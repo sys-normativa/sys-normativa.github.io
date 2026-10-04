@@ -25,7 +25,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - **Una sola página** (`salida/index.html`) con pestañas: Último informe, Todas las normas (filtros por nivel y tema, buscador), Por día, Cómo funciona. Pedido de Guido: todo junto y clarísimo, nada de un HTML por día.
 - Los informes se guardan como datos en `datos/informes/`. `npm run pagina` rearma la página sin revisar las fuentes.
 - **IA activada:** Gemini, nivel gratuito (confirmado en AI Studio: "Nivel gratuito", sin facturación). Recuadro "En pocas palabras" en cada norma, marcado como IA. Prueba: 31 de 31 normas resumidas. Detalle de cupos en `docs/analisis-regulatorio.md`.
-- La clave está en `.env` (no se sube). Guido la pegó en el chat: conviene regenerarla en AI Studio y reemplazarla en `.env`.
+- La clave está en `.env` y en el secreto del repo; Guido decidió no regenerarla (4/10).
 - La clave es de la cuenta personal de Google de Guido ("Default Gemini Project"). Si usa esa cuenta para otras cosas con la API, comparten cupo.
 - **Decisión de Guido:** el repo puede ser **público**, no hay nada secreto.
 
@@ -52,8 +52,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
    - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
    - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Falta que Guido confirme que le llegó.
    - Historial: Guido no quiere ir más de un mes atrás; se sumaron 5 días (22 al 28/9) y alcanza. Los mails de aviso le llegan (confirmado el 4/10).
-2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar).
-3. Regenerar la clave de Gemini (se pegó en el chat): actualizar `.env` y el secreto del repo.
+2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar). **Guido le va a preguntar a SYS en qué provincias trabaja** (dicho el 4/10); con eso se suman los boletines provinciales de Ingresos Brutos.
 4. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
 5. Si los mails diarios resultan muchos: avisar solo cuando hay algo que "Le afecta".
 6. Afinar "Para revisar".
