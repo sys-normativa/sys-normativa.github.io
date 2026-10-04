@@ -30,8 +30,8 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - **Decisión de Guido:** el repo puede ser **público**, no hay nada secreto.
 
 ## En producción desde el 3/10/2026
-- **Link:** https://guidoparisi91.github.io/sys-normativa/
-- **Repo (público):** https://github.com/Guidoparisi91/sys-normativa. Decisión de Guido: público, no hay nada secreto.
+- **Link:** https://sys-normativa.github.io/
+- **Repo (público):** https://github.com/sys-normativa/sys-normativa.github.io. Decisión de Guido: público, no hay nada secreto.
 - **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): días hábiles a las 8:00 y 19:00 (hora argentina). Se puede correr a mano desde la pestaña Actions → "Run workflow".
 - Cada corrida guarda `datos/` en el repo (commit "Guardar informe del …") y publica la página. Si una fuente falla, el informe igual se publica y el workflow queda en rojo.
 - **Aviso por mail:** cuando hay algo nuevo (o falla una fuente) se crea un issue que menciona a @Guidoparisi91; GitHub lo manda al mail de la cuenta. Hay que confirmar en GitHub → Settings → Notifications que ese mail sea guidoparisi91@gmail.com. Prueba enviada: issue #1.
@@ -48,7 +48,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - `ubuntu-latest` pasa a Ubuntu 26 desde el 19/10/2026; no debería afectar.
 
 ## Próximos pasos
-1. **Link más lindo:** Guido va a crear la organización gratuita `sys-normativa` en GitHub (no es otra cuenta, se maneja desde la suya). Después: transferir el repo a la organización, renombrarlo a `sys-normativa.github.io` y actualizar los links (`SITIO_URL` y aviso de prueba en el workflow, `src/aviso.ts`, docs). Link final: https://sys-normativa.github.io
+1. ~~Link más lindo~~ **Hecho (4/10/2026):** el repo pasó a la organización `sys-normativa` (gratuita, se maneja desde la cuenta de Guido) como `sys-normativa.github.io`. Link: https://sys-normativa.github.io/
    - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
    - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Falta que Guido confirme que le llegó.
    - Historial: recomendado extenderlo al 1/9 para incluir A 8472 y A 8482 (dirigidas a PSP); pendiente de su OK.

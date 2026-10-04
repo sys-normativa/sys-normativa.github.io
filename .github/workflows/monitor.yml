@@ -54,7 +54,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AVISO_ARCHIVO: ${{ runner.temp }}/aviso.json
-          SITIO_URL: https://guidoparisi91.github.io/sys-normativa/
+          SITIO_URL: https://sys-normativa.github.io/
 
       - name: Guardar el informe en el repo
         run: |
@@ -78,7 +78,7 @@ jobs:
           cat > "$AVISO" <<'FIN'
           {
             "titulo": "Prueba de aviso del monitor normativo",
-            "cuerpo": "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.\n\n**[Abrir el monitor](https://guidoparisi91.github.io/sys-normativa/)**"
+            "cuerpo": "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.\n\n**[Abrir el monitor](https://sys-normativa.github.io/)**"
           }
           FIN
 
