@@ -14,6 +14,8 @@ export interface AvisoBO {
   organismo: string;
   titulo: string;
   texto: string;
+  /** De qué boletín sale, si no es el nacional (p. ej. "Boletín Oficial de Córdoba"). */
+  boletin?: string;
 }
 
 interface Renglon {

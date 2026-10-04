@@ -78,6 +78,8 @@ const ORGANISMOS: { motivo: string; tema: Tema; patron: RegExp }[] = [
   { motivo: 'emitida por la CNV', tema: 'cnv', patron: /comision nacional de valores/ },
   { motivo: 'emitida por ARCA', tema: 'impuestos', patron: /agencia de recaudacion y control aduanero$|agencia de recaudacion y control aduanero - (direccion general impositiva|subdireccion general de (fiscalizacion|recaudacion))/ },
   { motivo: 'emitida por la Comisión Arbitral', tema: 'iibb', patron: /comision arbitral/ },
+  // Provincias (por ahora Córdoba): la autoridad de Ingresos Brutos.
+  { motivo: 'emitida por Rentas (Ingresos Brutos provincial)', tema: 'iibb', patron: /direccion general de rentas|secretaria de ingresos publicos/ },
   { motivo: 'emitida por Economía', tema: 'general', patron: /^ministerio de economia/ },
   { motivo: 'emitida por Comercio/Defensa del Consumidor', tema: 'usuarios', patron: /comercio|defensa del consumidor/ },
   { motivo: 'emitida por la AAIP (datos personales)', tema: 'datos', patron: /acceso a la informacion publica/ },

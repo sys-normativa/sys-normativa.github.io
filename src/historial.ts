@@ -1,6 +1,6 @@
 // Arma los informes de días que ya pasaron, como si el monitor hubiera corrido
-// ese día: el Boletín Oficial de la fecha y las comunicaciones del BCRA que
-// llevan esa fecha. Sirve para arrancar con historial.
+// ese día: los boletines (nación y Córdoba) de la fecha, las comunicaciones del
+// BCRA que llevan esa fecha y sus noticias de prensa de ese día. Sirve para arrancar con historial.
 //
 //   npm run historial -- 2026-09-29 2026-09-30 2026-10-01 2026-10-02
 //
@@ -9,6 +9,8 @@
 // de hoy), así que esos días no los incluyen y el informe lo aclara.
 
 import { avisosDelDia } from './fuentes/boletinOficial.js';
+import { normasCordobaDelDia } from './fuentes/boletinCordoba.js';
+import { leerNoticia, listarNoticias, type Noticia } from './fuentes/bcraPrensa.js';
 import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import { leerEstado } from './estado.js';
 import { fechaIso, guardarDia, Lote } from './procesar.js';
@@ -60,10 +62,22 @@ for (const tipo of ['A', 'B', 'C'] as TipoCom[]) {
   }
 }
 
+// Prensa del BCRA: solo se ven las 10 más nuevas. Si no alcanzan para cubrir
+// la primera fecha pedida, se avisa.
+const noticiasPorDia = new Map<string, Omit<Noticia, 'texto'>[]>();
+const erroresPrensa: string[] = [];
+try {
+  const lista = await listarNoticias();
+  for (const n of lista) if (fechas.includes(n.fecha)) noticiasPorDia.set(n.fecha, [...(noticiasPorDia.get(n.fecha) ?? []), n]);
+  if (lista.every((n) => n.fecha >= desde)) erroresPrensa.push('Prensa del BCRA: el listado no llega tan atrás; puede haber noticias de estos días sin revisar.');
+} catch (e) {
+  erroresPrensa.push(`Prensa del BCRA: ${(e as Error).message}`);
+}
+
 for (const fecha of fechas) {
   const lote = new Lote();
   const revisado: string[] = [];
-  const errores = [...erroresBcra];
+  const errores = [...erroresBcra, ...erroresPrensa];
   try {
     const avisos = await avisosDelDia(fecha.replaceAll('-', ''));
     lote.avisosBO(avisos, fecha);
@@ -71,6 +85,16 @@ for (const fecha of fechas) {
   } catch (e) {
     errores.push(`Boletín Oficial del ${fecha}: ${(e as Error).message}`);
   }
+  try {
+    const normas = await normasCordobaDelDia(fecha);
+    lote.avisosBO(normas, fecha);
+    revisado.push(normas.length ? `Boletín de Córdoba del ${fecha}: ${normas.length} normas.` : `Boletín de Córdoba del ${fecha}: no hubo edición.`);
+  } catch (e) {
+    errores.push(`Boletín de Córdoba del ${fecha}: ${(e as Error).message}`);
+  }
+  const noticias = noticiasPorDia.get(fecha) ?? [];
+  for (const n of noticias) lote.noticia(await leerNoticia(n));
+  revisado.push(`Prensa del BCRA: ${noticias.length} noticias de ese día.`);
   const comunicaciones = porDia.get(fecha) ?? [];
   for (const c of comunicaciones) lote.comunicacion(c);
   revisado.push(

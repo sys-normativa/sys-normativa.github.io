@@ -15,6 +15,10 @@ export interface Estado {
    * Se vuelven a buscar en cada corrida por si se publican tarde.
    */
   pendientes?: Partial<Record<TipoCom, { numero: number; desde: string }[]>>;
+  /** Último día del Boletín Oficial de Córdoba leído completo (igual que `boletinHasta`). */
+  cordobaHasta?: string;
+  /** Noticias del BCRA ya leídas (identificadores del sitio), para no repetirlas. */
+  prensaVistas?: string[];
 }
 
 const RUTA = new URL('../datos/estado.json', import.meta.url);

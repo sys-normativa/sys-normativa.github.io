@@ -1,7 +1,51 @@
 {
   "fecha": "2026-09-30",
-  "generado": "3/10/2026 a las 23:35",
+  "generado": "4/10/2026 a las 00:57",
   "hallazgos": [
+    {
+      "fuente": "Boletín Oficial de Córdoba",
+      "emisor": "Dirección General de Rentas (Córdoba)",
+      "titulo": "Resolución General N° 2229",
+      "asunto": "",
+      "fecha": "30/09/2026",
+      "url": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/09/1_Secc_300926.pdf#page=1&norma=resolucion-general-n-2229",
+      "tipo": "Publicada en el Boletín Oficial de Córdoba",
+      "queCambia": "APROBAR Y REMITIR a la Comisión Arbitral del Convenio Multilateral el listado correspondiente al período octubre de 2026 de los sujetos pasibles del Impuesto sobre los Ingresos Brutos -locales y de Convenio Multilateral- alcanzados por los distintos regímenes de retención, percepción y/o recaudación creados por la Provincia de Córdoba, identificados en los considerandos de la presente, para su inclusión en cada uno de los padrones con la respectiva alícuota aplicable como pago a cuenta que la provincia propone, en el marco de los regímenes sistémicos y unificados administrados por la Comisión Arbitral.",
+      "paraQue": "",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Menciona temas propios de SYS: proveedores de servicios de pago, cuentas de pago, SIRCUPA (IIBB sobre cuentas de pago).",
+        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
+      ],
+      "queHacer": "Pasársela a compliance para ver si SYS tiene que adecuar algo y desde cuándo.",
+      "fechasClave": [],
+      "dondeNombraASys": "…II del citado Decreto regula el Régimen de Recaudación Bancaria del Impuesto sobre los Ingresos Brutos y el Régimen de recaudación en cuentas de pago abiertas en las entidades “Proveedores de servicios de pago que ofrecen cuentas de pago (PSPOCP)” y, respecto a este último Régimen, dispone que revisten la…",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 20,
+        "motivos": [
+          "proveedores de servicios de pago",
+          "cuentas de pago",
+          "SIRCUPA (IIBB sobre cuentas de pago)",
+          "Convenio Multilateral / IIBB",
+          "retenciones/percepciones",
+          "entidades financieras",
+          "emitida por Rentas (Ingresos Brutos provincial)"
+        ],
+        "temas": [
+          "iibb",
+          "psp",
+          "impuestos",
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma aprueba y remite a la Comisión Arbitral del Convenio Multilateral el listado de sujetos alcanzados por los regímenes de recaudación de Ingresos Brutos en Córdoba, incluyendo SIRCUPA, para el período octubre de 2026.",
+        "comoAfecta": "Aplica a SYS Global Pay como proveedor de servicios de pago que ofrece cuentas de pago. SYS debe utilizar el padrón correspondiente a SIRCUPA para aplicar las retenciones de Ingresos Brutos a sus clientes corporativos en la Provincia de Córdoba según corresponda.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
     {
       "fuente": "Boletín Oficial",
       "emisor": "Agencia de Recaudación y Control Aduanero",
@@ -158,9 +202,11 @@
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-30: 68 avisos de la primera sección.",
+    "Boletín de Córdoba del 2026-09-30: 1 normas.",
+    "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 5 comunicaciones con fecha de ese día (C 102380, C 102379, C 102378, C 102377, C 102376).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: 4 de 4 normas."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": []
 }

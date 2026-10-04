@@ -2,14 +2,16 @@
 // datos/informes/, rearma la página (salida/index.html) y actualiza
 // datos/estado.json. Si ya corrió ese día, suma lo nuevo al mismo informe.
 //
-//   npm run revisar                         -> Boletín Oficial de hoy + novedades del BCRA
+//   npm run revisar                         -> boletines de hoy (nación y Córdoba) + novedades del BCRA
 //   npm run revisar -- --fecha 2026-10-02   -> Boletín Oficial de ese día
 //   npm run revisar -- --bcra-desde A=8480  -> relee el BCRA desde ese número (para probar)
 //
 // Una fuente que falla no frena a las demás: queda anotada en el informe,
 // porque un "hoy no hubo nada" falso es el peor error posible.
 
-import { avisosDelDia } from './fuentes/boletinOficial.js';
+import { avisosDelDia, type AvisoBO } from './fuentes/boletinOficial.js';
+import { normasCordobaDelDia } from './fuentes/boletinCordoba.js';
+import { leerNoticia, listarNoticias } from './fuentes/bcraPrensa.js';
 import { buscarUltimo, existe, leerComunicacion, nuevasDesde, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import { leerEncabezado, TEXTOS_ORDENADOS } from './fuentes/bcraTextosOrdenados.js';
 import { dejarAviso } from './aviso.js';
@@ -32,30 +34,41 @@ const revisado: string[] = [];
 const errores: string[] = [];
 let huboEdicion = true;
 
-// 1. Boletín Oficial: el de hoy, más los días anteriores que no se pudieron
-// leer completos (si una corrida falla, la siguiente los recupera). Ayer se
-// relee una vez más por si se agregó algo tarde. Lo ya informado no se repite.
+// 1. Boletines (nacional y de Córdoba): el de hoy, más los días anteriores que
+// no se pudieron leer completos (si una corrida falla, la siguiente los
+// recupera). Ayer se relee una vez más por si se agregó algo tarde. Lo ya
+// informado no se repite.
 const MAX_DIAS_ATRAS = 10;
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
-const dias = manual || !estado.boletinHasta ? [fecha] : diasEntre(estado.boletinHasta, fecha).slice(-MAX_DIAS_ATRAS);
-// Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
-// nunca incluye hoy, que se relee en cada corrida.
-let completoHasta = estado.boletinHasta ?? ayer;
-let seguidos = true;
-for (const dia of dias) {
-  try {
-    const avisos = await avisosDelDia(dia.replaceAll('-', ''));
-    lote.avisosBO(avisos, dia);
-    if (dia === fecha) huboEdicion = avisos.length > 0;
-    const cuando = dia === fecha ? '' : ' (día anterior, vuelto a mirar por si quedó algo)';
-    revisado.push(avisos.length ? `Boletín Oficial del ${dia}: ${avisos.length} avisos de la primera sección${cuando}.` : `Boletín Oficial del ${dia}: no hubo edición.`);
-    if (dia < fecha && seguidos) completoHasta = dia;
-  } catch (e) {
-    seguidos = false;
-    errores.push(`Boletín Oficial del ${dia}: ${(e as Error).message}`);
+
+async function recorrerBoletin(nombre: string, clave: 'boletinHasta' | 'cordobaHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
+  const hasta = estado[clave];
+  const dias = manual || !hasta ? [fecha] : diasEntre(hasta, fecha).slice(-MAX_DIAS_ATRAS);
+  // Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
+  // nunca incluye hoy, que se relee en cada corrida.
+  let completoHasta = hasta ?? ayer;
+  let seguidos = true;
+  let edicionHoy = false;
+  for (const dia of dias) {
+    try {
+      const avisos = await leer(dia);
+      lote.avisosBO(avisos, dia);
+      if (dia === fecha) edicionHoy = avisos.length > 0;
+      const cuando = dia === fecha ? '' : ' (día anterior, vuelto a mirar por si quedó algo)';
+      revisado.push(avisos.length ? `${nombre} del ${dia}: ${avisos.length} normas${cuando}.` : `${nombre} del ${dia}: no hubo edición.`);
+      if (dia < fecha && seguidos) completoHasta = dia;
+    } catch (e) {
+      seguidos = false;
+      errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
+    }
   }
+  if (!manual) estado[clave] = completoHasta;
+  return edicionHoy;
 }
-if (!manual) estado.boletinHasta = completoHasta;
+
+const edicionNacional = await recorrerBoletin('Boletín Oficial', 'boletinHasta', (dia) => avisosDelDia(dia.replaceAll('-', '')));
+const edicionCordoba = await recorrerBoletin('Boletín de Córdoba', 'cordobaHasta', normasCordobaDelDia);
+huboEdicion = edicionNacional || edicionCordoba;
 
 // 2. Comunicaciones del BCRA
 const forzado = argumento('bcra-desde');
@@ -129,7 +142,30 @@ for (const { archivo, tema, temaSys } of TEXTOS_ORDENADOS) {
 }
 revisado.push(`Textos ordenados del BCRA: ${TEXTOS_ORDENADOS.length} temas, ${cambiados} cambiaron.`);
 
-// 4. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
+// 4. Prensa del BCRA: las noticias que no se vieron todavía.
+const VISTAS_GUARDADAS = 300;
+try {
+  const vistas = new Set(estado.prensaVistas ?? []);
+  const primera = await listarNoticias();
+  if (!estado.prensaVistas) {
+    // Primera corrida: se fija el punto de partida sin informar el histórico.
+    estado.prensaVistas = primera.map((n) => n.id);
+    revisado.push(`Prensa del BCRA: primera corrida, se arranca desde "${primera[0].titulo}".`);
+  } else {
+    const nuevas = primera.filter((n) => !vistas.has(n.id));
+    for (const n of nuevas) lote.noticia(await leerNoticia(n));
+    // Si todas las del listado son nuevas, puede haber más viejas sin ver.
+    if (nuevas.length === primera.length) {
+      errores.push(`Prensa del BCRA: las ${primera.length} noticias del listado son nuevas; puede haber otras anteriores sin revisar (mirar https://www.bcra.gob.ar/noticias/).`);
+    }
+    estado.prensaVistas = [...nuevas.map((n) => n.id), ...(estado.prensaVistas ?? [])].slice(0, VISTAS_GUARDADAS);
+    revisado.push(`Prensa del BCRA: ${nuevas.length} noticias nuevas.`);
+  }
+} catch (e) {
+  errores.push(`Prensa del BCRA: ${(e as Error).message}`);
+}
+
+// 5. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
 const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion });
 await escribirSitio(resumen.generado);
 await guardarEstado(estado);

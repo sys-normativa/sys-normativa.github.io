@@ -1,6 +1,6 @@
 {
   "fecha": "2026-09-23",
-  "generado": "4/10/2026 a las 00:23",
+  "generado": "4/10/2026 a las 00:55",
   "hallazgos": [
     {
       "fuente": "Boletín Oficial",
@@ -164,9 +164,11 @@
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-23: 49 avisos de la primera sección.",
+    "Boletín de Córdoba del 2026-09-23: 5 normas.",
+    "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 6 comunicaciones con fecha de ese día (B 13236, C 102349, C 102348, C 102347, C 102346, C 102345).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: 4 de 4 normas."
+    "Resumen con IA: no hubo normas para resumir."
   ],
   "errores": []
 }

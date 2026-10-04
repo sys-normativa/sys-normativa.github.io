@@ -1,7 +1,45 @@
 {
   "fecha": "2026-09-22",
-  "generado": "4/10/2026 a las 00:23",
+  "generado": "4/10/2026 a las 00:55",
   "hallazgos": [
+    {
+      "fuente": "Boletín Oficial de Córdoba",
+      "emisor": "Secretaría de Ingresos Públicos (Córdoba)",
+      "titulo": "Resolución N° 19 - Letra:D",
+      "asunto": "",
+      "fecha": "22/09/2026",
+      "url": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/09/1_Secc_220926.pdf#page=3&norma=resolucion-n-19-letra-d",
+      "tipo": "Publicada en el Boletín Oficial de Córdoba",
+      "queCambia": "MODIFICAR el ANEXO I - TÍTULO I AGENTES DE RE- TENCIÓN GENERAL de la Resolución N° 2023/D-00000045 de esta Secretaría, y sus modificatorias, según se indica a continuación: Dar de baja-: ANEXO I – TÍTULO I AGENTES DE RETENCIÓN GENERAL CUIT NOMBRE 30-70872992-9 AVEX S.A.",
+      "paraQue": "",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (Convenio Multilateral / IIBB, retenciones/percepciones), pero no nombra su actividad: puede que no le aplique.",
+        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 4,
+        "motivos": [
+          "Convenio Multilateral / IIBB",
+          "retenciones/percepciones",
+          "emitida por Rentas (Ingresos Brutos provincial)"
+        ],
+        "temas": [
+          "iibb",
+          "impuestos"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma dispone dar de baja a las sociedades AVEX S.A. y Granja Tres Arroyos S.A.C.A.F.I. de la nómina de agentes de retención y percepción del Impuesto sobre los Ingresos Brutos en Córdoba.",
+        "comoAfecta": "No le aplica a SYS Global Pay. La resolución se refiere exclusivamente a empresas particulares ajenas a la billetera virtual.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
     {
       "fuente": "Boletín Oficial",
       "emisor": "Banco Central de la República Argentina",
@@ -41,6 +79,8 @@
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-22: 59 avisos de la primera sección.",
+    "Boletín de Córdoba del 2026-09-22: 5 normas.",
+    "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 5 comunicaciones con fecha de ese día (B 13235, C 102344, C 102343, C 102342, C 102341).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
     "Resumen con IA: 1 de 1 normas."

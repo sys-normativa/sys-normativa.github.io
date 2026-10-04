@@ -139,13 +139,17 @@ function tarjeta(h) {
 // Un informe (último o de un día elegido)
 
 function fuentesRevisadas(r) {
-  const fallo = (nombre) => r.errores.some((e) => e.toLowerCase().includes(nombre));
+  const fallo = (nombre) => r.errores.some((e) => e.toLowerCase().startsWith(nombre));
+  const reviso = (nombre) => r.errores.concat(r.revisado).some((e) => e.toLowerCase().startsWith(nombre));
   // Los informes armados hacia atrás no pudieron mirar los textos ordenados.
   const sinTextos = r.revisado.some((x) => x.includes('se vigilan desde'));
   const f = [
-    ['Boletín Oficial', fallo('boletín')],
+    ['Boletín Oficial', fallo('boletín oficial')],
+    // Las fuentes que se sumaron después solo aparecen en los informes que las incluyen.
+    ...(reviso('boletín de córdoba') ? [['Boletín de Córdoba', fallo('boletín de córdoba')]] : []),
     ['Comunicaciones del BCRA', fallo('bcra "')],
     ...(sinTextos ? [] : [['Textos ordenados', fallo('texto ordenado')]]),
+    ...(reviso('prensa del bcra') ? [['Prensa del BCRA', fallo('prensa del bcra')]] : []),
   ];
   const chips = f.map(([n, mal]) => `<span class="fuente${mal ? ' mal' : ''}">${icono(mal ? 'cruz' : 'check')} ${n}</span>`);
   if (sinTextos) chips.push(`<span class="fuente neutra">${icono('reloj')} Textos ordenados: se vigilan desde el 3/10</span>`);

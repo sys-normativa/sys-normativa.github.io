@@ -1,7 +1,47 @@
 {
   "fecha": "2026-09-24",
-  "generado": "4/10/2026 a las 00:24",
+  "generado": "4/10/2026 a las 00:56",
   "hallazgos": [
+    {
+      "fuente": "Boletín Oficial de Córdoba",
+      "emisor": "Dirección General de Rentas (Córdoba)",
+      "titulo": "Resolución Normativa N° 37",
+      "asunto": "",
+      "fecha": "24/09/2026",
+      "url": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/09/1_Secc_240926.pdf#page=1&norma=resolucion-normativa-n-37",
+      "tipo": "Publicada en el Boletín Oficial de Córdoba",
+      "queCambia": "INCORPORAR a continuación del Artículo 340 (1) de la Resolución Normativa N° 1/2023, publicada en el Boletín Oficial de fecha 23-11-2023, y sus modificatorias, el siguiente inciso 33) a la “SECCIÓN 6: SITUACIONES ESPECIALES”: “33) Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar - Ley N° 11.137 Artículo 340 (2).- Las entidades adheridas al “Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar” previsto en la Ley N° 11.137, deberán declarar los ingresos alcanzados por la alícuota especial del Cero por Ciento (0,00%) de la siguiente manera: a) Entidades comprendidas en el Artículo 6 de la Ley N° 11.137: deberán declararse en los códigos de…",
+      "paraQue": "",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (Convenio Multilateral / IIBB, entidades financieras), pero no nombra su actividad: puede que no le aplique.",
+        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [
+        "La presente Resolución entrará en vigencia a partir del día siguiente al de su publicación en el Boletín Oficial y resultará de aplicación respecto de los hechos imponibles que se perfeccionen a partir de la fecha indicada en el Convenio de Adhesión suscripto…"
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 4,
+        "motivos": [
+          "Convenio Multilateral / IIBB",
+          "entidades financieras",
+          "emitida por Rentas (Ingresos Brutos provincial)"
+        ],
+        "temas": [
+          "iibb",
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma establece la forma en que las entidades financieras y emisoras de tarjetas de crédito adheridas al Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar deben declarar los ingresos alcanzados por la alícuota especial del cero por ciento en el Impuesto sobre los Ingresos Brutos en Córdoba.",
+        "comoAfecta": "No le aplica a SYS. La norma está dirigida a entidades financieras y emisoras de tarjetas de crédito, y SYS opera como proveedor de servicios de pago para empresas.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
     {
       "fuente": "Boletín Oficial",
       "emisor": "Ministerio de Economía - Secretaría de Coordinación de Producción",
@@ -120,9 +160,11 @@
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-24: 75 avisos de la primera sección.",
+    "Boletín de Córdoba del 2026-09-24: 4 normas.",
+    "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 10 comunicaciones con fecha de ese día (B 13237, C 102358, C 102357, C 102356, C 102355, C 102354, C 102353, C 102352, C 102351, C 102350).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: 3 de 3 normas."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": []
 }

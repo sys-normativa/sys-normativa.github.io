@@ -5,7 +5,8 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import type { AvisoBO } from './fuentes/boletinOficial.js';
 import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
-import { explicarAvisoBO, explicarComunicacion, type Hallazgo } from './explicar.js';
+import type { Noticia } from './fuentes/bcraPrensa.js';
+import { explicarAvisoBO, explicarComunicacion, explicarNoticia, type Hallazgo } from './explicar.js';
 import { enParalelo } from './http.js';
 import { resumirTodos } from './ia.js';
 import type { Resumen } from './informe.js';
@@ -66,6 +67,14 @@ export class Lote {
       ev.nivel = 'revisar';
     }
     if (ev.nivel !== 'descartada') this.agregar(explicarComunicacion(c, ev, dirigida), c.texto);
+  }
+
+  noticia(n: Noticia): void {
+    const ev = evaluar('', `${n.titulo}
+${n.texto}`);
+    // Un anuncio no obliga a nada: llega como mucho a "Para revisar".
+    if (ev.nivel === 'alta') ev.nivel = 'revisar';
+    if (ev.nivel !== 'descartada') this.agregar(explicarNoticia(n, ev), n.texto);
   }
 }
 

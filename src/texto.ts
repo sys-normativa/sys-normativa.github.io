@@ -10,6 +10,8 @@ export function decodificarEntidades(s: string): string {
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
+    .replace(/&raquo;/g, '»')
+    .replace(/&laquo;/g, '«')
     .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
 }
 

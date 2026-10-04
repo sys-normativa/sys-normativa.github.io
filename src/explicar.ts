@@ -3,6 +3,7 @@
 // Todo sale de recortes literales de la norma, así que se puede verificar.
 
 import type { AvisoBO } from './fuentes/boletinOficial.js';
+import type { Noticia } from './fuentes/bcraPrensa.js';
 import { parsearEncabezado, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import type { ResumenIa } from './ia.js';
 import { dirigidaAPsp, type Evaluacion } from './reglas.js';
@@ -84,7 +85,7 @@ export function fechasClave(texto: string, max = 3): string[] {
   for (const o of oraciones(texto)) {
     const m = FECHA_CLAVE.exec(o);
     if (m) {
-      const sinArticulo = o.replace(/^ART[IÍ]CULO \d+\s*(?:º|°)?\.?\s*-?\s*/i, '');
+      const sinArticulo = o.replace(/^ART[IÍ]CULO \d+\s*(?:º|°)?[.:]?\s*-?\s*/i, '');
       // Oración larga: se muestra el tramo de la fecha, no el principio.
       const desde = sinArticulo.length <= 260 ? 0 : Math.max(0, sinArticulo.indexOf(m[0]) - 100);
       const limpia = desde ? '…' + recortar(sinArticulo.slice(sinArticulo.indexOf(' ', desde) + 1), 240) : recortar(sinArticulo, 260);
@@ -282,7 +283,8 @@ export function parteDispositiva(texto: string): string {
 
 /** El primer artículo, sin el "ARTÍCULO 1°.-". */
 export function primerArticulo(dispositiva: string): string {
-  const m = /ART[IÍ]CULO\s*1\s*(?:º|°)?\.?\s*-?\s*([\s\S]*?)(?=\nART[IÍ]CULO\s*2|$)/i.exec(dispositiva);
+  // "ARTÍCULO 1°.-" (nación) o "Artículo 1°:" (Córdoba).
+  const m = /ART[IÍ]CULO\s*1\s*(?:º|°)?[.:]?\s*-?\s*([\s\S]*?)(?=\nART[IÍ]CULO\s*2|$)/i.exec(dispositiva);
   return plano(m ? m[1] : dispositiva);
 }
 
@@ -312,7 +314,7 @@ export function explicarAvisoBO(a: AvisoBO, ev: Evaluacion, fecha: string): Hall
   // Las comunicaciones del BCRA que salen en el Boletín son la misma carta del
   // PDF, sin "RESUELVE:": se explican igual que las leídas en la web del BCRA.
   const carta = cartaBcra(cuerpo);
-  if (carta && /banco central/i.test(a.organismo)) {
+  if (carta && !a.boletin && /banco central/i.test(a.organismo)) {
     const enc = parsearEncabezado(cuerpo);
     const m = /COMUNICACI[OÓ]N\s*["“]?([ABC])["”]?\s*(\d+)/i.exec(cuerpo);
     const c: ComunicacionBCRA = { tipo: (m?.[1] ?? 'A') as TipoCom, numero: Number(m?.[2] ?? 0), url: a.url, texto: cuerpo, ...enc };
@@ -334,13 +336,13 @@ export function explicarAvisoBO(a: AvisoBO, ev: Evaluacion, fecha: string): Hall
   const [d, m, y] = [fecha.slice(8, 10), fecha.slice(5, 7), fecha.slice(0, 4)];
 
   return {
-    fuente: 'Boletín Oficial',
-    emisor: nombrePropio(a.organismo),
+    fuente: a.boletin ?? 'Boletín Oficial',
+    emisor: nombrePropio(a.organismo) + (a.boletin ? ` (${a.boletin.replace('Boletín Oficial de ', '')})` : ''),
     titulo: a.titulo || nombrePropio(a.organismo),
     asunto: '',
     fecha: `${d}/${m}/${y}`,
     url: a.url,
-    tipo: 'Publicada en el Boletín Oficial',
+    tipo: `Publicada en el ${a.boletin ?? 'Boletín Oficial'}`,
     queCambia: recortar(primerArticulo(dispositiva) || plano(cuerpo), 700),
     paraQue: paraQue(cuerpo),
     tema,
@@ -381,5 +383,35 @@ export function explicarTextoOrdenado(t: { tema: string; temaSys: Tema; url: str
     dondeNombraASys: '',
     relacionadas: [{ texto: `Comunicación ${ahora}`, url: urlComunicacion(citada) }],
     evaluacion: { nivel: 'alta', puntaje: 0, motivos: ['tema normativo que regula a SYS'], temas: [t.temaSys] },
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Prensa del BCRA
+
+export function explicarNoticia(n: Noticia, ev: Evaluacion): Hallazgo {
+  const tema = ev.temas[0] ?? 'general';
+  const [y, m, d] = n.fecha.split('-');
+  const citadas = comunicacionesCitadas(n.texto);
+  return {
+    fuente: 'BCRA — prensa',
+    emisor: 'Banco Central (BCRA) — comunicado de prensa',
+    titulo: n.titulo,
+    asunto: '',
+    fecha: n.fecha ? `${d}/${m}/${y}` : '',
+    url: n.url,
+    tipo: 'Anuncio de prensa (no es una norma)',
+    queCambia: recortar(n.bajada || n.texto, 600),
+    paraQue: '',
+    tema,
+    comoAfecta: [
+      'Es un anuncio del BCRA, no una norma: puede adelantar una comunicación que todavía no salió. Cuando salga, va a aparecer en el monitor como norma.',
+      TEMAS[tema].impacto,
+    ],
+    queHacer: 'Tenerlo en el radar. Si toca la operatoria de SYS, conviene anticiparse antes de que salga la norma.',
+    fechasClave: fechasClave(n.texto),
+    dondeNombraASys: dondeNombraASys(n.texto),
+    relacionadas: citadas.slice(0, 6).map((x) => ({ texto: `Comunicación "${x.tipo}" ${x.numero}`, url: urlComunicacion(x) })),
+    evaluacion: ev,
   };
 }
