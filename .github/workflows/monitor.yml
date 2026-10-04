@@ -1,0 +1,95 @@
+# Corre el monitor solo, publica la página y avisa por mail si hay algo nuevo.
+#
+# Horario: días hábiles a las 8:00 y a las 19:00 de Argentina (11:00 y 22:00 UTC).
+# GitHub puede atrasar el arranque unos minutos. Lo que salga un fin de semana
+# aparece en la corrida del lunes.
+#
+# El aviso se publica como "issue" del repo: GitHub lo manda por mail al dueño.
+
+name: Monitor normativo
+
+on:
+  schedule:
+    - cron: '0 11,22 * * 1-5'
+  workflow_dispatch: # botón "Run workflow" para correrlo a mano
+
+permissions:
+  contents: write # guardar el informe del día en el repo
+  issues: write # aviso por mail
+  pages: write
+  id-token: write
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.publicar.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      # Si una fuente falla, el informe igual se guarda y se publica (con el
+      # aviso de la falla). Al final el workflow queda en rojo para que se note.
+      - name: Revisar las fuentes
+        id: revisar
+        continue-on-error: true
+        run: npm run revisar
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AVISO_ARCHIVO: ${{ runner.temp }}/aviso.json
+          SITIO_URL: https://guidoparisi91.github.io/sys-normativa/
+
+      - name: Guardar el informe en el repo
+        run: |
+          git config user.name "monitor-normativo"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add datos
+          if git diff --cached --quiet; then
+            echo "Sin cambios para guardar."
+          else
+            git commit -m "Guardar informe del $(TZ=America/Argentina/Buenos_Aires date +%F)"
+            git push
+          fi
+
+      - name: Avisar por mail
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AVISO: ${{ runner.temp }}/aviso.json
+        run: |
+          if [ -f "$AVISO" ]; then
+            titulo=$(node -p "require(process.env.AVISO).titulo")
+            node -p "require(process.env.AVISO).cuerpo" > "$RUNNER_TEMP/cuerpo.md"
+            url=$(gh issue create --title "$titulo" --body-file "$RUNNER_TEMP/cuerpo.md")
+            # Se cierra enseguida: el mail ya salió y la lista de issues queda limpia.
+            gh issue close "$url"
+          else
+            echo "Nada nuevo: no se manda aviso."
+          fi
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: salida
+
+      - name: Publicar la página
+        id: publicar
+        uses: actions/deploy-pages@v4
+
+      - name: Marcar en rojo si falló alguna fuente
+        if: steps.revisar.outcome == 'failure'
+        run: |
+          echo "Alguna fuente no se pudo revisar: ver el informe del día."
+          exit 1

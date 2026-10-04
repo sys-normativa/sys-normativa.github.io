@@ -1,0 +1,93 @@
+{
+  "fecha": "2026-09-29",
+  "generado": "3/10/2026 a las 23:33",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"A\" 8486",
+      "asunto": "Servicios Complementarios de la Actividad Financiera y Actividades Permitidas. Expansión de Entidades Financieras. Actualización.",
+      "fecha": "29/09/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8486.pdf",
+      "tipo": "Actualización del texto ordenado",
+      "queCambia": "El BCRA envía en anexo las hojas que, en reemplazo de las oportunamente provistas, corresponde incorporar en el texto ordenado sobre Servicios Complementarios de la Actividad Financiera y Actividades Permitidas y en el texto ordenado sobre Expansión de Entidades Financieras en función de las disposiciones divulgadas por la Comunicación A 8472 –puntos 1. y 2.–.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida.",
+        "No trae reglas nuevas: pasa al texto ordenado lo que ya dispuso la comunicación A 8472. Si no se revisó, es lo que hay que leer."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "Se exceptúa a las agencias complementarias de servicios financieros que se encuentren inscriptas en el Registro de Proveedores de Servicios de Pago habilitado en el BCRA como Empresas de cobranza extrabancaria, quienes podrán –previa conformidad de la entidad financiera– subcontratar a personas humanas y/o jurídicas…",
+      "relacionadas": [
+        {
+          "texto": "Comunicación \"A\" 8472",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8472.pdf",
+          "detalle": "Servicios Complementarios de la Actividad Financiera y Actividades Permitidas. Expansión de Entidades Financieras. Proveedores de Servicios de Pago. Adecuaciones. (03/09/2026)"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 6,
+        "motivos": [
+          "proveedores de servicios de pago",
+          "entidades financieras"
+        ],
+        "temas": [
+          "psp",
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma actualiza los textos ordenados sobre servicios complementarios y expansión de entidades financieras, incorporando disposiciones sobre la actuación de agencias complementarias de servicios financieros y la delegación de actividades.",
+        "comoAfecta": "No le aplica directamente a SYS Global Pay, ya que la normativa está dirigida a las entidades financieras. No obstante, menciona requisitos para subcontrataciones de empresas de cobranza extrabancaria inscriptas como PSP, por lo que SYS debe revisar si realiza alguna actividad de este tipo para verificar posibles adecuaciones en sus contratos o acuerdos.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"B\" 13237/2026",
+      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
+      "fecha": "",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348155/20260929",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por el BCRA"
+        ],
+        "temas": [
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma comunica los valores de las tasas de referencia aplicables para la garantía de los depósitos, dirigida exclusivamente a las entidades financieras.",
+        "comoAfecta": "No le aplica directamente a SYS Global Pay por ser un proveedor de servicios de pago y no una entidad financiera, por lo que no debe realizar ninguna acción ni revisión al respecto.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-09-29: 51 avisos de la primera sección.",
+    "BCRA: 5 comunicaciones con fecha de ese día (A 8486, C 102375, C 102374, C 102373, C 102372).",
+    "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
+    "Resumen con IA: 2 de 2 normas."
+  ],
+  "errores": []
+}

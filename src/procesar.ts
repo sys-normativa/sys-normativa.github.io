@@ -1,0 +1,167 @@
+// Lo que comparten la corrida diaria (revisar.ts) y el armado de días
+// anteriores (historial.ts): evaluar y explicar cada norma, completar las
+// normas citadas, resumir con IA y guardar el informe del día.
+
+import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import type { AvisoBO } from './fuentes/boletinOficial.js';
+import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
+import { explicarAvisoBO, explicarComunicacion, type Hallazgo } from './explicar.js';
+import { enParalelo } from './http.js';
+import { resumirTodos } from './ia.js';
+import type { Resumen } from './informe.js';
+import { dirigidaAPsp, evaluar } from './reglas.js';
+
+const ZONA = 'America/Argentina/Buenos_Aires';
+
+export function hoyEnArgentina(): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: ZONA }).format(new Date());
+}
+
+export function ahoraEnArgentina(): string {
+  const f = new Intl.DateTimeFormat('es-AR', { timeZone: ZONA, day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  return f.format(new Date()).replace(',', ' a las');
+}
+
+/** "02/10/2026" -> "2026-10-02". */
+export function fechaIso(ddmmaaaa: string): string {
+  const [d, m, y] = ddmmaaaa.split('/');
+  return `${y}-${m}-${d}`;
+}
+
+/** Lo encontrado en una corrida, con el texto completo de cada norma para la IA (no se guarda). */
+export class Lote {
+  hallazgos: Hallazgo[] = [];
+  textos = new Map<Hallazgo, string>();
+
+  agregar(h: Hallazgo, texto = ''): void {
+    this.hallazgos.push(h);
+    this.textos.set(h, texto);
+  }
+
+  avisosBO(avisos: AvisoBO[], fecha: string): void {
+    for (const a of avisos) {
+      const ev = evaluar(a.organismo, `${a.titulo}\n${a.texto}`);
+      if (ev.nivel !== 'descartada') this.agregar(explicarAvisoBO(a, ev, fecha), a.texto);
+    }
+  }
+
+  comunicacion(c: ComunicacionBCRA): void {
+    // Sin organismo: que sea del BCRA no suma, lo son todas.
+    const ev = evaluar('', c.texto);
+    const dirigida = dirigidaAPsp(c.destinatarios);
+    if (dirigida) {
+      ev.nivel = 'alta';
+      ev.motivos.unshift('dirigida a los proveedores de servicios de pago');
+    } else if (ev.nivel === 'alta') {
+      // Las del BCRA nombran a los PSP de pasada en muchas normas para bancos;
+      // si no van dirigidas a ellos, que las mire una persona.
+      ev.nivel = 'revisar';
+    }
+    if (ev.nivel !== 'descartada') this.agregar(explicarComunicacion(c, ev, dirigida), c.texto);
+  }
+}
+
+// De qué trata cada comunicación citada, para que el lector sepa si vale la
+// pena abrirla. Es lo que más ayuda en las "actualizaciones del texto
+// ordenado", donde el cambio de fondo está en otra comunicación.
+const MAX_CITADAS = 4;
+const referencias = new Map<string, Promise<string>>();
+
+function referenciaDe(url: string): Promise<string> {
+  const m = /\/([ABC])(\d+)\.pdf$/.exec(url);
+  if (!m) return Promise.resolve('');
+  if (!referencias.has(url)) {
+    referencias.set(
+      url,
+      leerComunicacion(m[1] as TipoCom, Number(m[2]))
+        .then((x) => (x ? `${x.referencia.replace(/^[^:]*Circular[^:]*:\s*/i, '')} (${x.fecha})` : ''))
+        .catch(() => ''),
+    );
+  }
+  return referencias.get(url)!;
+}
+
+const ORDEN = { alta: 0, revisar: 1, descartada: 2 };
+const ordenar = (hs: Hallazgo[]) => hs.sort((a, b) => ORDEN[a.evaluacion.nivel] - ORDEN[b.evaluacion.nivel] || b.evaluacion.puntaje - a.evaluacion.puntaje);
+
+const INFORMES = new URL('../datos/informes/', import.meta.url);
+
+/** Una comunicación del BCRA es la misma aunque llegue por la web del BCRA o por el Boletín Oficial. */
+export function claveComunicacion(titulo: string): string | null {
+  const m = /^Comunicaci[oó]n "([ABC])" (\d+)/.exec(titulo);
+  return m ? `${m[1]}${m[2]}` : null;
+}
+
+/** Comunicaciones del BCRA ya informadas en otros días. */
+async function comunicacionesYaInformadas(menos: string): Promise<Set<string>> {
+  const claves = new Set<string>();
+  let archivos: string[] = [];
+  try {
+    archivos = (await readdir(INFORMES)).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f) && f !== `${menos}.json`);
+  } catch {
+    return claves;
+  }
+  for (const f of archivos) {
+    const r = JSON.parse(await readFile(new URL(f, INFORMES), 'utf8')) as Resumen;
+    for (const h of r.hallazgos) {
+      const k = claveComunicacion(h.titulo);
+      if (k) claves.add(k);
+    }
+  }
+  return claves;
+}
+
+/**
+ * Completa y guarda el informe del día. Si ya había uno (la corrida de la
+ * mañana), suma lo nuevo sin repetir: una norma es la misma si tiene el mismo
+ * link. Devuelve el informe guardado y lo que apareció en esta corrida.
+ */
+export async function guardarDia(
+  fecha: string,
+  lote: Lote,
+  revisado: string[],
+  errores: string[],
+  { huboEdicion = true } = {},
+): Promise<{ resumen: Resumen; nuevos: Hallazgo[] }> {
+  let anterior: Resumen | undefined;
+  try {
+    anterior = JSON.parse(await readFile(new URL(`${fecha}.json`, INFORMES), 'utf8')) as Resumen;
+  } catch {
+    // Primera corrida del día.
+  }
+  const vistos = new Set(anterior?.hallazgos.map((h) => h.url));
+  // Una comunicación que ya salió otro día (p. ej. en la web del BCRA y días
+  // después en el Boletín Oficial) no se repite: queda donde apareció primero.
+  const otrosDias = await comunicacionesYaInformadas(fecha);
+  const nuevos = ordenar(
+    lote.hallazgos.filter((h) => {
+      const k = claveComunicacion(h.titulo);
+      return !vistos.has(h.url) && !(k && otrosDias.has(k));
+    }),
+  );
+
+  await enParalelo(
+    nuevos.flatMap((h) => h.relacionadas.slice(0, MAX_CITADAS)),
+    2,
+    async (e) => {
+      e.detalle = await referenciaDe(e.url);
+    },
+  );
+  // Resumen con IA (opcional) solo de lo nuevo. Si falla, el informe sale igual.
+  revisado.push(await resumirTodos(nuevos, lote.textos));
+
+  const resumen: Resumen = {
+    fecha,
+    generado: ahoraEnArgentina(),
+    hallazgos: ordenar([...(anterior?.hallazgos ?? []), ...nuevos]),
+    revisado,
+    errores,
+  };
+  // Fin de semana o feriado sin novedades: no se guarda un informe vacío.
+  // Lo que salga esos días aparece en el informe del próximo día hábil.
+  if (huboEdicion || resumen.hallazgos.length || errores.length) {
+    await mkdir(INFORMES, { recursive: true });
+    await writeFile(new URL(`${fecha}.json`, INFORMES), JSON.stringify(resumen, null, 2) + '\n', 'utf8');
+  }
+  return { resumen, nuevos };
+}

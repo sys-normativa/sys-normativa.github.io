@@ -1,0 +1,183 @@
+# Análisis regulatorio: qué normas le importan a SYS
+
+*Relevado el 3/10/2026. Proyecto independiente, sin relación con PIRP.*
+
+## Resumen en criollo
+
+SYS Global Pay es una **billetera virtual para empresas** (gastos corporativos con pagos QR y transferencias), registrada en el BCRA como proveedor de servicios de pago. Según los resultados de búsqueda, la operadora sería **EvaPar S.A.**, pero no lo pude confirmar porque el PDF de términos y condiciones de su web hoy da error.
+
+Las normas que le pueden cambiar el negocio salen de **ocho organismos** y se publican en **tres lugares distintos**:
+
+1. **La web del BCRA.** Ahí sale lo más importante, y en su mayoría **no** se publica en el Boletín Oficial.
+2. **El Boletín Oficial nacional.** UIF, ARCA, CNV, decretos, Comisión Arbitral y algunas comunicaciones del BCRA.
+3. **Los boletines provinciales.** Ingresos Brutos sobre billeteras: ARBA, AGIP, Córdoba, etc.
+
+El monitor ya cubre los dos primeros. Los boletines provinciales y el Congreso quedan para una segunda etapa.
+
+**Prueba con casos reales:** corrí el monitor sobre los días en que salieron cuatro normas que sabemos que afectaban a billeteras, y las cuatro aparecieron en "Le afecta a SYS":
+
+| Norma | Qué hizo | Publicada |
+|---|---|---|
+| Res. UIF 200/2024 | Obligaciones antilavado para los PSP | BO 19/12/2024 |
+| RG ARCA 5804/2025 | Los PSP informan ingresos, egresos y saldos | BO 24/12/2025 |
+| Com. BCRA A 8398 | Requisitos de seguridad informática, alcanza a los PSP | BO 9/2/2026 |
+| Decreto 475/2026 | Exenciones del impuesto al cheque (PSP/PSAV) | BO 18/6/2026 |
+
+Y sobre lo reciente, encontró la **Com. A 8488 del 2/10/2026**, dirigida a "proveedores de servicios de pago que ofrecen cuentas de pago". **Esa no salió en el Boletín Oficial**: con solo el Boletín se hubiera perdido.
+
+---
+
+## Los frentes, uno por uno
+
+La columna "Monitor" dice si hoy se detecta automáticamente.
+
+### 1. BCRA: régimen de PSP *(el núcleo)*
+- **Qué regula:** registro como PSP; el 100% de los fondos de clientes depositados en cuentas a la vista en pesos en bancos del país; transparencia; transferencias desde y hacia cuentas de pago; verificación de identidad; prohibiciones; informe anual de contadores independientes (Com. A 8482, 16/9/2026).
+- **Norma madre:** texto ordenado "Proveedores de servicios de pago" (`t-snp-psp`), al 2/10/2026 con la Com. A 8488 incorporada.
+- **Dónde sale:** web del BCRA (comunicaciones "A").
+- **Monitor:** ✅ Lee cada comunicación nueva. Si en el encabezado va dirigida a los PSP, sale sí o sí como "Le afecta". También vigila que el texto ordenado no cambie sin que lo hayamos visto.
+
+### 2. BCRA: Sistema Nacional de Pagos
+- **Qué regula:** transferencias (incluidas las inmediatas y los pagos con transferencia/QR interoperable), débitos directos, servicios de pago. Es la operatoria diaria de SYS.
+- **Normas madre:** `t-snp-tr`, `t-snp-tr-nc`, `t-snp-spd`, `t-snp-dd`.
+- **Monitor:** ✅
+
+### 3. BCRA: protección de usuarios de servicios financieros
+- **Qué regula:** comisiones, información al cliente, reclamos. Los PSP están alcanzados desde la Com. A 7593.
+- **Alcance para SYS:** limitado si todos sus clientes son empresas, pero aplica igual en parte.
+- **Norma madre:** `t-pusf`.
+- **Monitor:** ✅
+
+### 4. BCRA: seguridad informática y riesgo tecnológico
+- **Qué regula:** requisitos mínimos de gestión de riesgos de tecnología y seguridad. Desde 2026 alcanza a los PSP del registro (Com. A 8398).
+- **Normas madre:** `t-rmrtsd`, `t-rmgcti`.
+- **Monitor:** ✅
+
+### 5. BCRA: exterior y cambios
+- **Importa si** SYS permite pagos en el exterior o gastos de viaje en otra moneda. Está por confirmar con SYS.
+- **Norma madre:** `t-excbio`.
+- **Monitor:** ✅ Aparece como "Para revisar", salvo que vaya dirigida a los PSP.
+
+### 6. BCRA: comunicaciones "B" y "C"
+- **"B":** informativas (feriados bancarios, tasas, listados). **"C":** correcciones de normas anteriores.
+- **Feriados bancarios:** aunque no nombren a los PSP, mueven acreditaciones y plazos. Llegan siempre a "Para revisar", nunca a "Le afecta" (regla agregada el 3/10/2026, caso real: Com. A 8487, feriado bancario del 10/11/2026).
+- **Monitor:** ✅ Se leen todas; aparecen solo si tocan temas de SYS.
+
+### 7. UIF: prevención del lavado de dinero
+- **Qué regula:** desde la **Ley 27.739** (2024), los proveedores de servicios de pago son **sujetos obligados**. La **Res. UIF 200/2024** fija sus obligaciones: conocer al cliente, monitorear operaciones y reportar las sospechosas.
+- **Dónde sale:** Boletín Oficial.
+- **Monitor:** ✅
+
+### 8. ARCA: regímenes de información y retenciones
+- **Qué regula:** los PSP informan mensualmente movimientos y saldos de sus clientes (RG 5699/2025 con umbrales, RG 5804/2025 con ingresos, egresos y saldos desde mayo de 2026). Además, cualquier régimen de retención o percepción que pase por la billetera.
+- **Dónde sale:** Boletín Oficial.
+- **Monitor:** ✅ Se miran solo las áreas impositivas de ARCA; la Aduana no le interesa a SYS.
+
+### 9. Impuesto a los débitos y créditos ("impuesto al cheque")
+- **Qué regula:** Ley 25.413 y Decreto 380/2001. Las cuentas de pago están exentas, y el Decreto 475/2026 amplió exenciones. Si eso cambia, le cambia el costo a SYS y a sus clientes.
+- **Dónde sale:** Boletín Oficial (decretos).
+- **Monitor:** ✅
+
+### 10. Ingresos Brutos provincial sobre billeteras *(no cubierto todavía)*
+- **Qué regula:** **SIRCUPA** (Comisión Arbitral, RG 9/2022) retiene Ingresos Brutos sobre lo que entra a cuentas de pago, y cada provincia adhiere y fija alícuotas por su cuenta. Por ejemplo, ARBA tiene un régimen propio para billeteras (RN 25/2025).
+- **Dónde sale:** la Comisión Arbitral en el Boletín Oficial nacional (✅ cubierto); las provincias en **su propio boletín** (❌ no cubierto).
+- **Para cubrirlo:** hay que saber **en qué provincias tiene clientes SYS** y sumar esos boletines. Cada uno tiene un formato distinto.
+
+### 11. CNV *(depende de lo que haga SYS)*
+- **Importa si** SYS remunera saldos con un fondo común de inversión o toca activos virtuales (PSAV).
+- **Dónde sale:** Boletín Oficial.
+- **Monitor:** ✅
+
+### 12. Defensa del consumidor y Comercio
+- **Alcance:** bajo en un producto para empresas, aunque una norma general sobre medios de pago puede alcanzarlo.
+- **Dónde sale:** Boletín Oficial.
+- **Monitor:** ✅
+
+### 13. Datos personales
+- **Qué regula:** Ley 25.326 y la AAIP. SYS trata datos de empleados de sus clientes. Hay proyectos de reforma de la ley.
+- **Dónde sale:** Boletín Oficial.
+- **Monitor:** ✅ Con peso bajo, para no traer ruido.
+
+### 14. Congreso: proyectos de ley *(no cubierto)*
+- **Ejemplos:** pago de sueldos en billeteras, reforma de la ley de datos personales, regulación fintech.
+- **Por qué importa:** avisar cuando un proyecto **avanza** (dictamen, media sanción) le da meses de anticipación a SYS.
+- **Fuente:** HCDN y Senado tienen buscadores públicos.
+- **Estado:** queda para la segunda etapa.
+
+### 15. BCRA: borradores y comunicados de prensa *(no cubierto)*
+- A veces el BCRA anuncia medidas por prensa antes de la comunicación formal. Queda para la segunda etapa.
+
+---
+
+## Cómo explica el informe cada norma
+
+Cada norma que pasa el filtro trae, **sin IA**, recortes literales de la propia norma más un texto fijo por tema:
+
+- **Qué cambia:** en el BCRA, la carta de la comunicación ("Nos dirigimos a Uds…"), que es el resumen que hace el propio BCRA, o la resolución textual si la trae. En el Boletín Oficial, el artículo 1°.
+- **Para qué:** el considerando que dice el objetivo ("resulta necesario…", "con el fin de…").
+- **Cómo le afecta a SYS:** si va dirigida a los PSP o solo los nombra, más el impacto del tema (los textos están en `src/temas.ts` y salen de los frentes de este análisis). El tema sale del código de circular del BCRA (CAMEX, SINAP, CONAU…) o del organismo emisor (UIF, ARCA, CNV…).
+- **Fechas clave:** las oraciones con vigencia, plazos o vencimientos.
+- **Dónde nombra a SYS:** el pasaje donde aparece su actividad.
+- **Normas relacionadas:** las comunicaciones citadas, con link y de qué tratan. Es clave en las "actualizaciones del texto ordenado", donde el cambio de fondo está en otra comunicación (ej.: la A 8488 remite a la A 8472).
+
+Si alguna vez se suma IA, sería para reescribir esto en dos líneas; la base por reglas queda igual.
+
+---
+
+## Lo que hay que preguntarle a SYS
+
+Las respuestas cambian qué se vigila y con qué peso.
+
+1. **¿En qué provincias tienen clientes?** Define qué boletines provinciales sumar para Ingresos Brutos.
+2. **¿Emiten tarjetas** (prepagas o corporativas)? Si sí, entra la Ley de Tarjetas 25.065 y su normativa.
+3. **¿Remuneran los saldos?** ¿Con qué fondo? Define cuánto pesa la CNV.
+4. **¿Hay pagos en el exterior o en moneda extranjera?** Define cuánto pesa "Exterior y cambios".
+5. **¿Los clientes son solo empresas,** o también personas, por ejemplo empleados con cuenta propia? Define cuánto pesa la protección de usuarios.
+6. **¿A quién le llega el aviso, y cómo?** Mail a legales o compliance, Slack, etc.
+7. **¿Algún tema puntual que les preocupe hoy?**
+
+---
+
+## IA: activada, en el nivel gratuito
+
+**La detección sigue siendo por reglas.** La IA solo escribe el recuadro "En pocas palabras" (qué cambia y cómo le afecta a SYS, en dos líneas) de las normas que ya pasaron el filtro. Va marcado como resumen automático; abajo queda el texto literal de la norma.
+
+- **Servicio:** Google Gemini, nivel gratuito de AI Studio, sin facturación activada (no puede cobrar). Clave en `.env` (`GEMINI_API_KEY`), que no se sube.
+- **Cupos reales de la cuenta** (vistos en AI Studio el 3/10/2026, pedidos por minuto / por día): Gemini 3.5 Flash-Lite 15/500, 3.1 Flash-Lite 15/500, 2.5 Flash-Lite 10/20. Se usan en ese orden: si uno no responde, prueba el siguiente.
+- **Consumo:** una norma = un pedido. El peor caso son unas 30 por día (6% del cupo). Hay una pausa de 6 segundos entre pedidos para quedar abajo del tope por minuto. Prueba real: 31 normas de 5 días, 31 resúmenes, pico de 7 pedidos por minuto.
+- **Si falla** (sin cupo, Google caído, clave vencida): la norma sale igual, con la explicación por reglas, y "Qué se revisó" dice cuántas quedaron sin resumen.
+- **Advertencia:** en el nivel gratuito, Google puede usar lo que recibe para mejorar sus productos. Solo se le mandan normas públicas; **nunca datos internos de SYS**.
+- **Google puede bajar los cupos gratis cuando quiera** (ya lo hizo en 2025). Por eso la IA es un agregado y no una dependencia.
+
+---
+
+## Dónde correrlo sin gastar
+
+**Propuesta: GitHub Actions + GitHub Pages en un repositorio público.** Guido confirmó (3/10/2026) que no hay nada secreto: todo es información de los boletines.
+
+- **Corrida:** todos los días a las 8:00 y a las 19:00 (hora argentina). El BCRA publica durante el día, por eso son dos. En repos públicos, Actions no tiene límite de minutos.
+- **Link:** la página del monitor (`salida/index.html`) se publica en GitHub Pages, gratis en repos públicos. Una sola dirección para entrar todos los días.
+- **Estado e historial:** `datos/estado.json` y `datos/informes/` se guardan en el mismo repo después de cada corrida. No hace falta base de datos.
+- **Clave de Gemini:** va como "secreto" del repo, nunca en el código.
+- **Aviso por mail (opcional):** solo los días con algo que "Le afecta" o con una fuente caída, con el link.
+
+**Limitaciones a tener en cuenta:**
+- Los cron de GitHub pueden **atrasarse** varios minutos, a veces más, en horas pico. Para normas eso no es grave.
+- GitHub **apaga los cron de un repo sin actividad por 60 días.** El commit diario del estado lo mantiene activo, pero si el monitor deja de commitear, hay que volver a activarlo a mano.
+- Si mañana el BCRA o el Boletín cambian el formato de su web, el monitor **falla de forma visible**: el informe lista "Fuentes que fallaron", nunca dice "no hubo nada" en silencio. Igual alguien tiene que leer ese aviso.
+- En un repo público también quedan a la vista estos documentos (incluidas las preguntas para SYS y las notas del proyecto).
+
+---
+
+## Fuentes consultadas
+
+- [SYS Global Pay](https://www.sys.com.ar/)
+- [BCRA: texto ordenado de Proveedores de Servicios de Pago](https://www.bcra.gob.ar/archivos/Pdfs/Texord/t-snp-psp.pdf)
+- [BCRA: Com. A 8488](https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8488.pdf)
+- [BCRA: Com. A 8398 en el Boletín Oficial](https://www.boletinoficial.gob.ar/detalleAviso/primera/338304/20260209)
+- [Res. UIF 200/2024](https://www.boletinoficial.gob.ar/detalleAviso/primera/318446/20241219)
+- [Allende & Brea: UIF y PSP](https://allende.com/bancario/nueva-reglamentacion-de-la-uif-aplicable-a-proveedores-de-servicios-de-cobros-y-o-pagos-12-20-2024/)
+- [RG ARCA 5804/2025](https://www.boletinoficial.gob.ar/detalleAviso/primera/336723/20251224) · [iProfesional: montos informados](https://www.iprofesional.com/impuestos/464797-arca-fijo-los-montos-que-bancos-y-billeteras-informan-por-las-transferencias)
+- [Decreto 475/2026](https://www.boletinoficial.gob.ar/detalleAviso/primera/343279/20260618) · [Tributum: Dec 475/2026](https://tributum.news/dec-475-2026-impuesto-al-cheque-exenciones-psp-psav-tarjetas-transportadoras-de-caudales-exencion/)
+- [SIRCUPA (Infobae)](https://www.infobae.com/opinion/2022/10/10/10-claves-sobre-el-nuevo-impuesto-a-las-billeteras-virtuales-el-sircupa/) · [ARBA y billeteras (TradingView/Cointelegraph)](https://es.tradingview.com/news/cointelegraph:25b99558a09cd:0/)
+- [BCRA: Exterior y cambios](https://www.bcra.gob.ar/archivos/Pdfs/Texord/t-excbio.pdf) · [BCRA: riesgos de tecnología](https://www.bcra.gob.ar/archivos/Pdfs/Texord/t-rmrtsd.pdf)

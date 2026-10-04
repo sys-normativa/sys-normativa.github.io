@@ -1,0 +1,166 @@
+{
+  "fecha": "2026-09-30",
+  "generado": "3/10/2026 a las 23:35",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Agencia de Recaudación y Control Aduanero",
+      "titulo": "Resolución General 5903/2026",
+      "asunto": "",
+      "fecha": "30/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348243/20260930",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Las importaciones y exportaciones previstas en el artículo 9º, las transacciones entre sujetos vinculados a que se refiere el artículo 16, las operaciones mencionadas en el artículo 17 y las transacciones realizadas por los sujetos indicados en los artículos 126 y 127, todos ellos de la Ley de Impuesto a las Ganancias, texto ordenado en 2019 y sus modificaciones, así como las operaciones comprendidas en el segundo párrafo del artículo 229 de la Reglamentación de la citada ley, aprobada por el Decreto N° 862 del 6 de diciembre de 2019, se encuentran alcanzadas por la presente resolución general. SUJETOS COMPRENDIDOS",
+      "paraQue": "A los fines de facilitar el cumplimiento de las obligaciones aquí previstas por parte de aquellos contribuyentes cuyas operaciones no representan una materialidad ni riesgo significativo para este Organismo, y con el objeto de disminuir los altos costos que los aludidos sujetos enfrentan, se estima conveniente mantener vigente el Régimen Simplificado de Operaciones Internacionales.",
+      "tema": "impuestos",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (sujetos obligados, régimen de información financiera, retenciones/percepciones), pero no nombra su actividad: puede que no le aplique.",
+        "SYS le informa a ARCA los movimientos y saldos de sus clientes, y puede tener que retener o percibir impuestos. Un cambio puede tocar sistemas y fechas de presentación."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [
+        "…web institucional (https://www.arca.gob.ar) y será aplicable a los ejercicios fiscales que inicien a partir del 1° de enero del año siguiente a cada actualización.",
+        "…institucional (https://www.arca.gob.ar) y serán aplicables a los ejercicios fiscales que inicien a partir del 1° de enero del año siguiente a cada actualización.",
+        "Los importes actualizados se publicarán en el Micrositio “Operaciones Internacionales” disponible en el sitio web institucional y serán aplicables a los ejercicios fiscales que inicien a partir del 1° de enero del año siguiente a cada actualización."
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 5,
+        "motivos": [
+          "sujetos obligados",
+          "régimen de información financiera",
+          "retenciones/percepciones",
+          "emitida por ARCA"
+        ],
+        "temas": [
+          "impuestos",
+          "lavado"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma unifica y actualiza la normativa sobre precios de transferencia y operaciones internacionales, detallando las reglas para el análisis de comparabilidad, transacciones con sujetos vinculados y regímenes de información ante el organismo fiscal.",
+        "comoAfecta": "A SYS Global Pay no le resulta aplicable de forma directa, ya que su actividad como proveedor de servicios de pago para gastos corporativos locales no se vincula con operaciones internacionales, importaciones, exportaciones o precios de transferencia regulados por esta resolución.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Ministerio de Economía",
+      "titulo": "Resolución 1693/2026",
+      "asunto": "",
+      "fecha": "30/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348239/20260930",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Dase por designada transitoriamente, a partir del 8 de septiembre de 2025 y por el término de ciento ochenta (180) días hábiles, a la señora Adriana Mabel Leone (D.N.I. N° 18.313.653) en el cargo de Directora Nacional de Inspección de Navegación Aérea dependiente de la Administración Nacional de Aviación Civil (ANAC), organismo descentralizado actuante en el ámbito de la Secretaría de Transporte del Ministerio de Economía, con una remuneración equivalente al nivel A, grado 0, función ejecutiva nivel I del Sistema Nacional de Empleo Público (SINEP) aprobado por el Convenio Colectivo de Trabajo Sectorial homologado por el decreto 2098 del 3 de diciembre de 2008, sus modificatorios y…",
+      "paraQue": "En esta instancia, resulta necesario proceder a la cobertura transitoria del cargo vacante y financiado de Director Nacional de Inspección de Navegación Aérea dependiente de la ANAC.",
+      "tema": "general",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (Ley 25.326 (datos personales)), pero no nombra su actividad: puede que no le aplique.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [
+        "Dase por designada transitoriamente, a partir del 8 de septiembre de 2025 y por el término de ciento ochenta (180) días hábiles, a la señora Adriana Mabel Leone (D.N.I."
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "Ley 25.326 (datos personales)",
+          "emitida por Economía"
+        ],
+        "temas": [
+          "general",
+          "datos"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma dispone la designación transitoria de una funcionaria en un cargo directivo dentro de la Administración Nacional de Aviación Civil (ANAC).",
+        "comoAfecta": "No le aplica a SYS Global Pay, ya que se trata de una medida administrativa interna del sector público referida a personal estatal.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Ente Nacional Regulador del Gas y la Electricidad",
+      "titulo": "Resolución Sintetizada 669/2026",
+      "asunto": "",
+      "fecha": "30/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348250/20260930",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Resolución RESFC-2026-669-APN-DIRECTORIO#ENREGE Expediente EX-2025-137115529-APN-SD#ENRE Buenos Aires, 29 de SEPTIEMBRE de 2026 El Directorio del ENTE NACIONAL REGULADOR DEL GAS Y LA ELECTRICIDAD ha resuelto ha resuelto: 1.- Establecer que los Agentes Generadores, Transportistas y Distribuidores del Mercado Eléctrico Mayorista (MEM) obligados al pago de la Tasa de Fiscalización y Control para el año 2026 deberán cancelar el monto correspondiente a la cuarta cuota el día 21 de octubre de 2026.",
+      "paraQue": "",
+      "tema": "pagos",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (pagos con transferencia / QR), pero no nombra su actividad: puede que no le aplique.",
+        "Toca la operatoria diaria de SYS: cómo se envían, acreditan y rechazan los pagos con QR y transferencias. Puede pedir cambios en el producto o en la integración con el banco o la red."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "pagos con transferencia / QR"
+        ],
+        "temas": [
+          "pagos"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma fija la fecha de pago de la cuarta cuota de la Tasa de Fiscalización y Control de 2026 para los agentes del Mercado Eléctrico Mayorista y detalla que debe abonarse mediante el sistema e-Recauda con VEP o QR.",
+        "comoAfecta": "No le aplica a SYS Global Pay ya que está dirigida a los agentes del sector eléctrico y regula el pago de una tasa específica ante un ente regulador, sin establecer obligaciones para los proveedores de servicios de pago.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"B\" 13238/2026",
+      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
+      "fecha": "",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348270/20260930",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por el BCRA"
+        ],
+        "temas": [
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "El Banco Central comunica los nuevos valores de las tasas de referencia aplicables para la garantía de los depósitos.",
+        "comoAfecta": "La norma está dirigida exclusivamente a las entidades financieras. No le aplica directamente a SYS Global Pay.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-09-30: 68 avisos de la primera sección.",
+    "BCRA: 5 comunicaciones con fecha de ese día (C 102380, C 102379, C 102378, C 102377, C 102376).",
+    "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
+    "Resumen con IA: 4 de 4 normas."
+  ],
+  "errores": []
+}

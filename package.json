@@ -1,0 +1,22 @@
+{
+  "name": "sys-normativa",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monitor diario de normas que afectan a SYS Global Pay (Boletín Oficial + BCRA).",
+  "type": "module",
+  "scripts": {
+    "revisar": "tsx src/revisar.ts",
+    "pagina": "tsx src/pagina.ts",
+    "historial": "tsx src/historial.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "node --import tsx --test src/*.test.ts"
+  },
+  "dependencies": {
+    "unpdf": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

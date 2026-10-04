@@ -1,0 +1,50 @@
+// Aviso cuando aparece algo nuevo. En el servidor (GitHub Actions) el aviso se
+// publica como un "issue" del repositorio y GitHub lo manda por mail al dueño:
+// no hace falta guardar contraseñas de correo en ningún lado.
+//
+// Este módulo solo arma el texto y lo deja en el archivo que diga la variable
+// AVISO_ARCHIVO. El workflow lo publica. Sin esa variable (en la compu), no hace nada.
+
+import { writeFile } from 'node:fs/promises';
+import type { Hallazgo } from './explicar.js';
+import { fechaLarga } from './informe.js';
+
+// Se lo menciona en el aviso para que GitHub le mande el mail sí o sí.
+const DESTINATARIO = '@Guidoparisi91';
+
+export function armarAviso(fecha: string, nuevos: Hallazgo[], errores: string[], sitio: string): { titulo: string; cuerpo: string } | null {
+  if (!nuevos.length && !errores.length) return null;
+  const altas = nuevos.filter((h) => h.evaluacion.nivel === 'alta');
+  const rev = nuevos.filter((h) => h.evaluacion.nivel !== 'alta');
+
+  const partes: string[] = [];
+  if (altas.length) partes.push(`${altas.length} le ${altas.length === 1 ? 'afecta' : 'afectan'}`);
+  if (rev.length) partes.push(`${rev.length} para revisar`);
+  if (errores.length) partes.push(`⚠ ${errores.length} ${errores.length === 1 ? 'fuente falló' : 'fuentes fallaron'}`);
+  const [, m, d] = fecha.split('-');
+  const titulo = `Normativa SYS ${Number(d)}/${Number(m)}: ${partes.join(', ')}`;
+
+  const item = (h: Hallazgo) =>
+    [
+      `### ${h.titulo}${h.asunto ? ` — ${h.asunto}` : ''}`,
+      `${h.emisor} · ${h.fecha}`,
+      '',
+      h.resumenIa ? `${h.resumenIa.queCambia} ${h.resumenIa.comoAfecta}` : h.comoAfecta.join(' '),
+      '',
+      `[Ver la norma](${h.url})`,
+    ].join('\n');
+
+  const c = [`Novedades del ${fechaLarga(fecha)}. ${DESTINATARIO}`, '', `**[Abrir el monitor](${sitio})**`, ''];
+  if (errores.length) c.push('## ⚠ Fuentes que fallaron', 'Lo que no se pudo revisar puede tener novedades: hay que mirarlo a mano.', '', ...errores.map((e) => `- ${e}`), '');
+  if (altas.length) c.push('## Le afecta a SYS', '', altas.map(item).join('\n\n'), '');
+  if (rev.length) c.push('## Para revisar', 'Tocan temas de SYS, pero puede que no le apliquen.', '', rev.map(item).join('\n\n'), '');
+  if (nuevos.some((h) => h.resumenIa)) c.push('<sub>Los resúmenes están hechos con IA y pueden equivocarse: verificar con la norma.</sub>');
+  return { titulo, cuerpo: c.join('\n') };
+}
+
+export async function dejarAviso(fecha: string, nuevos: Hallazgo[], errores: string[]): Promise<void> {
+  const archivo = process.env.AVISO_ARCHIVO;
+  if (!archivo) return;
+  const aviso = armarAviso(fecha, nuevos, errores, process.env.SITIO_URL ?? '');
+  if (aviso) await writeFile(archivo, JSON.stringify(aviso), 'utf8');
+}
