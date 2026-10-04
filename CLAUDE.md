@@ -43,7 +43,7 @@ npm run typecheck
 - `src/temas.ts`: los frentes de SYS y el texto de "cómo le afecta" de cada uno. Sale de `docs/analisis-regulatorio.md`.
 - `src/ia.ts`: resumen opcional con Gemini (nivel gratuito). Solo resume lo que ya pasó el filtro; si falla, el informe sale igual. Clave en `.env` (`GEMINI_API_KEY`), nunca en el código.
 - `src/informe.ts`: el informe del día como datos (`datos/informes/AAAA-MM-DD.json`) y en Markdown para la consola.
-- `src/sitio.ts` + `src/sitio/`: la página única `salida/index.html` (pestañas: último informe, todas las normas, por día, cómo funciona), con todos los informes embebidos. Abre con doble clic y se publica tal cual.
+- `src/sitio.ts` + `src/sitio/`: la página única `salida/index.html` (pestañas: último informe, por día, cómo funciona), con todos los informes embebidos. Abre con doble clic y se publica tal cual.
 
 **Todo lo que ve el usuario tiene que ser clarísimo**: una sola página, lenguaje simple, sin jerga.
 

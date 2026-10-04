@@ -8,7 +8,7 @@ Lee todos los días:
 - las **comunicaciones "A", "B" y "C" del BCRA** (la mayoría no sale en el Boletín),
 - la carátula de los **textos ordenados del BCRA** que regulan a los PSP (si cambian, avisa).
 
-Y arma **una sola página**, `salida/index.html`, con pestañas: último informe, todas las normas (con filtros y buscador), historial por día y cómo funciona. Cada norma viene explicada (qué cambia, cómo le afecta a SYS, fechas, normas relacionadas y link) y, si hay clave de Gemini, con un resumen de dos líneas hecho con IA.
+Y arma **una sola página**, `salida/index.html`, con pestañas: último informe, historial por día y cómo funciona. Cada norma viene explicada (qué cambia, cómo le afecta a SYS, fechas, normas relacionadas y link) y, si hay clave de Gemini, con un resumen de dos líneas hecho con IA.
 
 ## Uso
 

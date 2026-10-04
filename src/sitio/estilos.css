@@ -160,32 +160,6 @@ details > summary::before { content: "›"; display: inline-block; transition: t
 details[open] > summary::before { transform: rotate(90deg); }
 .resumen-corto { margin: 12px 0 0; color: var(--suave); }
 
-/* Lista compacta (todas las normas) */
-.fila { position: relative; background: var(--papel); border: 1px solid var(--linea); border-radius: 14px; margin: 0 0 10px; overflow: hidden; overflow-wrap: anywhere; box-shadow: var(--sombra); }
-.fila::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 4px; border-radius: 0 4px 4px 0; background: var(--borde); }
-.fila > summary { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; color: var(--texto); font-weight: 400; font-size: 16px; width: 100%; }
-.fila > summary::before { content: none; }
-.fila > summary:hover { background: var(--papel-2); }
-.fila .t { display: block; font: 700 16px/1.35 var(--titulos); }
-.fila .s { display: block; color: var(--suave); font-size: 14px; }
-.fila .flecha { margin-left: auto; color: var(--tenue); transition: transform .2s; font-size: 20px; line-height: 1; }
-.fila[open] .flecha { transform: rotate(90deg); }
-.fila[open] > summary { border-bottom: 1px solid var(--linea); }
-.fila .cuerpo { padding: 4px 18px 16px 76px; }
-.fila .cuerpo .tarjeta { border: 0; padding: 0; margin: 0; box-shadow: none; }
-.fila .cuerpo .tarjeta::before { content: none; }
-
-/* Filtros */
-.filtros { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 18px 0 10px; }
-.segmentos { display: inline-flex; background: var(--papel); border: 1px solid var(--linea); border-radius: 999px; padding: 4px; box-shadow: var(--sombra); }
-.segmentos button { font: 600 14px var(--cuerpo); border: 0; background: transparent; color: var(--suave); border-radius: 999px; padding: 6px 14px; cursor: pointer; }
-.segmentos button[aria-pressed="true"] { background: var(--texto); color: var(--papel); }
-.filtros select { font: 500 14px var(--cuerpo); border: 1px solid var(--linea); background: var(--papel); color: var(--texto); border-radius: 999px; padding: 8px 14px; box-shadow: var(--sombra); }
-.buscador { flex: 1 1 220px; position: relative; }
-.buscador svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--tenue); }
-.buscador input { width: 100%; font: 15px var(--cuerpo); border: 1px solid var(--linea); background: var(--papel); color: var(--texto); border-radius: 999px; padding: 9px 14px 9px 38px; box-shadow: var(--sombra); }
-.buscador input:focus, .filtros select:focus { outline: 2px solid var(--marca); outline-offset: 1px; }
-
 /* Línea de tiempo (por día) */
 .linea-tiempo { position: relative; margin: 18px 0 0; padding-left: 28px; }
 .linea-tiempo::before { content: ""; position: absolute; left: 9px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--marca), var(--marca-2)); opacity: .35; border-radius: 2px; }
@@ -236,8 +210,7 @@ footer .linea { border-top: 1px solid var(--linea); padding-top: 18px; display: 
   .tablero .cifra:last-child { grid-column: 1 / -1; }
   .cifra .n { font-size: 32px; }
   .tarjeta { padding: 16px; }
-  .tarjeta .cabeza > .icono-tema, .fila summary > .icono-tema { display: none; }
-  .fila .cuerpo { padding: 4px 16px 16px; }
+  .tarjeta .cabeza > .icono-tema { display: none; }
   .actualizado { display: none; }
   .actualizado-movil { display: block; }
 }

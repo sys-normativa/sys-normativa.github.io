@@ -1,5 +1,5 @@
-// Página única del monitor: pestañas "Último informe", "Todas las normas",
-// "Por día" y "Cómo funciona". Los datos vienen embebidos en la página
+// Página única del monitor: pestañas "Último informe", "Por día" y
+// "Cómo funciona". Los datos vienen embebidos en la página
 // (<script id="datos">), así anda igual abierta desde la compu o publicada.
 
 const DATOS = JSON.parse(document.getElementById('datos').textContent);
@@ -44,7 +44,6 @@ const TRAZOS = {
   lupa: '<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
   flecha: '<path d="M5 12h14M13 6l6 6-6 6"/>',
   inicio: '<path d="M4 11l8-7 8 7v8a1 1 0 01-1 1h-5v-6h-4v6H5a1 1 0 01-1-1v-8z"/>',
-  lista: '<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
   ayuda: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 114 2c-.9.6-1.5 1.1-1.5 2.5M12 17v.01"/>',
   documento: '<path d="M7 3h7l5 5v12a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
   banco: '<path d="M3 10l9-6 9 6M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/>',
@@ -136,12 +135,6 @@ function tarjeta(h) {
   return `<article class="tarjeta ${esAlta(h) ? 'alta' : 'revisar'}">${cabeza}${cuerpo}</article>`;
 }
 
-/** Renglón plegable para la lista larga. */
-function fila(h) {
-  const linea = h.resumenIa ? h.resumenIa.queCambia : h.asunto || h.emisor;
-  return `<details class="fila ${esAlta(h) ? 'alta' : 'revisar'}"><summary>${iconoTema(h)}<div>${etiquetas(h)}<span class="t">${esc(h.titulo)}</span><span class="s">${esc(linea)}</span><span class="s">${esc(h.emisor)} · informe del ${esc(fechaLarga(h.dia))}</span></div><span class="flecha">›</span></summary><div class="cuerpo"><div class="tarjeta">${enPocasPalabras(h)}${explicacion(h)}</div></div></details>`;
-}
-
 // ---------------------------------------------------------------------------
 // Un informe (último o de un día elegido)
 
@@ -200,65 +193,6 @@ function vistaUltimo() {
   return informe(DIAS[0], 'Último informe');
 }
 
-const TODAS = DIAS.flatMap((d) => d.hallazgos.map((h) => ({ ...h, dia: d.fecha })));
-const filtro = { nivel: 'todas', tema: '', texto: '' };
-
-function sinTildes(s) {
-  return s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
-}
-
-function listaFiltrada() {
-  const q = sinTildes(filtro.texto.trim());
-  return TODAS.filter(
-    (h) =>
-      (filtro.nivel === 'todas' || h.evaluacion.nivel === filtro.nivel) &&
-      (!filtro.tema || h.tema === filtro.tema) &&
-      (!q || sinTildes([h.titulo, h.asunto, h.emisor, h.queCambia, h.comoAfecta.join(' '), h.resumenIa?.queCambia ?? ''].join(' ')).includes(q)),
-  );
-}
-
-function pintarLista() {
-  const l = listaFiltrada();
-  document.getElementById('cuenta').textContent = `Mostrando ${plural(l.length, 'norma', 'normas')}`;
-  document.getElementById('lista').innerHTML = l.length ? l.map(fila).join('') : '<p class="vacio">No hay normas con estos filtros.</p>';
-}
-
-function vistaTodas() {
-  const temasUsados = [...new Set(TODAS.map((h) => h.tema))].sort((a, b) => TEMAS[a].localeCompare(TEMAS[b]));
-  const boton = (valor, texto) => `<button type="button" data-nivel="${valor}" aria-pressed="${filtro.nivel === valor}">${texto}</button>`;
-  return [
-    '<div class="sobre-titulo">Archivo</div>',
-    '<h1>Todas las normas</h1>',
-    '<p class="bajada">Todo lo que encontró el monitor, de lo más nuevo a lo más viejo. Tocá una norma para ver la explicación.</p>',
-    '<div class="filtros">',
-    `<div class="segmentos" role="group" aria-label="Nivel">${boton('todas', 'Todas')}${boton('alta', 'Le afecta')}${boton('revisar', 'Para revisar')}</div>`,
-    `<select id="tema" aria-label="Tema"><option value="">Todos los temas</option>${temasUsados.map((t) => `<option value="${t}"${filtro.tema === t ? ' selected' : ''}>${esc(TEMAS[t])}</option>`).join('')}</select>`,
-    `<label class="buscador">${icono('lupa')}<input id="buscar" type="search" placeholder="Buscar: UIF, 8488, QR…" value="${esc(filtro.texto)}" aria-label="Buscar"></label>`,
-    '</div>',
-    '<p class="chico" id="cuenta"></p>',
-    '<div id="lista"></div>',
-  ].join('');
-}
-
-function prepararTodas() {
-  vista.querySelectorAll('[data-nivel]').forEach((b) =>
-    b.addEventListener('click', () => {
-      filtro.nivel = b.dataset.nivel;
-      vista.querySelectorAll('[data-nivel]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-      pintarLista();
-    }),
-  );
-  document.getElementById('tema').addEventListener('change', (e) => {
-    filtro.tema = e.target.value;
-    pintarLista();
-  });
-  document.getElementById('buscar').addEventListener('input', (e) => {
-    filtro.texto = e.target.value;
-    pintarLista();
-  });
-  pintarLista();
-}
-
 function vistaDias() {
   if (!DIAS.length) return '<p class="vacio">Todavía no hay informes.</p>';
   const items = DIAS.map((r) => {
@@ -294,16 +228,15 @@ function mostrar() {
   const hash = location.hash.slice(1) || 'ultimo';
   const [ruta, arg] = hash.split('/');
   // Los saltos dentro de un informe (#bloque-alta, #fallaron) no cambian de pestaña.
-  if (document.getElementById(ruta) && !['ultimo', 'normas', 'dias', 'ayuda', 'dia'].includes(ruta)) return;
+  if (document.getElementById(ruta) && !['ultimo', 'dias', 'ayuda', 'dia'].includes(ruta)) return;
   const pestana = ruta === 'dia' ? 'dias' : ruta;
-  const vistas = { ultimo: vistaUltimo, normas: vistaTodas, dias: vistaDias, ayuda: vistaAyuda };
+  const vistas = { ultimo: vistaUltimo, dias: vistaDias, ayuda: vistaAyuda };
   vista.innerHTML = ruta === 'dia' ? vistaDia(arg) : (vistas[pestana] ?? vistaUltimo)();
   // Reinicia la animación de entrada en cada cambio de pestaña.
   vista.style.animation = 'none';
   void vista.offsetWidth;
   vista.style.animation = '';
   ponerIconos(vista);
-  if (pestana === 'normas') prepararTodas();
   document.querySelectorAll('.pestanas a').forEach((a) => a.setAttribute('aria-selected', String(a.getAttribute('href') === `#${vistas[pestana] ? pestana : 'ultimo'}`)));
   window.scrollTo(0, 0);
 }
