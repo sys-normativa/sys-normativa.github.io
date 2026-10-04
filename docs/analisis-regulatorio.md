@@ -78,10 +78,11 @@ La columna "Monitor" dice si hoy se detecta automáticamente.
 - **Dónde sale:** Boletín Oficial (decretos).
 - **Monitor:** ✅
 
-### 10. Ingresos Brutos provincial sobre billeteras *(no cubierto todavía)*
+### 10. Ingresos Brutos provincial sobre billeteras *(Córdoba cubierta desde el 4/10/2026; el resto, no)*
 - **Qué regula:** **SIRCUPA** (Comisión Arbitral, RG 9/2022) retiene Ingresos Brutos sobre lo que entra a cuentas de pago, y cada provincia adhiere y fija alícuotas por su cuenta. Por ejemplo, ARBA tiene un régimen propio para billeteras (RN 25/2025).
-- **Dónde sale:** la Comisión Arbitral en el Boletín Oficial nacional (✅ cubierto); las provincias en **su propio boletín** (❌ no cubierto).
-- **Para cubrirlo:** hay que saber **en qué provincias tiene clientes SYS** y sumar esos boletines. Cada uno tiene un formato distinto.
+- **Dónde sale:** la Comisión Arbitral en el Boletín Oficial nacional (✅ cubierto); las provincias en **su propio boletín**.
+- **Córdoba (base de SYS): ✅ cubierta.** Se lee la 1ª Sección del Boletín Oficial de Córdoba todos los días y se separa norma por norma con el sumario del PDF. Las normas de **Rentas Córdoba** (Dirección General de Rentas, Secretaría de Ingresos Públicos) suman como organismo de Ingresos Brutos. Caso real: la **RG 2229/2026 de Rentas** (padrones de retención de IIBB, SIRCUPA, 30/9/2026) sale como "Le afecta".
+- **Resto de las provincias: ❌ no cubierto.** Hay que saber **en qué otras provincias tiene clientes SYS** (Guido lo va a preguntar) y sumar esos boletines. Cada uno tiene un formato distinto.
 
 ### 11. CNV *(depende de lo que haga SYS)*
 - **Importa si** SYS remunera saldos con un fondo común de inversión o toca activos virtuales (PSAV).
@@ -104,8 +105,9 @@ La columna "Monitor" dice si hoy se detecta automáticamente.
 - **Fuente:** HCDN y Senado tienen buscadores públicos.
 - **Estado:** queda para la segunda etapa.
 
-### 15. BCRA: borradores y comunicados de prensa *(no cubierto)*
-- A veces el BCRA anuncia medidas por prensa antes de la comunicación formal. Queda para la segunda etapa.
+### 15. BCRA: comunicados de prensa *(cubierto desde el 4/10/2026)*
+- A veces el BCRA anuncia medidas por prensa antes de la comunicación formal (ejemplo: 3/9/2026, el perfil de riesgo de fraude para los PSPCP).
+- **Monitor:** ✅ Lee las noticias de bcra.gob.ar/noticias. No son normas: llegan como mucho a "Para revisar". El sitio muestra las 10 más nuevas sin paginar por dirección; si las 10 resultaran nuevas, se avisa para mirar a mano.
 
 ---
 

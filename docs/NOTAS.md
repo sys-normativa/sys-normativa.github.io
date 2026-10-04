@@ -40,6 +40,12 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Una comunicación del BCRA que ya salió un día no se repite cuando después aparece en el Boletín Oficial.
 - Días sin Boletín (fines de semana, feriados) y sin novedades no generan informe vacío.
 
+## Fuentes sumadas el 4/10/2026
+- **Boletín Oficial de Córdoba** (base de SYS): 1ª Sección, norma por norma. Rentas Córdoba cuenta como organismo de Ingresos Brutos. Probado con los 9 días del historial: todos se leen; la RG 2229 de Rentas (30/9) sale como "Le afecta".
+- **Prensa del BCRA:** noticias de bcra.gob.ar, como "Para revisar" a lo sumo.
+- El historial (22/9 al 2/10) se completó con estas dos fuentes.
+- Punto de partida: `cordobaHasta` = 2/10 y `prensaVistas` = las 10 noticias hasta el 2/10.
+
 ## Datos y límites
 - No hay base de datos: cada día es un JSON en `datos/informes/` (~7 KB). Un año ≈ 2 MB. La página embebe todo: al año pesa ~2 MB, carga bien. Si en unos años pesa demasiado, mostrar solo los últimos meses en la página.
 - Límites de GitHub (repo público, gratis): Actions sin límite de minutos; Pages hasta 1 GB por sitio; repo recomendado < 1 GB. Sobra.
@@ -53,6 +59,6 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
    - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Le llegó (confirmado el 4/10).
    - Historial: Guido no quiere ir más de un mes atrás; se sumaron 5 días (22 al 28/9) y alcanza. Los mails de aviso le llegan (confirmado el 4/10).
 2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar). **Guido le va a preguntar a SYS en qué provincias trabaja** (dicho el 4/10); con eso se suman los boletines provinciales de Ingresos Brutos.
-3. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
+3. Otras provincias (Ingresos Brutos) según lo que diga SYS; después, proyectos de ley del Congreso.
 4. Si los mails diarios resultan muchos: avisar solo cuando hay algo que "Le afecta".
 5. Afinar "Para revisar".
