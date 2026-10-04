@@ -48,7 +48,10 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - `ubuntu-latest` pasa a Ubuntu 26 desde el 19/10/2026; no debería afectar.
 
 ## Próximos pasos
-1. **Darle más personalidad al diseño** de la página (pedido de Guido, después del link).
+1. **Link más lindo:** Guido va a crear la organización gratuita `sys-normativa` en GitHub (no es otra cuenta, se maneja desde la suya). Después: transferir el repo a la organización, renombrarlo a `sys-normativa.github.io` y actualizar los links (`SITIO_URL` y aviso de prueba en el workflow, `src/aviso.ts`, docs). Link final: https://sys-normativa.github.io
+   - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
+   - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Falta que Guido confirme que le llegó.
+   - Historial: recomendado extenderlo al 1/9 para incluir A 8472 y A 8482 (dirigidas a PSP); pendiente de su OK.
 2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar).
 3. Regenerar la clave de Gemini (se pegó en el chat): actualizar `.env` y el secreto del repo.
 4. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
