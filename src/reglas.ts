@@ -17,6 +17,8 @@ export interface Evaluacion {
   motivos: string[];
   /** Temas de SYS que toca, del que más pesa al que menos. */
   temas: Tema[];
+  /** Nombra algo propio de la actividad de SYS (PSP, cuentas de pago, billeteras, SIRCUPA…). */
+  fuerte?: boolean;
 }
 
 interface Regla {
@@ -33,7 +35,8 @@ const TERMINOS: Regla[] = [
   { motivo: 'proveedores de servicios de pago', tema: 'psp', patron: /proveedor(es)? de servicios de pago/, peso: 5 },
   { motivo: 'cuentas de pago', tema: 'psp', patron: /cuentas? de pago\b/, peso: 5 },
   { motivo: 'billeteras virtuales/digitales', tema: 'psp', patron: /billeteras? (virtual|digital|electronica)/, peso: 5 },
-  { motivo: 'PSP/PSPCP', tema: 'psp', patron: /\bpspcp\b|\bpsp\b/, peso: 4 },
+  // "PSP" también es "prestadores de servicios postales" (PSP/courier) en las normas de Aduana.
+  { motivo: 'PSP/PSPCP', tema: 'psp', patron: /\bpspcp\b|(?<!postales )\bpsp\b(?!\s*\/\s*courier)/, peso: 4 },
   { motivo: 'CVU', tema: 'psp', patron: /\bcvu\b|clave virtual uniforme/, peso: 4 },
   { motivo: 'SIRCUPA (IIBB sobre cuentas de pago)', tema: 'iibb', patron: /sircupa/, peso: 5 },
   { motivo: 'SIRTAC / regímenes de recaudación de IIBB', tema: 'iibb', patron: /sirtac|agentes? de recaudacion/, peso: 2 },
@@ -41,7 +44,10 @@ const TERMINOS: Regla[] = [
   // Medios de pago que SYS usa (QR, transferencias) y su infraestructura.
   // "QR" suelto no: aparece en cualquier norma que diga "se paga con VEP o QR".
   { motivo: 'pagos con transferencia / QR', tema: 'pagos', patron: /pagos? con transferencia|qr interoperable|pagos? (con|mediante) (codigo )?qr|aceptadores de pago/, peso: 3 },
-  { motivo: 'transferencias inmediatas', tema: 'pagos', patron: /transferencias? (inmediata|electronica)s? de fondos/, peso: 3 },
+  { motivo: 'transferencias inmediatas', tema: 'pagos', patron: /transferencias? inmediatas?/, peso: 3 },
+  // ARCA y otros la nombran como forma de pagarles ("cancelar mediante transferencia
+  // electrónica de fondos"): sola no dice nada de SYS.
+  { motivo: 'transferencia electrónica de fondos', tema: 'pagos', patron: /transferencias? electronicas? de fondos/, peso: 1 },
   { motivo: 'sistema nacional de pagos', tema: 'pagos', patron: /sistema nacional de pagos/, peso: 3 },
   { motivo: 'DEBIN / débito inmediato', tema: 'pagos', patron: /\bdebin\b|debito inmediato/, peso: 3 },
   { motivo: 'agregadores / adquirentes', tema: 'pagos', patron: /agregador(es)? de (instrumentos de )?pago|adquirente/, peso: 2 },
@@ -52,13 +58,16 @@ const TERMINOS: Regla[] = [
   { motivo: 'feriado bancario', tema: 'operativo', patron: /feriado bancario|asueto bancario/, peso: 2 },
 
   // Prevención de lavado: SYS es sujeto obligado ante la UIF desde la Ley 27.739.
-  { motivo: 'Ley 27.739 (PSP sujetos obligados)', tema: 'lavado', patron: /27\.?739/, peso: 4 },
-  { motivo: 'Ley 25.246 (lavado de activos)', tema: 'lavado', patron: /25\.?246/, peso: 2 },
+  // Los números de ley cuentan solo cerca de "ley" (un DNI terminado en "327.739"
+  // no es la Ley 27.739). La 27.739 se cita en los considerandos de muchas normas
+  // ajenas: peso medio; lo de la UIF ya entra por el organismo.
+  { motivo: 'Ley 27.739 (PSP sujetos obligados)', tema: 'lavado', patron: /\bley(es)?\b[^.\n]{0,40}27\.?739/, peso: 2 },
+  { motivo: 'Ley 25.246 (lavado de activos)', tema: 'lavado', patron: /\bley(es)?\b[^.\n]{0,40}25\.?246/, peso: 2 },
   { motivo: 'sujetos obligados', tema: 'lavado', patron: /sujetos? obligados?/, peso: 1 },
   { motivo: 'emisores/operadores de pago (UIF)', tema: 'lavado', patron: /emisores,? operadores y proveedores de servicios de cobros? y\/?o pagos?|servicios de cobros? y\/?o pagos?/, peso: 5 },
 
   // Impuestos que pasan por la billetera.
-  { motivo: 'impuesto a los débitos y créditos (Ley 25.413)', tema: 'cheque', patron: /25\.?413|creditos y debitos en cuentas/, peso: 3 },
+  { motivo: 'impuesto a los débitos y créditos (Ley 25.413)', tema: 'cheque', patron: /\bley(es)?\b[^.\n]{0,40}25\.?413|creditos y debitos en cuentas/, peso: 3 },
   { motivo: 'régimen de información financiera', tema: 'impuestos', patron: /regimen de informacion/, peso: 1 },
   { motivo: 'Convenio Multilateral / IIBB', tema: 'iibb', patron: /convenio multilateral|ingresos brutos/, peso: 1 },
   { motivo: 'retenciones/percepciones', tema: 'impuestos', patron: /retencion(es)?|percepcion(es)?/, peso: 1 },
@@ -68,7 +77,7 @@ const TERMINOS: Regla[] = [
   { motivo: 'protección de usuarios de servicios financieros', tema: 'usuarios', patron: /proteccion de (los )?usuarios de servicios financieros/, peso: 3 },
   { motivo: 'fraude / seguridad en pagos', tema: 'tecnologia', patron: /prevencion del fraude|fraudes? (en|con) (pagos|transferencias|cuentas)/, peso: 2 },
   { motivo: 'riesgos de tecnología y seguridad de la información', tema: 'tecnologia', patron: /riesgos? de tecnologia y seguridad de la informacion/, peso: 2 },
-  { motivo: 'Ley 25.326 (datos personales)', tema: 'datos', patron: /25\.?326/, peso: 1 },
+  { motivo: 'Ley 25.326 (datos personales)', tema: 'datos', patron: /\bley(es)?\b[^.\n]{0,40}25\.?326/, peso: 1 },
   { motivo: 'entidades financieras', tema: 'general', patron: /entidades financieras/, peso: 1 },
 ];
 
@@ -149,7 +158,9 @@ export function evaluar(organismo: string, texto: string): Evaluacion {
       : puntaje >= UMBRAL_REVISAR && (hayTerminoMedio || deOrganismo?.basta)
         ? 'revisar'
         : 'descartada';
-  return { nivel, puntaje, motivos, temas };
+  // "fuerte": la IA no puede esconderla. Vale para lo que nombra la actividad
+  // de SYS y para lo que emite la UIF (regula a todos los sujetos obligados).
+  return { nivel, puntaje, motivos, temas, fuerte: hayTerminoFuerte || !!deOrganismo?.basta };
 }
 
 /**

@@ -23,7 +23,7 @@ const AYUDA = `
 <h2>Qué significa cada color</h2>
 <div class="caja leyenda">
 <div><span class="pill alta">Le afecta</span><span>Le cambia algo a SYS como billetera, o el BCRA la dirige a los PSP. Trae qué hacer. <strong>La tiene que ver compliance.</strong></span></div>
-<div><span class="pill rev">Para revisar</span><span>Puede aplicar según cómo opere SYS (por ejemplo, si opera con el exterior). Alcanza con una mirada rápida.</span></div>
+<div><span class="pill rev">Para revisar</span><span>Nombra temas de SYS, pero no está claro que le cambie algo: depende de cómo opere SYS (por ejemplo, si opera con el exterior) o la IA no ve impacto. Alcanza con una mirada rápida. La IA nunca puede esconder una norma que nombra la actividad de SYS.</span></div>
 <div><span class="pill nada">No aplica</span><span>Pasó el primer filtro, pero no le cambia nada a SYS. Queda plegada al final de cada día, con el motivo, y no genera mail.</span></div>
 <div><span class="pill alta">⚠ Fuente falló</span><span>No se pudo leer alguna fuente (por ejemplo, la web del BCRA estaba caída). Lo que no se leyó puede tener novedades: hay que mirarlo a mano. El monitor <strong>nunca</strong> dice "no hubo nada" si no pudo revisar.</span></div>
 </div>

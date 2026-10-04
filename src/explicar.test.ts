@@ -14,6 +14,7 @@ import {
   temaDeComunicacion,
   tipoComunicacion,
 } from './explicar.js';
+import { parsearEncabezado } from './fuentes/bcraComunicaciones.js';
 
 const A8488 =
   'COMUNICACIÓN “A” 8488 02/10/2026 A LAS ENTIDADES FINANCIERAS, A LOS PROVEEDORES DE SERVICIOS DE PAGO QUE OFRECEN CUENTAS DE PAGO: Ref.: Circular SINAP 1-256: Proveedores de Servicios de Pago. Actualización. ____ ' +
@@ -88,4 +89,18 @@ test('Com. A 8398 (BO 9/2/2026): la fecha clave muestra el plazo de 180 días', 
 test('carta del BCRA: no se corta cuando nombra al banco en el medio', () => {
   const carta = cartaBcra('Nos dirigimos a Uds. para comunicarles que se incluye a los PSP del Registro de PSP del BANCO CENTRAL DE LA REPÚBLICA ARGENTINA con un plazo. Saludamos a Uds. atentamente.');
   assert.match(carta, /con un plazo\.$/);
+});
+
+test('Com. A 8310: destinatarios sin "A LOS" al principio', () => {
+  const enc = parsearEncabezado(
+    '“Año de la Reconstrucción de la Nación Argentina” COMUNICACIÓN “A” 8310 28/08/2025 ADQUIRENTES DE PAGOS CON TARJETA: Ref.: Circular CONAU 1-1692: R.I. Adquirentes de pagos con tarjeta ____ Nos dirigimos a Uds.',
+  );
+  assert.equal(enc.fecha, '28/08/2025');
+  assert.equal(enc.destinatarios, 'ADQUIRENTES DE PAGOS CON TARJETA');
+  assert.match(enc.referencia, /Adquirentes de pagos con tarjeta/);
+});
+
+test('Com. A 8488: destinatarios de siempre', () => {
+  const enc = parsearEncabezado(A8488);
+  assert.match(enc.destinatarios, /^A LAS ENTIDADES FINANCIERAS, A LOS PROVEEDORES DE SERVICIOS DE PAGO/);
 });

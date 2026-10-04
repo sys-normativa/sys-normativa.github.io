@@ -34,13 +34,12 @@ test('días entre dos fechas, cruzando de mes', () => {
 });
 
 test('nivel final: reglas + veredicto de la IA', () => {
-  const con = (nivel: 'alta' | 'revisar', motivos: string[] = []) => ({ evaluacion: { nivel, puntaje: 5, motivos, temas: [] } });
-  assert.equal(nivelFinal(con('alta', ['dirigida a los proveedores de servicios de pago']), 'no_aplica'), 'alta');
-  assert.equal(nivelFinal(con('alta'), 'no_aplica'), 'descartada');
-  assert.equal(nivelFinal(con('alta'), 'dudoso'), 'revisar');
+  const con = (nivel: 'alta' | 'revisar', motivos: string[] = [], fuerte = false) => ({ evaluacion: { nivel, puntaje: 5, motivos, temas: [], fuerte } });
+  assert.equal(nivelFinal(con('alta', ['dirigida a los proveedores de servicios de pago'], true), 'no_aplica'), 'alta');
+  assert.equal(nivelFinal(con('alta', [], true), 'no_aplica'), 'revisar', 'nombra a SYS: la IA no la puede esconder');
+  assert.equal(nivelFinal(con('revisar', [], false), 'no_aplica'), 'descartada');
+  assert.equal(nivelFinal(con('alta', [], true), 'dudoso'), 'revisar');
   assert.equal(nivelFinal(con('revisar'), 'aplica'), 'alta');
-  assert.equal(nivelFinal(con('revisar'), 'dudoso'), 'revisar');
-  assert.equal(nivelFinal(con('revisar'), 'no_aplica'), 'descartada');
   assert.equal(nivelFinal(con('revisar')), 'revisar', 'sin IA mandan las reglas');
 });
 

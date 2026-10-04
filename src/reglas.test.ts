@@ -84,3 +84,35 @@ test('CNV con solo "entidades financieras" -> descartada', () => {
 test('UIF con términos débiles -> para revisar (sus normas valen para todos los sujetos obligados)', () => {
   assert.equal(evaluar('UNIDAD DE INFORMACIÓN FINANCIERA', 'Los sujetos obligados deberán ... entidades financieras').nivel, 'revisar');
 });
+
+test('UIF: la IA no puede esconder sus normas (cuentan como "nombra a SYS")', () => {
+  assert.equal(evaluar('UNIDAD DE INFORMACIÓN FINANCIERA', 'Los sujetos obligados ... entidades financieras').fuerte, true);
+  assert.equal(evaluar('COMISIÓN NACIONAL DE VALORES', 'sujetos obligados ... activos virtuales ... entidades financieras').fuerte, false);
+});
+
+// Huecos encontrados por `npm run estudio` (Boletín de julio a septiembre de 2026).
+
+test('"PSP/courier" (prestadores de servicios postales, RG ARCA 5884/2026) no es un proveedor de pagos', () => {
+  const ev = evaluar('AGENCIA DE RECAUDACIÓN Y CONTROL ADUANERO', 'Régimen de importación por Prestadores de Servicios Postales PSP/Courier, con el objeto de simplificar el proceso');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('"cancelar mediante transferencia electrónica de fondos" (RG ARCA 5896/2026) no es tema de SYS', () => {
+  const ev = evaluar('AGENCIA DE RECAUDACIÓN Y CONTROL ADUANERO', 'las cuotas deberán cancelarse mediante transferencia electrónica de fondos ... planes de facilidades de pago ... retenciones');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('un DNI terminado en 327.739 no es la Ley 27.739 (aviso de la Aduana de Posadas)', () => {
+  const ev = evaluar('AGENCIA DE RECAUDACIÓN Y CONTROL ADUANERO - ADUANA POSADAS', 'RAMIREZ JAVIER JOSUE DNI 35.327.739 ... sujetos obligados');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('la Ley 27.739 citada en los considerandos ya no alcanza para "Le afecta"', () => {
+  const ev = evaluar('MINISTERIO DE JUSTICIA', 'Que mediante la Ley N° 27.739 se incorporó a la Ley N° 25.246 la definición de activos virtuales');
+  assert.notEqual(ev.nivel, 'alta');
+  assert.equal(ev.fuerte, false);
+});
+
+test('las transferencias inmediatas siguen siendo tema de SYS', () => {
+  assert.equal(evaluar('', 'transferencias inmediatas ... proveedores de servicios de pago').fuerte, true);
+});

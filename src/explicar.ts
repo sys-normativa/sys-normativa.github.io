@@ -102,7 +102,7 @@ export function fechasClave(texto: string, max = 3): string[] {
 // busca la actividad en sí; los números de ley, solo si no aparece.
 const NOMBRA_A_SYS = [
   /proveedor(?:es)? de servicios de pago|cuentas? de pago|billeteras? (?:virtual|digital|electr[oó]nica)s?|\bPSPCP\b|\bPSP\b|servicios de cobros? y\/?o pagos?|SIRCUPA|clave virtual uniforme|\bCVU\b/i,
-  /25\.?413|27\.?739|activos virtuales/i,
+  /\bley(es)?\b[^.\n]{0,40}(25\.?413|27\.?739)|activos virtuales/i,
 ];
 
 // Tablas y planes de cuentas de los anexos: más números que palabras.

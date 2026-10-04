@@ -37,7 +37,9 @@ async function bajarPdf(tipo: TipoCom, n: number): Promise<Uint8Array | null> {
 export function parsearEncabezado(texto: string): Pick<ComunicacionBCRA, 'fecha' | 'destinatarios' | 'referencia'> {
   const plano = texto.replace(/\s+/g, ' ');
   const fecha = /COMUNICACI[OÓ]N\s*["“]?[ABC]["”]?\s*\d+\s*(\d{2}\/\d{2}\/\d{4})/i.exec(plano)?.[1] ?? '';
-  const destinatarios = /\d{2}\/\d{2}\/\d{4}\s*(A L[AO]S? [\s\S]*?):?\s*Ref\.?:/i.exec(plano)?.[1]?.trim() ?? '';
+  // Entre la fecha y "Ref.:" van los destinatarios. Casi siempre empiezan con
+  // "A LAS…/A LOS…", pero no siempre ("ADQUIRENTES DE PAGOS CON TARJETA:").
+  const destinatarios = (/COMUNICACI[OÓ]N[\s\S]{0,40}?\d{2}\/\d{2}\/\d{4}\s*([\s\S]*?):?\s*Ref\.?:/i.exec(plano)?.[1] ?? '').trim();
   const referencia = (/Ref\.?:\s*([\s\S]*?)(_{3,}|Nos dirigimos|Les comunicamos)/i.exec(plano)?.[1] ?? '')
     // Palabras cortadas al final de renglón en el PDF: "Pa- go" -> "Pago".
     .replace(/(\p{Ll})- (\p{Ll})/gu, '$1$2')

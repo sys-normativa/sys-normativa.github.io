@@ -92,7 +92,7 @@ const estiloTema = (t) => ESTILO_TEMA[t] ?? ['documento', 225];
 const VEREDICTOS = {
   aplica: ['alta', 'Aplica a SYS'],
   dudoso: ['rev', 'Puede aplicar'],
-  no_aplica: ['nada', 'No aplica'],
+  no_aplica: ['nada', 'La IA no ve impacto'],
 };
 
 /** El resumen de la IA: veredicto, qué cambia, cómo le afecta y qué hacer. Va marcado como IA. */
@@ -210,7 +210,7 @@ function informe(r, sobreTitulo) {
     c.push(`<div class="tranquilo">${icono('check')}<div><b>${r.errores.length ? 'Nada en las fuentes que respondieron' : 'Día tranquilo'}</b>${r.errores.length ? 'En las fuentes que sí se pudieron revisar no apareció nada que afecte a SYS.' : 'No apareció nada que afecte a SYS. No hay que hacer nada.'}</div></div>`);
   }
   if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Le cambian algo a SYS como billetera. Las tiene que ver compliance.</p>', ...altas.map(tarjeta));
-  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Pueden aplicar según cómo opere SYS. Alcanza con una mirada rápida.</p>', ...rev.map(tarjeta));
+  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Nombran temas de SYS, pero no está claro que le cambien algo: dependen de cómo opere SYS o la IA no ve impacto. Una mirada rápida alcanza.</p>', ...rev.map(tarjeta));
   c.push(descartadas(desc));
   c.push(
     '<details class="caja revisado"><summary>Qué se revisó en este informe</summary>',

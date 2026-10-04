@@ -38,19 +38,20 @@ const VEREDICTOS: Veredicto[] = ['aplica', 'dudoso', 'no_aplica'];
 /**
  * El nivel final combina las reglas con el veredicto de la IA:
  * - Dirigida a los PSP por el BCRA: le afecta, diga lo que diga la IA.
- * - La IA dice que no aplica: se descarta (queda plegado al final de la
- *   página, con el motivo, por si acaso; no se avisa por mail).
- * - Las reglas dicen "para revisar" y la IA confirma que aplica: le afecta.
- * - La IA dice que es dudoso: queda para revisar.
+ * - La IA dice que aplica: le afecta.
+ * - La IA dice que es dudoso: para revisar.
+ * - La IA dice que no aplica: si la norma nombra la actividad de SYS, queda
+ *   para revisar (la IA nunca puede esconder eso); si no, se descarta y queda
+ *   plegada al final de la página, con el motivo, sin aviso por mail.
  * Sin veredicto (IA caída o desactivada) manda lo que dijeron las reglas.
  */
 export function nivelFinal(h: Pick<Hallazgo, 'evaluacion'>, veredicto?: Veredicto): Hallazgo['evaluacion']['nivel'] {
   const nivel = h.evaluacion.nivel;
   if (!veredicto || h.evaluacion.motivos.includes('dirigida a los proveedores de servicios de pago')) return nivel;
   if (nivel === 'descartada') return nivel;
-  if (veredicto === 'no_aplica') return 'descartada';
   if (veredicto === 'aplica') return 'alta';
-  return 'revisar';
+  if (veredicto === 'dudoso') return 'revisar';
+  return h.evaluacion.fuerte ? 'revisar' : 'descartada';
 }
 
 const URL_API = (modelo: string) => `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;

@@ -123,6 +123,21 @@ Resultado sobre el historial del 22/9 al 2/10: de 25 normas mostradas se pasó a
 
 ---
 
+## Ajustes del filtro que salieron de datos reales (5/10/2026)
+
+El estudio sobre el Boletín de julio a septiembre de 2026 (4.254 normas; ver `docs/estudio-palabras.md`) encontró por qué se colaban normas ajenas:
+
+- **"PSP" también es "prestadores de servicios postales"** (PSP/courier) en las normas de Aduana: ya no cuenta como proveedor de pagos.
+- **"Transferencia electrónica de fondos"** aparece como forma de pagarle a ARCA ("cancelar mediante transferencia electrónica de fondos"): ahora es un término débil. "Transferencias inmediatas" sigue siendo fuerte.
+- **Números de ley sueltos:** un DNI terminado en "327.739" contaba como la Ley 27.739. Ahora los números de ley (27.739, 25.246, 25.413, 25.326) cuentan solo cerca de la palabra "ley".
+- **La Ley 27.739 citada en considerandos** de normas ajenas (ej.: programa de ciberdelito) pasó de término fuerte a medio. Lo de la UIF entra igual por el organismo.
+- **La IA no puede esconder** lo que nombra la actividad de SYS ni lo de la UIF: como mucho, "Para revisar".
+- **Encabezados del BCRA** que no empiezan con "A LOS…" ("ADQUIRENTES DE PAGOS CON TARJETA:") ahora se leen bien.
+
+Cada ajuste tiene un test con el texto real que lo motivó (`src/reglas.test.ts`, `src/explicar.test.ts`).
+
+---
+
 ## Cómo explica el informe cada norma
 
 Cada norma que pasa el filtro trae, **sin IA**, recortes literales de la propia norma más un texto fijo por tema:

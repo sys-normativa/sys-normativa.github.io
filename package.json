@@ -8,6 +8,8 @@
     "revisar": "tsx src/revisar.ts",
     "pagina": "tsx src/pagina.ts",
     "historial": "tsx src/historial.ts",
+    "validar": "tsx src/validar.ts",
+    "estudio": "tsx src/estudio.ts",
     "typecheck": "tsc --noEmit",
     "test": "node --import tsx --test src/*.test.ts"
   },
