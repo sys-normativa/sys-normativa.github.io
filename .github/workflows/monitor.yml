@@ -75,14 +75,12 @@ jobs:
         env:
           AVISO: ${{ runner.temp }}/aviso.json
         run: |
-          node -e '
-            const fs = require("fs");
-            fs.writeFileSync(process.env.AVISO, JSON.stringify({
-              titulo: "Prueba de aviso del monitor normativo",
-              cuerpo: "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.
-
-**[Abrir el monitor](https://guidoparisi91.github.io/sys-normativa/)**",
-            }));'
+          cat > "$AVISO" <<'FIN'
+          {
+            "titulo": "Prueba de aviso del monitor normativo",
+            "cuerpo": "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.\n\n**[Abrir el monitor](https://guidoparisi91.github.io/sys-normativa/)**"
+          }
+          FIN
 
       - name: Avisar por mail
         env:
