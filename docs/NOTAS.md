@@ -45,6 +45,9 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - **Prensa del BCRA:** noticias de bcra.gob.ar, como "Para revisar" a lo sumo.
 - El historial (22/9 al 2/10) se completó con estas dos fuentes.
 - Punto de partida: `cordobaHasta` = 2/10 y `prensaVistas` = las 10 noticias hasta el 2/10.
+- **Problema (4/10):** el Boletín de Córdoba **bloquea conexiones de fuera de Argentina** (CloudFront, 403 en todo: páginas y PDF, con cualquier navegador). Desde la compu de Guido anda; desde GitHub Actions (EE.UU.), no. No se intenta esquivar el bloqueo. La web de Rentas Córdoba sí responde desde GitHub, pero es una aplicación sin páginas legibles y solo cubriría Rentas.
+- Mientras se decide: la corrida en la nube marca Córdoba en rojo (no se esconde) y el mail de una fuente caída sale **una sola vez** cuando empieza a fallar (`fallasAvisadas` en el estado), no en cada corrida.
+- **Propuesta pendiente de OK de Guido:** leer Córdoba desde su compu con una tarea programada de Windows (gratis), que recupere los días que la compu estuvo apagada; la nube sigue con todo lo demás y manda los avisos.
 
 ## Datos y límites
 - No hay base de datos: cada día es un JSON en `datos/informes/` (~7 KB). Un año ≈ 2 MB. La página embebe todo: al año pesa ~2 MB, carga bien. Si en unos años pesa demasiado, mostrar solo los últimos meses en la página.
