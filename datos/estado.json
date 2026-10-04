@@ -15,6 +15,10 @@
     "t-rmgcti": "A 8401",
     "t-excbio": "A 8481"
   },
-  "boletinHasta": "2026-10-02",
-  "pendientes": {}
+  "boletinHasta": "2026-10-03",
+  "pendientes": {
+    "A": [],
+    "B": [],
+    "C": []
+  }
 }
