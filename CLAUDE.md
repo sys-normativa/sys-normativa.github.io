@@ -24,6 +24,9 @@ npm run revisar -- --fecha 2026-10-02    # Boletín Oficial de otro día (para p
 npm run revisar -- --bcra-desde A=8480   # releer el BCRA desde un número
 npm run pagina                           # rearmar la página sin revisar las fuentes
 npm run historial -- 2026-09-29 ...      # armar informes de días pasados (no toca el estado)
+npm run validar                          # casos reales + BCRA + ruido -> docs/validacion.md (~25 min)
+npm run estudio-rapido                   # ruido en 3 meses de Boletín -> docs/estudio-palabras.md (~15 min)
+npm run estudio                          # completo: + BCRA y la IA sobre lo descartado (>1 h)
 npm test                                 # tests de las reglas
 npm run typecheck
 ```
