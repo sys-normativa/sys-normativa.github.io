@@ -1,0 +1,172 @@
+{
+  "fecha": "2026-09-23",
+  "generado": "4/10/2026 a las 00:23",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Comisión Nacional de Valores",
+      "titulo": "Resolución General 1169/2026",
+      "asunto": "",
+      "fecha": "23/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347839/20260923",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Incorporar en el artículo 2° de la Sección II del Capítulo II del Título I de las NORMAS (N.T. 2013 y mod.), los siguientes términos definidos: “(…) “Agente Colocador Principal”: significa el Agente Colocador que tiene asignada la responsabilidad de llevar el libro o registro de ofertas de los inversores, exclusivamente para las ofertas llevadas adelante exclusivamente en el mercado local.",
+      "paraQue": "Resulta oportuno aclarar que en los procedimientos de colocación primaria internacional mediante el sistema de formación de libros o book building no resulta obligatorio, ni para el tramo local ni para el internacional, efectuar dicha colocación a través de los sistemas informáticos de negociación habilitados por los Mercados.",
+      "tema": "cnv",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (entidades financieras), pero no nombra su actividad: puede que no le aplique.",
+        "Le importa si SYS remunera los saldos con un fondo común de inversión o toca activos virtuales. Está pendiente de confirmar con SYS."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [
+        "…por los Mercados que se encuentra habilitada alguna funcionalidad para su homologación y no más allá del 26 de febrero de 2027.",
+        "La presente RG entrará en vigencia a partir del día siguiente al de su publicación en el B.O."
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [
+        {
+          "texto": "Comunicación \"A\" 3046 del BCRA",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A3046.pdf",
+          "detalle": "Circular OPASI 2 - 223 Colocación de títulos valores de deuda y obtención de líneas de crédito del exterior. Texto ordenado. ()"
+        },
+        {
+          "texto": "Comunicación \"A\" 3500 del BCRA",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A3500.pdf",
+          "detalle": "Circular CAMEX 1 – 333. Disposiciones para la determinación del tipo de cambio de referencia ()"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por la CNV"
+        ],
+        "temas": [
+          "cnv",
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La Comisión Nacional de Valores establece nuevos requisitos, definiciones y estándares para los procesos de colocación primaria de valores negociables y los sistemas informáticos de negociación de los mercados, con el fin de transparentar la formación de precios y otorgar acceso directo a la información al organismo.",
+        "comoAfecta": "No le aplica a SYS Global Pay. La norma regula a los mercados y agentes del mercado de capitales en la colocación de valores negociables, una actividad ajena a los servicios de billetera virtual y cuentas de pago para gastos corporativos.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"B\" 13233/2026",
+      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
+      "fecha": "23/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347858/20260923",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por el BCRA"
+        ],
+        "temas": [
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma comunica los valores de las tasas de referencia aplicables al régimen de garantía de los depósitos, dirigida exclusivamente a las entidades financieras.",
+        "comoAfecta": "No le aplica directamente a SYS Global Pay, ya que está dirigida a entidades financieras y no a proveedores de servicios de pago que ofrecen cuentas de pago.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"B\" 13234/2026",
+      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
+      "fecha": "23/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347859/20260923",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por el BCRA"
+        ],
+        "temas": [
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma comunica los valores de las tasas de referencia aplicables al sistema financiero para la garantía de los depósitos.",
+        "comoAfecta": "No le aplica a SYS Global Pay, ya que está dirigida exclusivamente a las entidades financieras y no a los proveedores de servicios de pago.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Banco Central de la República Argentina",
+      "titulo": "Aviso Oficial",
+      "asunto": "",
+      "fecha": "23/09/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347876/20260923",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "EDICTO El Banco Central de la República Argentina notifica que mediante la Resolución N° 33/26 del Subgerente General de Cumplimiento y Control Superintendente de Entidades Financieras y Cambiarias, se resolvió dejar sin efecto la imputación formulada, entre otros, a la firma INTERBRIDGE S.R.L. (C.U.I.T. 30-71418574-4) y a la señora Adriana Aurelia Tejeda (DNI 14.364.225), por prescripción de la acción penal cambiaria y en consecuencia archivar el presente Sumario en lo cambiario 7283, Expediente N° 101/137/16. Publíquese por 5 (cinco) días en el Boletín Oficial.",
+      "paraQue": "",
+      "tema": "general",
+      "comoAfecta": [
+        "Toca temas cercanos a SYS (entidades financieras), pero no nombra su actividad: puede que no le aplique.",
+        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 3,
+        "motivos": [
+          "entidades financieras",
+          "emitida por el BCRA"
+        ],
+        "temas": [
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "El Banco Central dispuso dejar sin efecto la imputación y archivar un sumario cambiario específico contra terceros ajenos a nuestra empresa, por prescripción de la acción penal.",
+        "comoAfecta": "No le aplica a SYS Global Pay, ya que se trata de un edicto sobre un caso particular de otra firma y personas que no guardan relación con nuestra actividad como proveedor de servicios de pago.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-09-23: 49 avisos de la primera sección.",
+    "BCRA: 6 comunicaciones con fecha de ese día (B 13236, C 102349, C 102348, C 102347, C 102346, C 102345).",
+    "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
+    "Resumen con IA: 4 de 4 normas."
+  ],
+  "errores": []
+}

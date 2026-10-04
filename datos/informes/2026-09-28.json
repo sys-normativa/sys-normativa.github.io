@@ -1,0 +1,61 @@
+{
+  "fecha": "2026-09-28",
+  "generado": "4/10/2026 a las 00:25",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"A\" 8485",
+      "asunto": "R.I. Redes de Cajeros Automáticos. Adecuaciones.",
+      "fecha": "28/09/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8485.pdf",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA comunica las adecuaciones realizadas en el requerimiento informativo de la referencia, oportunamente difundido mediante las Comunicaciones A 8376 y A 8409. En este sentido, se incorporaron excepciones a la obligación de presentación de los Apartados A y C para las redes sin procesamiento propio que sean adherentes de otra red local inscripta, estableciéndose asimismo las exigencias de notificación asociadas. En Anexo se acompañan las hojas que reemplazan a las oportunamente difundidas.",
+      "paraQue": "",
+      "tema": "informativo",
+      "comoAfecta": [
+        "No va dirigida a los PSP (va a: redes de cajeros automáticos), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
+        "Cambia qué información hay que presentarle al BCRA, con qué formato o cada cuánto. Si alcanza a los PSP, lo tiene que ver quien arma esas presentaciones."
+      ],
+      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "fechasClave": [],
+      "dondeNombraASys": "REGIMEN INFORMATIVO PROVEEDORES DE SERVICIOS DE PAGO REDES DE CAJEROS AUTOMATICOS SECCION I – INSTRUCCIONES GENERALES Versión: 2a.",
+      "relacionadas": [
+        {
+          "texto": "Comunicación \"A\" 8376",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8376.pdf",
+          "detalle": "R.I. Redes de Cajeros Automáticos (18/12/2025)"
+        },
+        {
+          "texto": "Comunicación \"A\" 8409",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8409.pdf",
+          "detalle": "R.I. Redes de Cajeros Automáticos (16/03/2026)"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 6,
+        "motivos": [
+          "proveedores de servicios de pago",
+          "entidades financieras"
+        ],
+        "temas": [
+          "psp",
+          "general"
+        ]
+      },
+      "resumenIa": {
+        "queCambia": "La norma introduce excepciones en el régimen informativo para las redes de cajeros automáticos sin procesamiento propio que operen como adherentes de otra red local, detallando los requisitos de notificación mediante declaración jurada.",
+        "comoAfecta": "No le aplica a SYS Global Pay, ya que la comunicación está dirigida exclusivamente a las redes de cajeros automáticos y regula su propio régimen informativo ante el Banco Central.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-09-28: 86 avisos de la primera sección.",
+    "BCRA: 8 comunicaciones con fecha de ese día (A 8485, B 13238, C 102371, C 102370, C 102369, C 102368, C 102367, C 102366).",
+    "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
+    "Resumen con IA: 1 de 1 normas."
+  ],
+  "errores": []
+}

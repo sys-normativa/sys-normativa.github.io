@@ -36,7 +36,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Cada corrida guarda `datos/` en el repo (commit "Guardar informe del …") y publica la página. Si una fuente falla, el informe igual se publica y el workflow queda en rojo.
 - **Aviso por mail:** cuando hay algo nuevo (o falla una fuente) se crea un issue que menciona a @Guidoparisi91; GitHub lo manda al mail de la cuenta. Hay que confirmar en GitHub → Settings → Notifications que ese mail sea guidoparisi91@gmail.com. Prueba enviada: issue #1.
 - **Clave de Gemini:** secreto `GEMINI_API_KEY` del repo (y `.env` en la compu).
-- **Historial:** arranca con los 4 días hábiles anteriores (29/9 al 2/10), armados con `npm run historial`: Boletín de ese día + comunicaciones del BCRA con esa fecha. Los 4 días sueltos de la validación se sacaron del historial (la validación sigue documentada en el análisis).
+- **Historial:** arranca con los 9 días hábiles anteriores (22/9 al 2/10; los del 22 al 28/9 se sumaron el 4/10), armados con `npm run historial`: Boletín de ese día + comunicaciones del BCRA con esa fecha. Los 4 días sueltos de la validación se sacaron del historial (la validación sigue documentada en el análisis).
 - Una comunicación del BCRA que ya salió un día no se repite cuando después aparece en el Boletín Oficial.
 - Días sin Boletín (fines de semana, feriados) y sin novedades no generan informe vacío.
 
@@ -51,7 +51,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 1. ~~Link más lindo~~ **Hecho (4/10/2026):** el repo pasó a la organización `sys-normativa` (gratuita, se maneja desde la cuenta de Guido) como `sys-normativa.github.io`. Link: https://sys-normativa.github.io/
    - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
    - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Falta que Guido confirme que le llegó.
-   - Historial: recomendado extenderlo al 1/9 para incluir A 8472 y A 8482 (dirigidas a PSP); pendiente de su OK.
+   - Historial: Guido no quiere ir más de un mes atrás; se sumaron 5 días (22 al 28/9) y alcanza. Los mails de aviso le llegan (confirmado el 4/10).
 2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar).
 3. Regenerar la clave de Gemini (se pegó en el chat): actualizar `.env` y el secreto del repo.
 4. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
