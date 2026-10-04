@@ -1,60 +1,14 @@
 {
   "fecha": "2026-09-24",
-  "generado": "4/10/2026 a las 01:41",
-  "hallazgos": [
-    {
-      "fuente": "BCRA",
-      "emisor": "Banco Central (BCRA)",
-      "titulo": "Comunicación \"C\" 102351",
-      "asunto": "Levantamiento de suspensión para operar en el Mercado de Cambios EX-2019- 00294895- -GDEBCRA-GCTRL#BCRA.",
-      "fecha": "24/09/2026",
-      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/C102351.pdf",
-      "tipo": "Corrección de una norma anterior",
-      "queCambia": "El BCRA mediante RESOL-2026-99-E-GDEBCRA- GPCTRL#BCRA de la Gerencia Principal de Control se ha resuelto levantar las medidas aplicadas mediante Comunicación C 85918 de fecha 30/12/2019, respecto de la suspensión para dar curso a operaciones de cambio a nombre o por cuenta de: C.U.I.T. / C.U.I.L. Nº 20-05530679-7 D.N.I. Nº 5.530.679 C.U.I.T. / C.U.I.L. Nº 20-06051430-6 D.N.I. Nº 6.051.430 C.U.I.T. / C.U.I.L. Nº 20-06134740-3 D.N.I. Nº 6.134.740 C.U.I.T. / C.U.I.L. Nº 20-06513091-3 D.N.I. Nº 6.513.091 C.U.I.T. / C.U.I.L. Nº 20-07597192-4 D.N.I. Nº 7.597.192 C.U.I.T. / C.U.I.L. Nº 20-07686104-9 D.N.I. Nº 7.686.104 C.U.I.T. / C.U.I.L. Nº 20-08308312-4 D.N.I. Nº 8.308.312 C.U.I.T. / C.U.I.L.",
-      "paraQue": "",
-      "tema": "lavado",
-      "comoAfecta": [
-        "No va dirigida a los PSP (va a: entidades financieras, operadores de cambio, casas de cambio, agencias de cambio), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
-        "Desde la Ley 27.739, SYS es sujeto obligado ante la UIF: tiene que conocer a sus clientes, monitorear operaciones y reportar las sospechosas. Un cambio puede pedir ajustar el alta de clientes o el monitoreo."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [
-        {
-          "texto": "Comunicación \"C\" 85918",
-          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/C85918.pdf",
-          "detalle": "Suspensión de Operaciones de Cambio. Expediente EX2019-00294895-GDEBCRA- GCTRL#BCRA. (30/12/2019)"
-        }
-      ],
-      "evaluacion": {
-        "nivel": "descartada",
-        "puntaje": 3,
-        "motivos": [
-          "Ley 25.246 (lavado de activos)",
-          "entidades financieras",
-          "la IA no ve impacto para SYS"
-        ],
-        "temas": [
-          "lavado",
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "veredicto": "no_aplica",
-        "queCambia": "El Banco Central levantó la suspensión para operar en el Mercado de Cambios a un listado de personas físicas.",
-        "comoAfecta": "SYS no opera en el Mercado de Cambios oficial.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    }
-  ],
+  "generado": "4/10/2026 a las 08:48",
+  "hallazgos": [],
   "revisado": [
     "Boletín Oficial del 2026-09-24: 75 avisos de la primera sección.",
     "Rentas Córdoba: 3 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 10 comunicaciones con fecha de ese día (B 13237, C 102358, C 102357, C 102356, C 102355, C 102354, C 102353, C 102352, C 102351, C 102350).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: 1 de 1 normas."
+    "Resumen con IA: no hubo normas para resumir."
   ],
   "errores": []
 }

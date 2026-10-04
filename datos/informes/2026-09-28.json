@@ -1,6 +1,6 @@
 {
   "fecha": "2026-09-28",
-  "generado": "4/10/2026 a las 01:42",
+  "generado": "4/10/2026 a las 08:48",
   "hallazgos": [
     {
       "fuente": "BCRA",
@@ -33,22 +33,22 @@
         }
       ],
       "evaluacion": {
-        "nivel": "descartada",
+        "nivel": "revisar",
         "puntaje": 6,
         "motivos": [
           "proveedores de servicios de pago",
-          "entidades financieras",
-          "la IA no ve impacto para SYS"
+          "entidades financieras"
         ],
         "temas": [
           "psp",
           "general"
-        ]
+        ],
+        "fuerte": true
       },
       "resumenIa": {
         "veredicto": "no_aplica",
-        "queCambia": "El Banco Central dispuso excepciones al régimen informativo para redes de cajeros automáticos sin procesamiento propio.",
-        "comoAfecta": "La norma regula exclusivamente a las redes de cajeros automáticos, no a los PSP.",
+        "queCambia": "El Banco Central establece excepciones en el régimen informativo para redes de cajeros automáticos sin procesamiento propio.",
+        "comoAfecta": "La norma está dirigida exclusivamente a las redes de cajeros automáticos.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }

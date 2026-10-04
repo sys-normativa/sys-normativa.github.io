@@ -62,10 +62,9 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Arreglo: 3 comunicaciones (A 8310, 8326, 8381) tenían destinatarios sin "A LOS" ("ADQUIRENTES DE PAGOS CON TARJETA:") y el lector no los leía. Ninguna iba a los PSP en general.
 - `npm run estudio` → `docs/estudio-palabras.md`: comunicaciones A 8000 a 8488 y Boletín de julio a septiembre de 2026 (4.254 normas). Resultado: **0 huecos** entre 250 normas "casi" que vio la IA (de 606), pero bastante ruido en "Para revisar". Las causas, todas corregidas con test: "PSP" = prestadores de servicios postales (courier), "transferencia electrónica de fondos" como forma de pagarle a ARCA, un DNI que coincidía con "27.739", y la Ley 27.739 citada en considerandos (pasó a peso medio). Detalle en el análisis regulatorio.
 - **Validación después de los ajustes:** 9 de 9 casos reales aparecen, 0 encabezados del BCRA ilegibles, 31 de 31 dirigidas a PSP como "Le afecta", 20 días de Boletín → 2 "Le afecta" + 2 "Para revisar". 43 tests en verde. Subido.
-- **Pendiente:**
-  1. Volver a correr `npm run estudio` con el filtro ajustado para medir el ruido final en 3 meses. La segunda corrida se cortó por falta de memoria de la compu (lo cortó Claude Code, no el programa).
-  2. Rearmar el historial publicado (22/9 al 2/10) con la lógica nueva: `npm run historial -- <fechas>` borrando antes los JSON y reincorporando la RG 2229 de Rentas (ver más arriba cómo se hizo).
-  3. Que la IA revise las 356 normas "casi" que quedaron sin ver (tope de 250 por cupo).
+- **Estudio rápido después de los ajustes (5/10, `npm run estudio-rapido`, ~15 min):** en 3 meses de Boletín (4.254 normas) se muestran **6 "Le afecta"** (todas del BCRA: fraude, pagos, régimen informativo) y **4 "Para revisar"** (2 de la UIF, 1 de la CNV, 1 que nombra billeteras). Antes de los ajustes eran 7 y 13.
+- Historial del 22/9 al 2/10 rearmado con la lógica nueva (y la RG 2229 de Rentas reincorporada a mano).
+- **Pendiente:** que la IA revise las ~360 normas "casi" que nunca vio (`npm run estudio`, la versión completa, tarda más de una hora).
 
 ## Datos y límites
 - No hay base de datos: cada día es un JSON en `datos/informes/` (~7 KB). Un año ≈ 2 MB. La página embebe todo: al año pesa ~2 MB, carga bien. Si en unos años pesa demasiado, mostrar solo los últimos meses en la página.

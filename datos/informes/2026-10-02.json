@@ -1,6 +1,6 @@
 {
   "fecha": "2026-10-02",
-  "generado": "4/10/2026 a las 01:42",
+  "generado": "4/10/2026 a las 08:49",
   "hallazgos": [
     {
       "fuente": "BCRA",
@@ -30,14 +30,14 @@
       ],
       "evaluacion": {
         "nivel": "alta",
-        "puntaje": 23,
+        "puntaje": 21,
         "motivos": [
           "dirigida a los proveedores de servicios de pago",
           "proveedores de servicios de pago",
           "cuentas de pago",
           "PSP/PSPCP",
           "pagos con transferencia / QR",
-          "transferencias inmediatas",
+          "transferencia electrónica de fondos",
           "agregadores / adquirentes",
           "entidades financieras"
         ],
@@ -45,13 +45,14 @@
           "psp",
           "pagos",
           "general"
-        ]
+        ],
+        "fuerte": true
       },
       "resumenIa": {
         "veredicto": "aplica",
-        "queCambia": "El Banco Central actualiza el texto ordenado sobre Proveedores de Servicios de Pago incorporando las modificaciones de la Comunicación A 8472 sobre definiciones operativas y sanciones.",
-        "comoAfecta": "SYS debe conocer las nuevas definiciones normativas sobre redes, adquirencia y el régimen de sanciones aplicable a los PSP.",
-        "queHacer": "Leer la Comunicación A 8472 que introdujo el cambio de fondo en el texto ordenado del BCRA.",
+        "queCambia": "El Banco Central actualiza el texto ordenado sobre Proveedores de Servicios de Pago incorporando las modificaciones de la Comunicación A 8472 sobre definiciones de servicios y régimen de sanciones.",
+        "comoAfecta": "SYS debe tener en cuenta las nuevas definiciones normativas y el régimen de sanciones aplicable a los proveedores de servicios de pago.",
+        "queHacer": "Consultar las modificaciones incorporadas en el texto ordenado vigente en la web del Banco Central.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }

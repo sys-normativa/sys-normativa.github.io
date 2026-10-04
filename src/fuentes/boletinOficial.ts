@@ -63,7 +63,8 @@ export async function avisosDelDia(fecha: string): Promise<AvisoBO[]> {
   // probable es que haya cambiado el formato. Nunca se informa como "no hubo
   // edición", porque eso escondería las normas del día.
   if (!delDia.length) throw new Error('la página del día respondió, pero no se pudo leer ningún aviso (¿cambió el formato del sitio?)');
-  const avisos = await enParalelo(delDia, 4, async (r) => ({
+  // Pedidos en paralelo: 4 en la corrida diaria; los estudios pueden pedir más.
+  const avisos = await enParalelo(delDia, Number(process.env.BO_PARALELO) || 4, async (r) => ({
     id: r.id,
     url: BASE + r.ruta,
     organismo: r.organismo,

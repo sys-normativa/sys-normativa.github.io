@@ -29,6 +29,9 @@ const BCRA_HASTA = 8488;
 const BO_DESDE = '2026-07-01';
 const BO_HASTA = '2026-09-30';
 const MAX_CASI = 250;
+// --rapido: solo el Boletín, sin la parte del BCRA (ya validada con `npm run validar`)
+// y sin pasarle a la IA las normas "casi" (solo se cuentan).
+const RAPIDO = process.argv.includes('--rapido');
 
 // Organismos cuyas normas pueden tocar a una billetera.
 const ORG_RELEVANTE = /banco central|recaudacion y control aduanero|informacion financiera|comision nacional de valores|comision arbitral|ministerio de economia|comercio|defensa del consumidor|poder ejecutivo|presidencia|jefatura de gabinete/;
@@ -43,6 +46,7 @@ md.push('# Estudio de palabras clave', '', `Corrido el ${hoy} con \`npm run estu
 // ---------------------------------------------------------------------------
 // 1. BCRA
 
+if (!RAPIDO) {
 console.log(`1. Comunicaciones A ${BCRA_DESDE} a A ${BCRA_HASTA}…`);
 const positivas: ComunicacionBCRA[] = [];
 const negativas: ComunicacionBCRA[] = [];
@@ -73,6 +77,8 @@ if (escapan.length) {
   md.push('Las que el filtro solo no detectaría:', '', fila(['Comunicación', 'Tema']), fila(['---', '---']), ...escapan.map((x) => fila([`A ${x.c.numero} (${x.c.fecha})`, x.c.referencia])), '');
 }
 
+}
+
 // ---------------------------------------------------------------------------
 // 2. Boletín Oficial
 
@@ -96,14 +102,14 @@ for (const dia of [BO_DESDE, ...diasEntre(BO_DESDE, BO_HASTA)]) {
   for (const a of avisos) {
     const ev = evaluar(a.organismo, `${a.titulo}\n${a.texto}`);
     if (ev.nivel !== 'descartada') continue;
-    if (ORG_RELEVANTE.test(normalizar(a.organismo)) && SENAL_PAGOS.test(normalizar(a.texto))) casi.push({ aviso: a, dia });
+    if (ORG_RELEVANTE.test(normalizar(a.organismo)) && SENAL_PAGOS.test(normalizar(a.texto))) casi.push({ aviso: RAPIDO ? { ...a, texto: '' } : a, dia });
   }
   console.log(`   ${dia}: ${avisos.length} normas, pasan ${pasan.hallazgos.length}, casi ${casi.length}`);
 }
 
 // La IA opina sobre las "casi": se arman como hallazgos "para revisar" para usar el mismo camino.
 const loteCasi = new Lote();
-for (const { aviso, dia } of casi.slice(0, MAX_CASI)) {
+for (const { aviso, dia } of RAPIDO ? [] : casi.slice(0, MAX_CASI)) {
   const ev = { ...evaluar(aviso.organismo, `${aviso.titulo}\n${aviso.texto}`), nivel: 'revisar' as const };
   loteCasi.agregar(explicarAvisoBO(aviso, ev, dia), aviso.texto);
 }
@@ -118,8 +124,8 @@ md.push(
   '',
   `- ${ediciones} ediciones, **${normas} normas** leídas.`,
   `- Pasan el filtro: ${pasan.hallazgos.length}. Después de la IA se muestran **${nivel('alta')} "Le afecta"** y **${nivel('revisar')} "Para revisar"**; ${nivel('descartada')} quedan plegadas. ${iaPasan}`,
-  `- "Casi" (descartadas por el filtro, de un organismo que importa y que hablan de pagos): ${casi.length}${casi.length > MAX_CASI ? ` (la IA vio las primeras ${MAX_CASI})` : ''}. ${iaCasi}`,
-  `- **Huecos del filtro** (la IA dice que aplicaban o podían aplicar): **${huecos.length}**.`,
+  `- "Casi" (descartadas por el filtro, de un organismo que importa y que hablan de pagos): ${casi.length}${RAPIDO ? ' (en esta corrida rápida no se le pasan a la IA)' : casi.length > MAX_CASI ? ` (la IA vio las primeras ${MAX_CASI})` : ''}. ${RAPIDO ? '' : iaCasi}`,
+  ...(RAPIDO ? [] : [`- **Huecos del filtro** (la IA dice que aplicaban o podían aplicar): **${huecos.length}**.`]),
   '',
 );
 if (huecos.length) {

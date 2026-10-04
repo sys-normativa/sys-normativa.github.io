@@ -1,6 +1,6 @@
 {
   "fecha": "2026-09-30",
-  "generado": "4/10/2026 a las 01:42",
+  "generado": "4/10/2026 a las 08:48",
   "hallazgos": [
     {
       "fuente": "Boletín Oficial de Córdoba",
@@ -38,13 +38,14 @@
           "psp",
           "impuestos",
           "general"
-        ]
+        ],
+        "fuerte": true
       },
       "resumenIa": {
         "veredicto": "aplica",
-        "queCambia": "La Provincia de Córdoba aprueba y remite a la Comisión Arbitral el padrón de octubre de 2026 de sujetos pasibles de retención, percepción y recaudación del Impuesto sobre los Ingresos Brutos.",
-        "comoAfecta": "SYS, como PSPCP, debe actualizar el padrón de contribuyentes de Córdoba para calcular las retenciones de Ingresos Brutos mediante SIRCUPA en octubre de 2026.",
-        "queHacer": "Usar el padrón de octubre de Córdoba para las retenciones desde el 01/10/2026.",
+        "queCambia": "La Dirección General de Rentas de Córdoba aprobó y remitió a la Comisión Arbitral el listado del período octubre de 2026 de sujetos pasibles de retención, percepción y recaudación del Impuesto sobre los Ingresos Brutos para su inclusión en los padrones unificados, incluyendo el SIRCUPA para proveedores de servicios de pago.",
+        "comoAfecta": "SYS, como proveedor de servicios de pago que opera con cuentas de pago, debe utilizar el nuevo padrón de Córdoba para aplicar las retenciones de Ingresos Brutos a sus clientes según corresponda.",
+        "queHacer": "Aplicar las alícuotas del padrón de Córdoba de octubre de 2026 para las retenciones de Ingresos Brutos desde el inicio de dicho período.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }
