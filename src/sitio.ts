@@ -34,7 +34,7 @@ const AYUDA = `
 </div>
 
 <h2>Cuándo se actualiza</h2>
-<div class="caja"><p>De lunes a viernes a las <strong>8:00, 12:00, 16:00, 20:00 y 23:30</strong>, y los sábados a las <strong>12:00</strong> (hora de Argentina). Cada revisión suma solo lo nuevo. Cuando aparece algo, llega un aviso por mail.</p><p>Si una fuente no responde, se avisa y la revisión siguiente vuelve a intentar: los días del Boletín que no se pudieron leer se recuperan solos.</p></div>
+<div class="caja"><p>De lunes a viernes a las <strong>10:00</strong> y a las <strong>22:00</strong>, y los sábados a las <strong>12:00</strong> (hora de Argentina). Cada revisión suma solo lo nuevo. Cuando aparece algo, llega un aviso por mail.</p><p>Si una fuente no responde, se avisa y la revisión siguiente vuelve a intentar: los días del Boletín que no se pudieron leer se recuperan solos.</p></div>
 
 <h2>Límites</h2>
 <div class="caja"><ul>

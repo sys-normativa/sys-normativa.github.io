@@ -32,7 +32,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 ## En producción desde el 3/10/2026
 - **Link:** https://sys-normativa.github.io/
 - **Repo (público):** https://github.com/sys-normativa/sys-normativa.github.io. Decisión de Guido: público, no hay nada secreto.
-- **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): lunes a viernes a las 8, 12, 16, 20 y 23:30, y sábados a las 12 (hora argentina). Ampliado el 4/10 a pedido de Guido, para no depender del horario de publicación. Se puede correr a mano desde la pestaña Actions → "Run workflow".
+- **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): lunes a viernes a las 10 y a las 22, y sábados a las 12 (hora argentina). Elegido el 4/10 con Guido: a las 10 ya salió el Boletín y a las 22 el BCRA ya publicó lo del día. Se puede correr a mano desde la pestaña Actions → "Run workflow".
 - Cada corrida guarda `datos/` en el repo (commit "Guardar informe del …") y publica la página. Si una fuente falla, el informe igual se publica y el workflow queda en rojo.
 - **Aviso por mail:** cuando hay algo nuevo (o falla una fuente) se crea un issue que menciona a @Guidoparisi91; GitHub lo manda al mail de la cuenta. Hay que confirmar en GitHub → Settings → Notifications que ese mail sea guidoparisi91@gmail.com. Prueba enviada: issue #1.
 - **Clave de Gemini:** secreto `GEMINI_API_KEY` del repo (y `.env` en la compu).
