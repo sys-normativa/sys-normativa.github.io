@@ -50,14 +50,14 @@ npm run typecheck
 - `src/informe.ts`: el informe del día como datos (`datos/informes/AAAA-MM-DD.json`) y en Markdown para la consola.
 - `src/sitio.ts` + `src/sitio/`: la página única `salida/index.html` (pestañas: último informe, por día, cómo funciona), con todos los informes embebidos. Abre con doble clic y se publica tal cual.
 
-**Todo lo que ve el usuario tiene que ser clarísimo**: una sola página, lenguaje simple, sin jerga.
+**Todo lo que ve el cliente (página, guía, mails) tiene que ser claro y profesional**: tono formal, sin jerga técnica, sin detalles internos (repo, pruebas, métricas de validación) ni expresiones coloquiales.
 
 **Si se agrega o cambia una regla en `reglas.ts`**, actualizar `docs/analisis-regulatorio.md` y sumar un caso en `src/reglas.test.ts`, de ser posible con una norma real.
 
 ## Decisiones vigentes
 
 - **Sin presupuesto.** Toda herramienta, hosting o IA tiene que ser gratuita o casi gratuita. Si algo tiene costo, cuota o límite, avisarlo siempre antes de sumarlo.
-- **La detección es por reglas, sin IA.** La IA es opcional y solo para resumir lo que ya pasó el filtro. Si se usa un nivel gratuito, nunca mandarle datos internos de SYS: solo normas públicas.
+- **Detección en dos pasos:** reglas (palabras clave + organismo) y después la IA, que da veredicto y qué hacer. La IA no puede esconder lo que nombra la actividad de SYS, lo de la UIF ni lo que el BCRA dirige a los PSP. Si la IA falla, mandan las reglas. Nunca mandarle datos internos de SYS: solo normas públicas.
 - **El filtro es generoso.** Perder una norma relevante es peor que mostrar una de más.
 - **Las fuentes son públicas.** Pedidos con pausa y reintentos, sin castigar los sitios del Estado.
 
