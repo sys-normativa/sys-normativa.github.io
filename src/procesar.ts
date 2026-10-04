@@ -2,7 +2,7 @@
 // anteriores (historial.ts): evaluar y explicar cada norma, completar las
 // normas citadas, resumir con IA y guardar el informe del día.
 
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import type { AvisoBO } from './fuentes/boletinOficial.js';
 import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import type { Noticia } from './fuentes/bcraPrensa.js';
@@ -202,11 +202,18 @@ export async function guardarDia(
     revisado,
     errores,
   };
-  // Fin de semana o feriado sin novedades: no se guarda un informe vacío.
-  // Lo que salga esos días aparece en el informe del próximo día hábil.
+  const archivo = new URL(`${fecha}.json`, INFORMES);
   if (huboEdicion || resumen.hallazgos.length || errores.length) {
+    // Siempre se reescribe, aunque no haya nada nuevo: así una falla que ya
+    // se resolvió deja de figurar en el informe del día.
     await mkdir(INFORMES, { recursive: true });
-    await writeFile(new URL(`${fecha}.json`, INFORMES), JSON.stringify(resumen, null, 2) + '\n', 'utf8');
+    await writeFile(archivo, JSON.stringify(resumen, null, 2) + '\n', 'utf8');
+  } else if (anterior) {
+    // Fin de semana o feriado que había quedado guardado solo por una falla
+    // ya resuelta: sin edición ni novedades, no corresponde un informe.
+    await rm(archivo, { force: true });
   }
+  // (Un fin de semana o feriado sin novedades no genera informe: lo que salga
+  // esos días aparece en el del próximo día hábil.)
   return { resumen, nuevos };
 }
