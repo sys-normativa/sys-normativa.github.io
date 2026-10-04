@@ -12,6 +12,11 @@ on:
   schedule:
     - cron: '0 11,22 * * 1-5'
   workflow_dispatch: # botón "Run workflow" para correrlo a mano
+    inputs:
+      prueba_aviso:
+        description: 'Mandar un aviso de prueba por mail'
+        type: boolean
+        default: false
 
 permissions:
   contents: write # guardar el informe del día en el repo
@@ -62,6 +67,22 @@ jobs:
             git commit -m "Guardar informe del $(TZ=America/Argentina/Buenos_Aires date +%F)"
             git push
           fi
+
+      # El aviso lo crea el robot del repo: GitHub no avisa por mail de lo que
+      # hace uno mismo, por eso la prueba también tiene que salir de acá.
+      - name: Preparar aviso de prueba
+        if: inputs.prueba_aviso
+        env:
+          AVISO: ${{ runner.temp }}/aviso.json
+        run: |
+          node -e '
+            const fs = require("fs");
+            fs.writeFileSync(process.env.AVISO, JSON.stringify({
+              titulo: "Prueba de aviso del monitor normativo",
+              cuerpo: "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.
+
+**[Abrir el monitor](https://guidoparisi91.github.io/sys-normativa/)**",
+            }));'
 
       - name: Avisar por mail
         env:
