@@ -317,7 +317,7 @@ export function explicarAvisoBO(a: AvisoBO, ev: Evaluacion, fecha: string): Hall
     const m = /COMUNICACI[OÓ]N\s*["“]?([ABC])["”]?\s*(\d+)/i.exec(cuerpo);
     const c: ComunicacionBCRA = { tipo: (m?.[1] ?? 'A') as TipoCom, numero: Number(m?.[2] ?? 0), url: a.url, texto: cuerpo, ...enc };
     const h = explicarComunicacion(c, ev, dirigidaAPsp(enc.destinatarios));
-    return { ...h, fuente: 'Boletín Oficial', titulo: a.titulo || h.titulo, fecha: enc.fecha || h.fecha };
+    return { ...h, fuente: 'Boletín Oficial', titulo: a.titulo || h.titulo, fecha: enc.fecha || h.fecha || `${fecha.slice(8, 10)}/${fecha.slice(5, 7)}/${fecha.slice(0, 4)}` };
   }
   const dispositiva = parteDispositiva(cuerpo);
   const tema = ev.temas[0] ?? 'general';
