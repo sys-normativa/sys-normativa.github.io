@@ -21,7 +21,6 @@
     "B": [],
     "C": []
   },
-  "cordobaHasta": "2026-10-02",
   "prensaVistas": [
     "post-107128",
     "post-105708",
@@ -34,7 +33,16 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [
-    "Boletín de Córdoba"
+  "fallasAvisadas": [],
+  "rentasVistas": [
+    "p=101460",
+    "p=68684",
+    "p=68747",
+    "p=101422",
+    "p=101139",
+    "p=100883",
+    "p=101128",
+    "p=100623",
+    "p=100746"
   ]
 }

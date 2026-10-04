@@ -147,6 +147,7 @@ function fuentesRevisadas(r) {
     ['Boletín Oficial', fallo('boletín oficial')],
     // Las fuentes que se sumaron después solo aparecen en los informes que las incluyen.
     ...(reviso('boletín de córdoba') ? [['Boletín de Córdoba', fallo('boletín de córdoba')]] : []),
+    ...(reviso('rentas córdoba') ? [['Rentas Córdoba', fallo('rentas córdoba')]] : []),
     ['Comunicaciones del BCRA', fallo('bcra "')],
     ...(sinTextos ? [] : [['Textos ordenados', fallo('texto ordenado')]]),
     ...(reviso('prensa del bcra') ? [['Prensa del BCRA', fallo('prensa del bcra')]] : []),

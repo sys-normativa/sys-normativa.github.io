@@ -6,11 +6,13 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import type { AvisoBO } from './fuentes/boletinOficial.js';
 import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import type { Noticia } from './fuentes/bcraPrensa.js';
-import { explicarAvisoBO, explicarComunicacion, explicarNoticia, type Hallazgo } from './explicar.js';
+import type { NormaRentas } from './fuentes/rentasCordoba.js';
+import { explicarAvisoBO, explicarComunicacion, explicarNoticia, explicarRentas, type Hallazgo } from './explicar.js';
 import { enParalelo } from './http.js';
 import { resumirTodos } from './ia.js';
 import type { Resumen } from './informe.js';
 import { dirigidaAPsp, evaluar } from './reglas.js';
+import { normalizar } from './texto.js';
 
 const ZONA = 'America/Argentina/Buenos_Aires';
 
@@ -69,6 +71,15 @@ export class Lote {
     if (ev.nivel !== 'descartada') this.agregar(explicarComunicacion(c, ev, dirigida), c.texto);
   }
 
+  rentas(n: NormaRentas): void {
+    // Todo lo que publica Rentas es de su área: suma como organismo de Ingresos Brutos.
+    const ev = evaluar('Dirección General de Rentas', `${n.titulo}
+${n.resumen}
+${n.texto}`);
+    if (ev.nivel !== 'descartada') this.agregar(explicarRentas(n, ev), `${n.resumen}
+${n.texto}`);
+  }
+
   noticia(n: Noticia): void {
     const ev = evaluar('', `${n.titulo}
 ${n.texto}`);
@@ -109,6 +120,22 @@ export function claveComunicacion(titulo: string): string | null {
   return m ? `${m[1]}${m[2]}` : null;
 }
 
+/**
+ * Una norma de Córdoba es la misma aunque venga del Boletín de Córdoba
+ * ("Resolución General N° 2229") o del sitio de Rentas ("Resolución General
+ * N° 2229/2026 – Padrón…"): tipo y número.
+ */
+export function claveCordoba(h: Pick<Hallazgo, 'titulo' | 'fuente' | 'emisor'>): string | null {
+  if (!/c[oó]rdoba/i.test(`${h.fuente} ${h.emisor}`)) return null;
+  const t = normalizar(h.titulo);
+  const n = /n[°º]?\s*(\d+)/.exec(t)?.[1];
+  if (!n) return null;
+  const tipo = /general/.test(t) ? 'rg' : /normativa/.test(t) ? 'rn' : /\bsip\b/.test(t) || /ingresos publicos/i.test(normalizar(h.emisor)) ? 'sip' : /^ley/.test(t) ? 'ley' : /^decreto/.test(t) ? 'decreto' : null;
+  return tipo ? `cba-${tipo}-${n}` : null;
+}
+
+const claveNorma = (h: Hallazgo) => claveComunicacion(h.titulo) ?? claveCordoba(h);
+
 /** Lo ya informado en otros días: links de cada norma y número de cada comunicación del BCRA. */
 async function yaInformado(menos: string): Promise<Set<string>> {
   const claves = new Set<string>();
@@ -121,7 +148,7 @@ async function yaInformado(menos: string): Promise<Set<string>> {
   for (const f of archivos) {
     const r = JSON.parse(await readFile(new URL(f, INFORMES), 'utf8')) as Resumen;
     for (const h of r.hallazgos) {
-      const k = claveComunicacion(h.titulo);
+      const k = claveNorma(h);
       claves.add(h.url);
       if (k) claves.add(k);
     }
@@ -153,7 +180,7 @@ export async function guardarDia(
   const otrosDias = await yaInformado(fecha);
   const nuevos = ordenar(
     lote.hallazgos.filter((h) => {
-      const k = claveComunicacion(h.titulo);
+      const k = claveNorma(h);
       return !vistos.has(h.url) && !otrosDias.has(h.url) && !(k && otrosDias.has(k));
     }),
   );

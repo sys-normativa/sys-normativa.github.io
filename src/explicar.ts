@@ -4,6 +4,7 @@
 
 import type { AvisoBO } from './fuentes/boletinOficial.js';
 import type { Noticia } from './fuentes/bcraPrensa.js';
+import type { NormaRentas } from './fuentes/rentasCordoba.js';
 import { parsearEncabezado, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import type { ResumenIa } from './ia.js';
 import { dirigidaAPsp, type Evaluacion } from './reglas.js';
@@ -412,6 +413,45 @@ export function explicarNoticia(n: Noticia, ev: Evaluacion): Hallazgo {
     fechasClave: fechasClave(n.texto),
     dondeNombraASys: dondeNombraASys(n.texto),
     relacionadas: citadas.slice(0, 6).map((x) => ({ texto: `Comunicación "${x.tipo}" ${x.numero}`, url: urlComunicacion(x) })),
+    evaluacion: ev,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Rentas Córdoba
+
+// Las categorías del sitio de Rentas, en singular para el "tipo" de la norma.
+function tipoRentas(categorias: string[]): string {
+  const c = categorias.find((x) => !/^(novedades|todos|vigente)$/i.test(x)) ?? 'Norma';
+  return `${c.replace(/es\b/g, '').replace(/s\b/g, '')} de Córdoba`.replace(/^Otra /, 'Otra norma: ');
+}
+
+export function explicarRentas(n: NormaRentas, ev: Evaluacion): Hallazgo {
+  const tema = ev.temas[0] ?? 'iibb';
+  const [y, m, d] = n.fecha.split('-');
+  const fuertes = ev.motivos.filter((x) => !x.startsWith('emitida'));
+  return {
+    fuente: 'Rentas Córdoba',
+    emisor: 'Rentas Córdoba (Ingresos Brutos de Córdoba)',
+    titulo: n.titulo,
+    asunto: '',
+    fecha: n.fecha ? `${d}/${m}/${y}` : '',
+    url: n.url,
+    tipo: tipoRentas(n.categorias),
+    // El resumen lo escribe Rentas: es la mejor explicación disponible.
+    queCambia: recortar(n.resumen.replace(/^Fecha de Publicaci[oó]n:?\s*\S+\s*/i, '') || n.texto, 700),
+    paraQue: '',
+    tema,
+    comoAfecta: [
+      ev.nivel === 'alta'
+        ? `Norma impositiva de Córdoba, donde SYS tiene su base, que menciona temas propios de SYS: ${fuertes.slice(0, 3).join(', ')}.`
+        : `Norma impositiva de Córdoba, donde SYS tiene su base${fuertes.length ? ` (toca: ${fuertes.slice(0, 3).join(', ')})` : ''}. Puede que no le aplique.`,
+      TEMAS[tema].impacto,
+    ],
+    queHacer: ev.nivel === 'alta' ? 'Pasársela a quien maneja los impuestos de SYS para ver si cambia algo en Ingresos Brutos.' : 'Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.',
+    fechasClave: fechasClave(`${n.resumen}\n${n.texto}`),
+    dondeNombraASys: dondeNombraASys(n.texto),
+    relacionadas: [],
     evaluacion: ev,
   };
 }

@@ -16,7 +16,7 @@ const AYUDA = `
 <div class="caja"><h3><span class="icono-tema" style="--h:225"><span data-icono="documento"></span></span>Boletín Oficial</h3><p>Todas las normas del día (primera sección). Ahí salen la UIF, ARCA, la CNV, los decretos y algunas comunicaciones del BCRA.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="banco"></span></span>Comunicaciones del BCRA</h3><p>Cada comunicación nueva: "A" (normas), "B" (informativas) y "C" (correcciones). La mayoría <em>no</em> sale en el Boletín Oficial.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:160"><span data-icono="escudo"></span></span>Textos ordenados</h3><p>La versión consolidada de los 9 temas del BCRA que regulan a SYS. Si alguno cambia, avisa. Es la red de seguridad.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:95"><span data-icono="mapa"></span></span>Boletín de Córdoba</h3><p>Las normas de la provincia (1ª Sección), donde publica Rentas Córdoba lo de Ingresos Brutos: retenciones, padrones y SIRCUPA.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:95"><span data-icono="mapa"></span></span>Rentas Córdoba</h3><p>La normativa impositiva de Córdoba, donde SYS tiene su base: Ingresos Brutos, agentes de retención, padrones y SIRCUPA, con el resumen que publica Rentas.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:30"><span data-icono="chispa"></span></span>Prensa del BCRA</h3><p>Las noticias y comunicados del BCRA. No son normas, pero a veces anuncian medidas antes de que salgan: llegan como "Para revisar".</p></div>
 </div>
 
@@ -42,7 +42,8 @@ const AYUDA = `
 <div class="caja"><ul>
 <li>La detección es automática y por reglas. <strong>No reemplaza la lectura de la norma</strong> por parte de un profesional.</li>
 <li>El filtro es generoso a propósito: es peor perder una norma que mostrar una de más. Por eso aparecen normas "Para revisar" que muchas veces no aplican.</li>
-<li>De las provincias, por ahora solo revisa Córdoba. Tampoco revisa los proyectos de ley del Congreso.</li>
+<li>De las provincias, por ahora solo revisa Córdoba, y ahí la normativa impositiva (lo que publica Rentas). El Boletín Oficial de Córdoba no se puede leer desde el servidor: bloquea conexiones de fuera del país.</li>
+<li>Tampoco revisa los proyectos de ley del Congreso.</li>
 </ul></div>`;
 
 /** `dias` en cualquier orden; la página los muestra del más nuevo al más viejo. */

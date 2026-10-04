@@ -15,8 +15,8 @@ export interface Estado {
    * Se vuelven a buscar en cada corrida por si se publican tarde.
    */
   pendientes?: Partial<Record<TipoCom, { numero: number; desde: string }[]>>;
-  /** Último día del Boletín Oficial de Córdoba leído completo (igual que `boletinHasta`). */
-  cordobaHasta?: string;
+  /** Normas de Rentas Córdoba ya leídas (identificadores del sitio). */
+  rentasVistas?: string[];
   /** Noticias del BCRA ya leídas (identificadores del sitio), para no repetirlas. */
   prensaVistas?: string[];
   /** Fuentes que estaban fallando en la última corrida (ya se avisó por mail). */

@@ -1,6 +1,6 @@
 // Arma los informes de días que ya pasaron, como si el monitor hubiera corrido
-// ese día: los boletines (nación y Córdoba) de la fecha, las comunicaciones del
-// BCRA que llevan esa fecha y sus noticias de prensa de ese día. Sirve para arrancar con historial.
+// ese día: el Boletín Oficial de la fecha, las comunicaciones del BCRA que
+// llevan esa fecha, y las normas de Rentas Córdoba y noticias del BCRA de ese día. Sirve para arrancar con historial.
 //
 //   npm run historial -- 2026-09-29 2026-09-30 2026-10-01 2026-10-02
 //
@@ -9,7 +9,7 @@
 // de hoy), así que esos días no los incluyen y el informe lo aclara.
 
 import { avisosDelDia } from './fuentes/boletinOficial.js';
-import { normasCordobaDelDia } from './fuentes/boletinCordoba.js';
+import { listarRentas, type NormaRentas } from './fuentes/rentasCordoba.js';
 import { leerNoticia, listarNoticias, type Noticia } from './fuentes/bcraPrensa.js';
 import { leerComunicacion, type ComunicacionBCRA, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import { leerEstado } from './estado.js';
@@ -74,6 +74,19 @@ try {
   erroresPrensa.push(`Prensa del BCRA: ${(e as Error).message}`);
 }
 
+// Rentas Córdoba: el feed va de lo más nuevo a lo más viejo; se lee hasta
+// pasar la primera fecha pedida.
+const rentasPorDia = new Map<string, NormaRentas[]>();
+try {
+  for (let p = 1; p <= 10; p++) {
+    const pagina = await listarRentas(p);
+    for (const n of pagina) if (fechas.includes(n.fecha)) rentasPorDia.set(n.fecha, [...(rentasPorDia.get(n.fecha) ?? []), n]);
+    if (pagina.some((n) => n.fecha && n.fecha < desde)) break;
+  }
+} catch (e) {
+  erroresPrensa.push(`Rentas Córdoba: ${(e as Error).message}`);
+}
+
 for (const fecha of fechas) {
   const lote = new Lote();
   const revisado: string[] = [];
@@ -85,13 +98,9 @@ for (const fecha of fechas) {
   } catch (e) {
     errores.push(`Boletín Oficial del ${fecha}: ${(e as Error).message}`);
   }
-  try {
-    const normas = await normasCordobaDelDia(fecha);
-    lote.avisosBO(normas, fecha);
-    revisado.push(normas.length ? `Boletín de Córdoba del ${fecha}: ${normas.length} normas.` : `Boletín de Córdoba del ${fecha}: no hubo edición.`);
-  } catch (e) {
-    errores.push(`Boletín de Córdoba del ${fecha}: ${(e as Error).message}`);
-  }
+  const deRentas = rentasPorDia.get(fecha) ?? [];
+  for (const n of deRentas) lote.rentas(n);
+  revisado.push(`Rentas Córdoba: ${deRentas.length} normas publicadas ese día.`);
   const noticias = noticiasPorDia.get(fecha) ?? [];
   for (const n of noticias) lote.noticia(await leerNoticia(n));
   revisado.push(`Prensa del BCRA: ${noticias.length} noticias de ese día.`);

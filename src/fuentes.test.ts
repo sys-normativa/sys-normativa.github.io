@@ -1,60 +1,11 @@
-// Las fuentes nuevas (Córdoba y prensa del BCRA), con recortes reales de sus páginas.
+// Las fuentes de Rentas Córdoba y de prensa del BCRA, con recortes reales de sus páginas.
 
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { fechaDeNoticia, parsearListado } from './fuentes/bcraPrensa.js';
-import { parsearPrimeraSeccion, reflujo } from './fuentes/boletinCordoba.js';
+import { fechaArgentina, parsearFeed } from './fuentes/rentasCordoba.js';
+import { claveCordoba } from './procesar.js';
 import { evaluar } from './reglas.js';
-
-// Tapa y sumario del 1/10/2026: la línea del sumario viene pegada al cuerpo.
-const PAGINA_1_10 = `SUMARIO
-SECCION
-LEGISLACIÓN Y
-NORMATIVAS
-1a1BOLETIN OFICIAL DE LA PROVINCIA DE CORDOBA
-2026
-Año de los Derechos Humanos por
-la Memoria, la Verdad y la Justicia.
-JUEVES 1° DE OCTUBRE DE 2026
-AÑO CXIII - TOMO DCCXLII - Nº 192
-CÓRDOBA, (R.A.)
-http://boletinoficial.cba.gov.ar
-Email: boe@cba.gov.ar
-DIRECCIÓN GENERAL DE CATASTRO
-Resolución General N° 30 ..........................................Pag. 1DIRECCIÓN GENERAL DE CATASTRO
-Resolución General N° 30
-Córdoba, 25 de septiembre 2026.
-VISTO el punto 3.4. del Anexo de la Resolución Normativa N° 2/2025 que
-establece normas técnicas.
-EL DIRECTOR GENERAL DE CATASTRO
-RESUELVE:
-Artículo 1°. RECTIFICAR los valores aprobados por Resolución Gene-
-ral N° 23/2025.`;
-
-test('Córdoba 1/10/2026: separa la norma aunque el sumario venga pegado', () => {
-  const [a, ...resto] = parsearPrimeraSeccion([PAGINA_1_10], 'https://x/1_Secc_011026.pdf');
-  assert.equal(resto.length, 0);
-  assert.equal(a.organismo, 'DIRECCIÓN GENERAL DE CATASTRO');
-  assert.equal(a.titulo, 'Resolución General N° 30');
-  assert.match(a.texto, /^Córdoba, 25 de septiembre/);
-  assert.match(a.texto, /Resolución General N° 23\/2025/, 'une "Gene- ral" partido entre renglones');
-  assert.match(a.url, /#page=1&norma=/);
-});
-
-test('Córdoba: si una norma del sumario no aparece en el cuerpo, va la sección entera', () => {
-  const avisos = parsearPrimeraSeccion([PAGINA_1_10.replace('Resolución General N° 30\nCórdoba', 'Resolucion Gral 30\nCórdoba')], 'https://x/a.pdf');
-  assert.equal(avisos.length, 1);
-  assert.match(avisos[0].titulo, /no se pudo separar/);
-  assert.match(avisos[0].texto, /RECTIFICAR/);
-});
-
-test('Córdoba: sin sumario es un error, no "no hubo nada"', () => {
-  assert.throws(() => parsearPrimeraSeccion(['texto sin sumario'], 'https://x/a.pdf'), /sumario/);
-});
-
-test('reflujo: une renglones y respeta los fines de oración', () => {
-  assert.equal(reflujo(['Que se trami-', 'ta el expediente', 'número 5.', 'Por ello:']), 'Que se tramita el expediente número 5.\nPor ello:');
-});
 
 test('Rentas Córdoba RG 2229/2026 (padrones IIBB y SIRCUPA) -> le afecta, tema IIBB', () => {
   const ev = evaluar(
@@ -79,4 +30,47 @@ test('prensa del BCRA: lee id, fecha, título, link y bajada del listado', () =>
 test('prensa del BCRA: fechas en castellano', () => {
   assert.equal(fechaDeNoticia('jueves, 1 de octubre de 2026'), '2026-10-01');
   assert.equal(fechaDeNoticia('sin fecha'), '');
+});
+
+// Entrada real del feed de Rentas Córdoba (22/9/2026), recortada.
+const FEED = `<rss><channel><item>
+<title>Resolución SIP N° 19/2026 Letra D &#8211; Baja de Agentes de Retención y Percepción de Ingresos Brutos</title>
+<link>https://www.rentascordoba.gob.ar/cms/resolucion-sip-n-19-2026-letra-d/</link>
+<pubDate>Tue, 22 Sep 2026 11:10:28 +0000</pubDate>
+<category><![CDATA[Novedades]]></category>
+<category><![CDATA[Resoluciones SIP]]></category>
+<guid isPermaLink="false">https://www.rentascordoba.gob.ar/cms/?p=101422</guid>
+<description><![CDATA[<p>Fecha de Publicación 22/09/2026</p> <p>Da de baja de la nómina de agentes de retención y percepción a Avex S.A. La vigencia es desde la publicación en el boletín oficial.</p> <p>La entrada <a href="https://x">Resolución SIP</a> se publicó primero en <a href="https://x">Rentas Córdoba</a>.</p>]]></description>
+<content:encoded><![CDATA[<p>Texto completo.</p>]]></content:encoded>
+</item><item>
+<title>Acreditación de inversión</title><link>https://x/guia/</link><pubDate>Mon, 14 Sep 2026 10:00:00 +0000</pubDate>
+<category><![CDATA[Gestiones CMS]]></category><category><![CDATA[Guía Trámite]]></category><guid>https://x/?p=1</guid>
+</item></channel></rss>`;
+
+test('Rentas Córdoba: lee la norma del feed y saltea las guías de trámites', () => {
+  const normas = parsearFeed(FEED);
+  assert.equal(normas.length, 1);
+  const [n] = normas;
+  assert.equal(n.id, 'p=101422');
+  assert.equal(n.fecha, '2026-09-22');
+  assert.equal(n.titulo, 'Resolución SIP N° 19/2026 Letra D – Baja de Agentes de Retención y Percepción de Ingresos Brutos');
+  assert.match(n.resumen, /Da de baja de la nómina/);
+  assert.doesNotMatch(n.resumen, /se publicó primero/);
+});
+
+test('Rentas Córdoba: la fecha se toma en hora argentina', () => {
+  // 01:30 UTC del 1/10 son las 22:30 del 30/9 en Argentina.
+  assert.equal(fechaArgentina('Thu, 01 Oct 2026 01:30:00 +0000'), '2026-09-30');
+});
+
+test('la misma norma de Córdoba por el Boletín o por Rentas no se repite', () => {
+  const boletin = claveCordoba({ titulo: 'Resolución General N° 2229', fuente: 'Boletín Oficial de Córdoba', emisor: 'Dirección General de Rentas (Córdoba)' });
+  const rentas = claveCordoba({ titulo: 'Resolución General N° 2229/2026 – Padrón de Octubre de 2026', fuente: 'Rentas Córdoba', emisor: 'Rentas Córdoba (Ingresos Brutos de Córdoba)' });
+  assert.equal(boletin, 'cba-rg-2229');
+  assert.equal(rentas, boletin);
+  const sipBoletin = claveCordoba({ titulo: 'Resolución N° 19 - Letra:D', fuente: 'Boletín Oficial de Córdoba', emisor: 'Secretaría de Ingresos Públicos (Córdoba)' });
+  const sipRentas = claveCordoba({ titulo: 'Resolución SIP N° 19/2026 Letra D – Baja de Agentes', fuente: 'Rentas Córdoba', emisor: 'Rentas Córdoba (Ingresos Brutos de Córdoba)' });
+  assert.equal(sipBoletin, 'cba-sip-19');
+  assert.equal(sipRentas, sipBoletin);
+  assert.equal(claveCordoba({ titulo: 'Resolución General N° 2229', fuente: 'Boletín Oficial', emisor: 'ARCA' }), null);
 });

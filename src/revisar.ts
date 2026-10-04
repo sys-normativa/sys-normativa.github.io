@@ -2,7 +2,7 @@
 // datos/informes/, rearma la página (salida/index.html) y actualiza
 // datos/estado.json. Si ya corrió ese día, suma lo nuevo al mismo informe.
 //
-//   npm run revisar                         -> boletines de hoy (nación y Córdoba) + novedades del BCRA
+//   npm run revisar                         -> Boletín Oficial de hoy + novedades del BCRA y de Rentas Córdoba
 //   npm run revisar -- --fecha 2026-10-02   -> Boletín Oficial de ese día
 //   npm run revisar -- --bcra-desde A=8480  -> relee el BCRA desde ese número (para probar)
 //
@@ -10,7 +10,7 @@
 // porque un "hoy no hubo nada" falso es el peor error posible.
 
 import { avisosDelDia, type AvisoBO } from './fuentes/boletinOficial.js';
-import { normasCordobaDelDia } from './fuentes/boletinCordoba.js';
+import { listarRentas } from './fuentes/rentasCordoba.js';
 import { leerNoticia, listarNoticias } from './fuentes/bcraPrensa.js';
 import { buscarUltimo, existe, leerComunicacion, nuevasDesde, type TipoCom } from './fuentes/bcraComunicaciones.js';
 import { leerEncabezado, TEXTOS_ORDENADOS } from './fuentes/bcraTextosOrdenados.js';
@@ -34,14 +34,13 @@ const revisado: string[] = [];
 const errores: string[] = [];
 let huboEdicion = true;
 
-// 1. Boletines (nacional y de Córdoba): el de hoy, más los días anteriores que
-// no se pudieron leer completos (si una corrida falla, la siguiente los
-// recupera). Ayer se relee una vez más por si se agregó algo tarde. Lo ya
-// informado no se repite.
+// 1. Boletín Oficial: el de hoy, más los días anteriores que no se pudieron
+// leer completos (si una corrida falla, la siguiente los recupera). Ayer se
+// relee una vez más por si se agregó algo tarde. Lo ya informado no se repite.
 const MAX_DIAS_ATRAS = 10;
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
-async function recorrerBoletin(nombre: string, clave: 'boletinHasta' | 'cordobaHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
+async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
   const hasta = estado[clave];
   const dias = manual || !hasta ? [fecha] : diasEntre(hasta, fecha).slice(-MAX_DIAS_ATRAS);
   // Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
@@ -66,9 +65,7 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta' | 'cordobaH
   return edicionHoy;
 }
 
-const edicionNacional = await recorrerBoletin('Boletín Oficial', 'boletinHasta', (dia) => avisosDelDia(dia.replaceAll('-', '')));
-const edicionCordoba = await recorrerBoletin('Boletín de Córdoba', 'cordobaHasta', normasCordobaDelDia);
-huboEdicion = edicionNacional || edicionCordoba;
+huboEdicion = await recorrerBoletin('Boletín Oficial', 'boletinHasta', (dia) => avisosDelDia(dia.replaceAll('-', '')));
 
 // 2. Comunicaciones del BCRA
 const forzado = argumento('bcra-desde');
@@ -142,8 +139,37 @@ for (const { archivo, tema, temaSys } of TEXTOS_ORDENADOS) {
 }
 revisado.push(`Textos ordenados del BCRA: ${TEXTOS_ORDENADOS.length} temas, ${cambiados} cambiaron.`);
 
-// 4. Prensa del BCRA: las noticias que no se vieron todavía.
+// 4. Rentas Córdoba (Ingresos Brutos de la provincia donde SYS tiene su base):
+// las normas que no se vieron todavía. Si toda la página es nueva, se miran
+// las siguientes para no perder ninguna.
+const MAX_PAGINAS_RENTAS = 5;
 const VISTAS_GUARDADAS = 300;
+try {
+  const vistas = new Set(estado.rentasVistas ?? []);
+  const primera = await listarRentas(1);
+  if (!estado.rentasVistas) {
+    // Primera corrida: se fija el punto de partida sin informar el histórico.
+    estado.rentasVistas = primera.map((n) => n.id);
+    revisado.push(`Rentas Córdoba: primera corrida, se arranca desde "${primera[0]?.titulo}".`);
+  } else {
+    const nuevas = primera.filter((n) => !vistas.has(n.id));
+    let todasNuevas = nuevas.length === primera.length;
+    for (let p = 2; p <= MAX_PAGINAS_RENTAS && todasNuevas; p++) {
+      const pagina = await listarRentas(p);
+      const mas = pagina.filter((n) => !vistas.has(n.id));
+      nuevas.push(...mas);
+      todasNuevas = mas.length === pagina.length;
+    }
+    if (todasNuevas) errores.push(`Rentas Córdoba: hay más de ${MAX_PAGINAS_RENTAS} páginas de normas nuevas; las más viejas pueden no haberse revisado.`);
+    for (const n of nuevas) lote.rentas(n);
+    estado.rentasVistas = [...nuevas.map((n) => n.id), ...estado.rentasVistas].slice(0, VISTAS_GUARDADAS);
+    revisado.push(`Rentas Córdoba: ${nuevas.length} normas nuevas.`);
+  }
+} catch (e) {
+  errores.push(`Rentas Córdoba: ${(e as Error).message}`);
+}
+
+// 5. Prensa del BCRA: las noticias que no se vieron todavía.
 try {
   const vistas = new Set(estado.prensaVistas ?? []);
   const primera = await listarNoticias();
@@ -165,7 +191,7 @@ try {
   errores.push(`Prensa del BCRA: ${(e as Error).message}`);
 }
 
-// 5. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
+// 6. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
 const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion });
 await escribirSitio(resumen.generado);
 
