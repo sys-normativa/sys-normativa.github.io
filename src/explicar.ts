@@ -215,8 +215,8 @@ export function destinatariosLegibles(d: string, max = 4): string {
 
 function queHacer(nivel: Evaluacion['nivel']): string {
   return nivel === 'alta'
-    ? 'Pasársela a compliance para ver si SYS tiene que adecuar algo y desde cuándo.'
-    : 'Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.';
+    ? 'Evaluar las adecuaciones requeridas y sus plazos.'
+    : 'Evaluar su aplicabilidad a SYS.';
 }
 
 export function explicarComunicacion(c: ComunicacionBCRA, ev: Evaluacion, dirigida: boolean): Hallazgo {
@@ -230,18 +230,18 @@ export function explicarComunicacion(c: ComunicacionBCRA, ev: Evaluacion, dirigi
   if (dirigida) {
     comoAfecta.push(
       /que ofrecen cuentas de pago/i.test(c.destinatarios)
-        ? 'Va dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, que es lo que es SYS: le aplica.'
-        : 'Va dirigida a los proveedores de servicios de pago: le aplica a SYS.',
+        ? 'Dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, categoría que comprende a SYS.'
+        : 'Dirigida a los proveedores de servicios de pago, categoría que comprende a SYS.',
     );
   } else {
     comoAfecta.push(
-      `No va dirigida a los PSP${c.destinatarios ? ` (va a: ${destinatariosLegibles(c.destinatarios)})` : ''}, pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.`,
+      `No está dirigida a los PSP${c.destinatarios ? ` (destinatarios: ${destinatariosLegibles(c.destinatarios)})` : ''}, pero trata materias vinculadas a la actividad de SYS.`,
     );
   }
   comoAfecta.push(TEMAS[tema].impacto);
   if (tipo === 'Actualización del texto ordenado' && citadas.length) {
     const lista = citadas.map((x) => `${x.tipo} ${x.numero}`).join(', ');
-    comoAfecta.push(`No trae reglas nuevas: pasa al texto ordenado lo que ya ${citadas.length > 1 ? 'dispusieron las comunicaciones' : 'dispuso la comunicación'} ${lista}. Si no se revisó, es lo que hay que leer.`);
+    comoAfecta.push(`No incorpora disposiciones nuevas: actualiza el texto ordenado con lo dispuesto por ${citadas.length > 1 ? 'las comunicaciones' : 'la comunicación'} ${lista}.`);
   }
 
   // Para el "qué cambia": la resolución textual si la hay; si no, la carta.
@@ -255,7 +255,7 @@ export function explicarComunicacion(c: ComunicacionBCRA, ev: Evaluacion, dirigi
     fecha: c.fecha,
     url: c.url,
     tipo,
-    queCambia: queCambia || 'No se pudo leer la carta de la comunicación: hay que abrir el PDF.',
+    queCambia: queCambia || 'El texto de la comunicación no pudo procesarse. Consultar el documento oficial.',
     paraQue: '',
     tema,
     comoAfecta,
@@ -329,8 +329,8 @@ export function explicarAvisoBO(a: AvisoBO, ev: Evaluacion, fecha: string): Hall
 
   const comoAfecta = [
     ev.nivel === 'alta'
-      ? `Menciona temas propios de SYS: ${fuertes.slice(0, 3).join(', ')}.`
-      : `Toca temas cercanos a SYS (${fuertes.slice(0, 3).join(', ')}), pero no nombra su actividad: puede que no le aplique.`,
+      ? `Menciona materias propias de la actividad de SYS: ${fuertes.slice(0, 3).join(', ')}.`
+      : `Trata materias vinculadas a SYS (${fuertes.slice(0, 3).join(', ')}), sin mencionar expresamente su actividad.`,
     TEMAS[tema].impacto,
   ];
   const citadas = comunicacionesCitadas(cuerpo);
@@ -371,13 +371,13 @@ export function explicarTextoOrdenado(t: { tema: string; temaSys: Tema; url: str
     // Cada versión es una novedad distinta: el link lleva la comunicación incorporada.
     url: `${t.url}#${ahora.replace(/\s+/g, '')}`,
     tipo: 'Cambio en un texto ordenado',
-    queCambia: `El BCRA actualizó la versión consolidada de "${t.tema}". Antes llegaba hasta la Comunicación ${antes}; ahora incorpora la ${ahora}. El texto ordenado marca lo nuevo en negrita y lo que se saca, tachado.`,
+    queCambia: `El BCRA actualizó la versión consolidada de "${t.tema}". Antes llegaba hasta la Comunicación ${antes}; ahora incorpora la ${ahora}. Las modificaciones se destacan en el texto ordenado.`,
     paraQue: '',
     tema: t.temaSys,
     comoAfecta: [
-      'Es uno de los temas que regulan a SYS: el cambio le puede aplicar.',
+      'Texto ordenado que regula la actividad de SYS.',
       TEMAS[t.temaSys].impacto,
-      'Este aviso es la red de seguridad: si la comunicación que lo cambió no apareció en un informe anterior, es la que hay que leer.',
+      'Corresponde revisar la comunicación incorporada si no fue informada previamente.',
     ],
     queHacer: queHacer('alta'),
     fechasClave: [],
@@ -406,10 +406,10 @@ export function explicarNoticia(n: Noticia, ev: Evaluacion): Hallazgo {
     paraQue: '',
     tema,
     comoAfecta: [
-      'Es un anuncio del BCRA, no una norma: puede adelantar una comunicación que todavía no salió. Cuando salga, va a aparecer en el monitor como norma.',
+      'Anuncio del BCRA, sin carácter normativo. Puede anticipar una comunicación futura, que se informará al publicarse.',
       TEMAS[tema].impacto,
     ],
-    queHacer: 'Tenerlo en el radar. Si toca la operatoria de SYS, conviene anticiparse antes de que salga la norma.',
+    queHacer: 'Seguimiento: evaluar si corresponde anticipar adecuaciones.',
     fechasClave: fechasClave(n.texto),
     dondeNombraASys: dondeNombraASys(n.texto),
     relacionadas: citadas.slice(0, 6).map((x) => ({ texto: `Comunicación "${x.tipo}" ${x.numero}`, url: urlComunicacion(x) })),
@@ -444,11 +444,11 @@ export function explicarRentas(n: NormaRentas, ev: Evaluacion): Hallazgo {
     tema,
     comoAfecta: [
       ev.nivel === 'alta'
-        ? `Norma impositiva de Córdoba, donde SYS tiene su base, que menciona temas propios de SYS: ${fuertes.slice(0, 3).join(', ')}.`
-        : `Norma impositiva de Córdoba, donde SYS tiene su base${fuertes.length ? ` (toca: ${fuertes.slice(0, 3).join(', ')})` : ''}. Puede que no le aplique.`,
+        ? `Norma tributaria de la Provincia de Córdoba que menciona materias propias de la actividad de SYS: ${fuertes.slice(0, 3).join(', ')}.`
+        : `Norma tributaria de la Provincia de Córdoba${fuertes.length ? ` (materias: ${fuertes.slice(0, 3).join(', ')})` : ''}.`,
       TEMAS[tema].impacto,
     ],
-    queHacer: ev.nivel === 'alta' ? 'Pasársela a quien maneja los impuestos de SYS para ver si cambia algo en Ingresos Brutos.' : 'Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.',
+    queHacer: ev.nivel === 'alta' ? 'Evaluar el impacto en las obligaciones de Ingresos Brutos de SYS.' : 'Evaluar su aplicabilidad a SYS.',
     fechasClave: fechasClave(`${n.resumen}\n${n.texto}`),
     dondeNombraASys: dondeNombraASys(n.texto),
     relacionadas: [],

@@ -14,11 +14,11 @@
       "paraQue": "",
       "tema": "psp",
       "comoAfecta": [
-        "Va dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, que es lo que es SYS: le aplica.",
-        "Es el régimen que habilita a SYS a operar como billetera. Un cambio acá puede tocar el registro, el resguardo de los fondos de los clientes, la información que se les da o lo que hay que reportar al BCRA.",
-        "No trae reglas nuevas: pasa al texto ordenado lo que ya dispuso la comunicación A 8472. Si no se revisó, es lo que hay que leer."
+        "Dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, categoría que comprende a SYS.",
+        "Régimen que habilita a SYS a operar como proveedor de servicios de pago. Sus cambios pueden alcanzar el registro, el resguardo de fondos de clientes, la información a clientes y los reportes al BCRA.",
+        "No incorpora disposiciones nuevas: actualiza el texto ordenado con lo dispuesto por la comunicación A 8472."
       ],
-      "queHacer": "Pasársela a compliance para ver si SYS tiene que adecuar algo y desde cuándo.",
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
       "fechasClave": [],
       "dondeNombraASys": "",
       "relacionadas": [

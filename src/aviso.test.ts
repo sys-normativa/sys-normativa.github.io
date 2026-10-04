@@ -17,7 +17,7 @@ test('sin novedades ni errores no hay aviso', () => {
 
 test('el título cuenta lo nuevo y el cuerpo menciona al destinatario', () => {
   const a = armarAviso('2026-10-02', [norma('alta', 'Comunicación "A" 8488'), norma('revisar', 'Resolución 400/2026')], ['BCRA "B": HTTP 500'], 'https://sitio');
-  assert.equal(a?.titulo, 'Normativa SYS 2/10: 1 le afecta, 1 para revisar, ⚠ 1 fuente falló');
+  assert.equal(a?.titulo, 'Normativa SYS 2/10: 1 le afecta, 1 para revisar, ⚠ 1 fuente no disponible');
   assert.match(a!.cuerpo, /@Guidoparisi91/);
   assert.match(a!.cuerpo, /\(https:\/\/sitio\)/);
 });

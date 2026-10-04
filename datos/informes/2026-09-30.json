@@ -14,10 +14,10 @@
       "paraQue": "",
       "tema": "iibb",
       "comoAfecta": [
-        "Menciona temas propios de SYS: proveedores de servicios de pago, cuentas de pago, SIRCUPA (IIBB sobre cuentas de pago).",
-        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
+        "Menciona materias propias de la actividad de SYS: proveedores de servicios de pago, cuentas de pago, SIRCUPA (IIBB sobre cuentas de pago).",
+        "Retenciones de Ingresos Brutos sobre las acreditaciones en cuentas de pago. Puede modificar las alícuotas aplicables a los clientes de SYS o sus obligaciones como agente."
       ],
-      "queHacer": "Pasársela a compliance para ver si SYS tiene que adecuar algo y desde cuándo.",
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
       "fechasClave": [],
       "dondeNombraASys": "…II del citado Decreto regula el Régimen de Recaudación Bancaria del Impuesto sobre los Ingresos Brutos y el Régimen de recaudación en cuentas de pago abiertas en las entidades “Proveedores de servicios de pago que ofrecen cuentas de pago (PSPOCP)” y, respecto a este último Régimen, dispone que revisten la…",
       "relacionadas": [],

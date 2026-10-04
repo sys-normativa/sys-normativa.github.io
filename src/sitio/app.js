@@ -91,8 +91,8 @@ const estiloTema = (t) => ESTILO_TEMA[t] ?? ['documento', 225];
 
 const VEREDICTOS = {
   aplica: ['alta', 'Aplica a SYS'],
-  dudoso: ['rev', 'Puede aplicar'],
-  no_aplica: ['nada', 'La IA no ve impacto'],
+  dudoso: ['rev', 'Aplicabilidad a evaluar'],
+  no_aplica: ['nada', 'Sin impacto identificado'],
 };
 
 /** El resumen de la IA: veredicto, qué cambia, cómo le afecta y qué hacer. Va marcado como IA. */
@@ -101,10 +101,10 @@ function enPocasPalabras(h) {
   if (!ia) return '';
   const [clase, texto] = VEREDICTOS[ia.veredicto] ?? [];
   return [
-    `<div class="ia"><b>${icono('chispa')} En pocas palabras${texto ? ` <span class="pill ${clase}">${texto}</span>` : ''}</b>`,
+    `<div class="ia"><b>${icono('chispa')} Síntesis${texto ? ` <span class="pill ${clase}">${texto}</span>` : ''}</b>`,
     `<p>${esc(ia.queCambia)}</p><p>${esc(ia.comoAfecta)}</p>`,
     ia.queHacer ? `<div class="hacer">${icono('check')}<div><strong>Qué hacer:</strong> ${esc(ia.queHacer)}</div></div>` : '',
-    '<span class="chico">Resumen hecho con IA: puede equivocarse. El texto de la norma está abajo.</span></div>',
+    '<span class="chico">Síntesis generada automáticamente. Verificar con el texto oficial.</span></div>',
   ].join('');
 }
 
@@ -115,15 +115,15 @@ function explicacion(h) {
   const bloque = (ic, titulo, html) => `<div class="bloque"><b>${icono(ic)} ${titulo}</b>${html}</div>`;
   return [
     '<div class="bloques">',
-    bloque('documento', 'Qué cambia (textual)', `<p>${esc(h.queCambia)}</p>`),
-    h.paraQue ? bloque('flecha', 'Para qué, según la norma', `<p>${esc(h.paraQue)}</p>`) : '',
-    bloque('billetera', 'Cómo le afecta a SYS', h.comoAfecta.map((p) => `<p>${esc(p)}</p>`).join('')),
+    bloque('documento', 'Texto de la disposición', `<p>${esc(h.queCambia)}</p>`),
+    h.paraQue ? bloque('flecha', 'Fundamentos', `<p>${esc(h.paraQue)}</p>`) : '',
+    bloque('billetera', 'Alcance para SYS', h.comoAfecta.map((p) => `<p>${esc(p)}</p>`).join('')),
     h.fechasClave.length ? bloque('calendario', 'Fechas clave', `<ul>${h.fechasClave.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>`) : '',
-    h.dondeNombraASys ? bloque('lupa', 'Dónde nombra a SYS', `<blockquote>${esc(h.dondeNombraASys)}</blockquote>`) : '',
+    h.dondeNombraASys ? bloque('lupa', 'Mención a la actividad de SYS', `<blockquote>${esc(h.dondeNombraASys)}</blockquote>`) : '',
     h.relacionadas.length
       ? bloque('enlace', 'Normas relacionadas', `<ul>${h.relacionadas.map((e) => `<li><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.texto)}</a>${e.detalle ? `: ${esc(e.detalle)}` : ''}</li>`).join('')}</ul>`)
       : '',
-    bloque('ojo', 'Por qué apareció', `<p class="chico">${esc(h.evaluacion.motivos.join(', '))}.</p>`),
+    bloque('ojo', 'Criterios de detección', `<p class="chico">${esc(h.evaluacion.motivos.join(', '))}.</p>`),
     '</div>',
   ].join('');
 }
@@ -149,10 +149,10 @@ function tarjeta(h) {
   const cabeza = `<div class="cabeza">${iconoTema(h)}<div>${etiquetas(h)}<h3>${esc(h.titulo)}</h3><div class="meta">${meta(h)}</div></div></div>`;
   const generico = `<div class="hacer">${icono('check')}<div><strong>Qué hacer:</strong> ${esc(h.queHacer)}</div></div>`;
   const cuerpo = h.resumenIa
-    ? `${enPocasPalabras(h)}${botonNorma(h)}<details><summary>Ver el texto de la norma y el detalle</summary>${explicacion(h)}</details>`
+    ? `${enPocasPalabras(h)}${botonNorma(h)}<details><summary>Ver detalle de la norma</summary>${explicacion(h)}</details>`
     : esAlta(h)
       ? `${explicacion(h)}${generico}${botonNorma(h)}`
-      : `<p class="resumen-corto">${esc(h.comoAfecta[0])}</p>${botonNorma(h)}<details><summary>Ver la explicación completa</summary>${explicacion(h)}</details>`;
+      : `<p class="resumen-corto">${esc(h.comoAfecta[0])}</p>${botonNorma(h)}<details><summary>Ver detalle de la norma</summary>${explicacion(h)}</details>`;
   return `<article class="tarjeta ${esAlta(h) ? 'alta' : 'revisar'}">${cabeza}${cuerpo}</article>`;
 }
 
@@ -160,7 +160,7 @@ function tarjeta(h) {
 function descartadas(lista) {
   if (!lista.length) return '';
   const items = lista.map((h) => `<li><a href="${esc(h.url)}" target="_blank" rel="noopener">${esc(h.titulo)}</a> <span class="chico">— ${esc(h.resumenIa?.comoAfecta ?? '')}</span></li>`);
-  return `<details class="caja descartadas"><summary>${plural(lista.length, 'norma más que la IA revisó y no aplica', 'normas más que la IA revisó y no aplican')} a SYS</summary><p class="chico">Pasaron el primer filtro, pero no le cambian nada a SYS. Quedan acá por si acaso.</p><ul>${items.join('')}</ul></details>`;
+  return `<details class="caja descartadas"><summary>${plural(lista.length, 'norma analizada sin impacto', 'normas analizadas sin impacto')} para SYS</summary><p class="chico">Normas vinculadas a la actividad de SYS que, analizadas, no requieren acciones. Se listan como referencia.</p><ul>${items.join('')}</ul></details>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -181,7 +181,7 @@ function fuentesRevisadas(r) {
     ...(reviso('prensa del bcra') ? [['Prensa del BCRA', fallo('prensa del bcra')]] : []),
   ];
   const chips = f.map(([n, mal]) => `<span class="fuente${mal ? ' mal' : ''}">${icono(mal ? 'cruz' : 'check')} ${n}</span>`);
-  if (sinTextos) chips.push(`<span class="fuente neutra">${icono('reloj')} Textos ordenados: se vigilan desde el 3/10</span>`);
+  if (sinTextos) chips.push(`<span class="fuente neutra">${icono('reloj')} Textos ordenados: monitoreados desde el 03/10/2026</span>`);
   return `<div class="fuentes">${chips.join('')}</div>`;
 }
 
@@ -195,27 +195,27 @@ function informe(r, sobreTitulo) {
     `<div class="sobre-titulo">${sobreTitulo}</div>`,
     `<h1>${esc(fechaLarga(r.fecha).replace(/^./, (l) => l.toUpperCase()))}</h1>`,
     '<div class="tablero">',
-    cifra(altas.length ? 'alta' : 'cero', altas.length, altas.length === 1 ? 'Le afecta a SYS' : 'Le afectan a SYS', altas.length ? 'Las tiene que ver compliance' : 'Nada que adecuar', altas.length ? '#bloque-alta' : ''),
-    cifra(rev.length ? 'rev' : 'cero', rev.length, 'Para revisar', rev.length ? 'Una mirada rápida alcanza' : 'Nada pendiente', rev.length ? '#bloque-rev' : ''),
+    cifra(altas.length ? 'alta' : 'cero', altas.length, altas.length === 1 ? 'Le afecta a SYS' : 'Le afectan a SYS', altas.length ? 'Requieren análisis de Compliance' : 'Sin novedades', altas.length ? '#bloque-alta' : ''),
+    cifra(rev.length ? 'rev' : 'cero', rev.length, 'Para revisar', rev.length ? 'Aplicabilidad a evaluar' : 'Sin novedades', rev.length ? '#bloque-rev' : ''),
     r.errores.length
-      ? cifra('mal', icono('alerta'), plural(r.errores.length, 'fuente falló', 'fuentes fallaron'), 'Revisar a mano', '#fallaron')
-      : cifra('ok', icono('check'), 'Todo revisado', 'Todas las fuentes respondieron', ''),
+      ? cifra('mal', icono('alerta'), plural(r.errores.length, 'fuente no disponible', 'fuentes no disponibles'), 'Verificar manualmente', '#fallaron')
+      : cifra('ok', icono('check'), 'Fuentes verificadas', 'Todas las fuentes disponibles', ''),
     '</div>',
     fuentesRevisadas(r),
   ];
   if (r.errores.length) {
-    c.push(`<div class="aviso" id="fallaron">${icono('alerta')}<div>No se pudieron revisar todas las fuentes. Lo que no se revisó puede tener novedades: hay que mirarlo a mano.<ul>${r.errores.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></div></div>`);
+    c.push(`<div class="aviso" id="fallaron">${icono('alerta')}<div>Una o más fuentes no estuvieron disponibles. Se recomienda verificarlas manualmente; la próxima actualización volverá a consultarlas.<ul>${r.errores.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></div></div>`);
   }
   if (!altas.length && !rev.length) {
-    c.push(`<div class="tranquilo">${icono('check')}<div><b>${r.errores.length ? 'Nada en las fuentes que respondieron' : 'Día tranquilo'}</b>${r.errores.length ? 'En las fuentes que sí se pudieron revisar no apareció nada que afecte a SYS.' : 'No apareció nada que afecte a SYS. No hay que hacer nada.'}</div></div>`);
+    c.push(`<div class="tranquilo">${icono('check')}<div><b>${r.errores.length ? 'Sin novedades en las fuentes disponibles' : 'Sin novedades'}</b>${r.errores.length ? 'Las fuentes consultadas no publicaron normas con impacto para SYS.' : 'No se publicaron normas con impacto para SYS.'}</div></div>`);
   }
-  if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Le cambian algo a SYS como billetera. Las tiene que ver compliance.</p>', ...altas.map(tarjeta));
-  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Nombran temas de SYS, pero no está claro que le cambien algo: dependen de cómo opere SYS o la IA no ve impacto. Una mirada rápida alcanza.</p>', ...rev.map(tarjeta));
+  if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Normas con impacto en la operatoria o las obligaciones de SYS.</p>', ...altas.map(tarjeta));
+  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Normas vinculadas a la actividad de SYS cuya aplicabilidad requiere evaluación.</p>', ...rev.map(tarjeta));
   c.push(descartadas(desc));
   c.push(
-    '<details class="caja revisado"><summary>Qué se revisó en este informe</summary>',
+    '<details class="caja revisado"><summary>Fuentes consultadas</summary>',
     `<ul>${r.revisado.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`,
-    `<p class="chico">Revisión hecha el ${esc(r.generado)} (hora de Argentina).</p></details>`,
+    `<p class="chico">Actualizado el ${esc(r.generado)} (hora de Argentina).</p></details>`,
   );
   return c.join('');
 }
@@ -238,11 +238,11 @@ function vistaDias() {
       a ? `<span class="pill alta">${plural(a, 'le afecta', 'le afectan')}</span>` : '',
       rev ? `<span class="pill rev">${rev} para revisar</span>` : '',
       !a && !rev ? '<span class="pill nada">Sin novedades</span>' : '',
-      r.errores.length ? `<span class="pill alta">⚠ ${plural(r.errores.length, 'fuente falló', 'fuentes fallaron')}</span>` : '<span class="pill ok">✓ Fuentes OK</span>',
+      r.errores.length ? `<span class="pill alta">⚠ ${plural(r.errores.length, 'fuente no disponible', 'fuentes no disponibles')}</span>` : '<span class="pill ok">✓ Fuentes verificadas</span>',
     ].join('');
     return `<a class="dia ${a ? 'con-alta' : rev ? 'con-rev' : ''}" href="#dia/${r.fecha}"><div class="fecha"><b>${f.d}</b><span>${MESES[f.m - 1].slice(0, 3)}</span></div><div class="que"><b>${esc(f.dia)}</b><div class="pills">${pills}</div></div><span class="ir">›</span></a>`;
   });
-  return ['<div class="sobre-titulo">Historial</div>', '<h1>Informes por día</h1>', '<p class="bajada">Un informe por cada día hábil revisado. Tocá un día para verlo completo.</p>', `<div class="linea-tiempo">${items.join('')}</div>`].join('');
+  return ['<div class="sobre-titulo">Historial</div>', '<h1>Informes por día</h1>', '<p class="bajada">Un informe por día hábil. Seleccione un día para ver el detalle.</p>', `<div class="linea-tiempo">${items.join('')}</div>`].join('');
 }
 
 function vistaDia(fecha) {
@@ -286,7 +286,7 @@ function ponerIconos(raiz) {
 
 ponerIconos(document);
 window.addEventListener('hashchange', mostrar);
-const textoActualizado = `Revisado ${DATOS.generado}`;
+const textoActualizado = `Actualizado ${DATOS.generado}`;
 document.getElementById('actualizado').insertAdjacentText('beforeend', textoActualizado);
 document.getElementById('actualizado-movil').textContent = `${textoActualizado} (hora de Argentina)`;
 mostrar();

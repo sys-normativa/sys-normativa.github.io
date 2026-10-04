@@ -7,56 +7,47 @@ import type { Resumen } from './informe.js';
 import { TEMAS } from './temas.js';
 
 const AYUDA = `
-<div class="sobre-titulo">Guía rápida</div>
+<div class="sobre-titulo">Información del servicio</div>
 <h1>Cómo funciona</h1>
-<p class="bajada">Un monitor que revisa solo, varias veces por semana, las normas nuevas que pueden afectar a <strong>SYS Global Pay</strong>, billetera virtual para empresas registrada en el BCRA como proveedor de servicios de pago (PSP), y avisa por mail cuando aparece algo que le importa.</p>
+<p class="bajada">Servicio de monitoreo normativo para <strong>SYS Global Pay</strong>, proveedor de servicios de pago registrado en el BCRA. Identifica las normas publicadas por los organismos que regulan su actividad, evalúa su impacto e indica las acciones requeridas.</p>
 
-<h2>Qué revisa</h2>
+<h2>Fuentes monitoreadas</h2>
 <div class="grilla">
-<div class="caja"><h3><span class="icono-tema" style="--h:225"><span data-icono="documento"></span></span>Boletín Oficial</h3><p>Todas las normas del día (primera sección). Ahí salen la UIF, ARCA, la CNV, la Comisión Arbitral, los decretos y algunas comunicaciones del BCRA.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="banco"></span></span>Comunicaciones del BCRA</h3><p>Cada comunicación nueva: "A" (normas), "B" (informativas) y "C" (correcciones). La mayoría <em>no</em> sale en el Boletín Oficial.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:160"><span data-icono="escudo"></span></span>Textos ordenados</h3><p>La versión consolidada de los 9 temas del BCRA que regulan a SYS. Si alguno cambia, avisa. Es la red de seguridad.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:95"><span data-icono="mapa"></span></span>Rentas Córdoba</h3><p>La normativa impositiva de Córdoba, donde SYS tiene su base: Ingresos Brutos, agentes de retención, padrones y SIRCUPA, con el resumen que publica Rentas.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:30"><span data-icono="chispa"></span></span>Prensa del BCRA</h3><p>Las noticias y comunicados del BCRA. No son normas, pero a veces anuncian medidas antes de que salgan: llegan como mucho a "Para revisar".</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:225"><span data-icono="documento"></span></span>Boletín Oficial</h3><p>Primera sección completa: normas de la UIF, ARCA, la CNV, la Comisión Arbitral, decretos y comunicaciones del BCRA publicadas allí.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="banco"></span></span>Comunicaciones del BCRA</h3><p>Comunicaciones "A", "B" y "C" publicadas por el Banco Central, incluidas las que no se publican en el Boletín Oficial.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:160"><span data-icono="escudo"></span></span>Textos ordenados del BCRA</h3><p>Control de cambios en los nueve textos ordenados que regulan la actividad de SYS.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:95"><span data-icono="mapa"></span></span>Rentas Córdoba</h3><p>Normativa tributaria de la Provincia de Córdoba: Ingresos Brutos, regímenes de retención y percepción, padrones y SIRCUPA.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:30"><span data-icono="chispa"></span></span>Comunicados del BCRA</h3><p>Anuncios de prensa del Banco Central que pueden anticipar nuevas regulaciones. Se informan como "Para revisar".</p></div>
 </div>
 
-<h2>Cómo decide qué mostrar</h2>
-<div class="grilla dos">
-<div class="caja"><h3><span class="icono-tema" style="--h:200"><span data-icono="lupa"></span></span>1. Palabras clave</h3><p>Cada norma pasa por un filtro de palabras propias de SYS (proveedores de servicios de pago, cuentas de pago, billeteras, SIRCUPA, transferencias inmediatas…) y del organismo que la firma. Lo que el BCRA dirige a los PSP pasa siempre.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="chispa"></span></span>2. La IA la lee</h3><p>Dice si le aplica a SYS, qué cambia y qué hacer. Lo que nombra la actividad de SYS o viene de la UIF <strong>nunca se esconde</strong>: si la IA no ve impacto, queda en "Para revisar".</p></div>
-</div>
-<div class="caja"><p><strong>Probado con datos reales</strong> (detalle en el repositorio, <code>docs/validacion.md</code>):</p><ul>
-<li>Detecta <strong>9 de 9</strong> normas reales de 2024 a 2026 que afectaron a billeteras (UIF, BCRA, ARCA, SIRCUPA, impuesto al cheque).</li>
-<li>En 189 comunicaciones del BCRA, las <strong>31</strong> dirigidas a los PSP salen todas como "Le afecta".</li>
-<li>En 3 meses de Boletín Oficial (4.254 normas) mostró 6 "Le afecta" y 4 "Para revisar": alrededor de <strong>una por semana</strong>.</li>
-</ul></div>
+<h2>Metodología</h2>
+<div class="caja"><p>Cada norma se evalúa en dos instancias. Primero, un filtro por términos y organismos vinculados a la actividad de SYS. Luego, un análisis del texto que determina su aplicabilidad, sintetiza su contenido e indica las acciones requeridas.</p><p>Las comunicaciones del BCRA dirigidas a los proveedores de servicios de pago, las normas que mencionan expresamente la actividad de SYS y las resoluciones de la UIF se informan siempre.</p></div>
 
-<h2>Qué significa cada color</h2>
+<h2>Clasificación</h2>
 <div class="caja leyenda">
-<div><span class="pill alta">Le afecta</span><span>Le cambia algo a SYS como billetera, o el BCRA la dirige a los PSP. Trae qué hacer. <strong>La tiene que ver compliance.</strong></span></div>
-<div><span class="pill rev">Para revisar</span><span>Nombra temas de SYS o es de la UIF, pero no está claro que le cambie algo: depende de cómo opere SYS (por ejemplo, si opera con el exterior) o la IA no ve impacto. Alcanza con una mirada rápida.</span></div>
-<div><span class="pill nada">No aplica</span><span>Pasó el filtro de palabras, pero la IA vio que no le cambia nada a SYS. Queda plegada al final de cada día, con el motivo, y no genera mail.</span></div>
-<div><span class="pill alta">⚠ Fuente falló</span><span>No se pudo leer alguna fuente (por ejemplo, la web del BCRA estaba caída). Lo que no se leyó puede tener novedades: hay que mirarlo a mano. El monitor <strong>nunca</strong> dice "no hubo nada" si no pudo revisar.</span></div>
+<div><span class="pill alta">Le afecta</span><span>Norma con impacto en la operatoria o las obligaciones de SYS. Incluye las acciones requeridas y sus plazos.</span></div>
+<div><span class="pill rev">Para revisar</span><span>Norma vinculada a la actividad de SYS cuya aplicabilidad depende de su operatoria o requiere evaluación.</span></div>
+<div><span class="pill nada">Sin impacto</span><span>Norma analizada que no requiere acciones. Se lista al final de cada informe como referencia.</span></div>
+<div><span class="pill alta">⚠ Fuente no disponible</span><span>Una fuente no pudo consultarse. Se indica en el informe y se vuelve a consultar en la siguiente actualización, recuperando los días pendientes.</span></div>
 </div>
 
-<h2>Cómo leer cada norma</h2>
+<h2>Contenido de cada norma</h2>
 <div class="grilla dos">
-<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="chispa"></span></span>En pocas palabras</h3><p>Arriba de todo: si le aplica a SYS, qué cambia, cómo le afecta y <strong>qué hacer</strong>, con plazo si la norma lo da. Lo hace la IA y puede equivocarse.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:350"><span data-icono="externo"></span></span>Ver la norma completa</h3><p>Lleva al texto oficial (Boletín Oficial, BCRA o Rentas).</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:200"><span data-icono="documento"></span></span>El detalle (plegado)</h3><p>Lo que dice la norma con sus propias palabras: qué cambia, para qué, a quién va dirigida, fechas clave, dónde nombra a SYS y normas relacionadas con link.</p></div>
-<div class="caja"><h3><span class="icono-tema" style="--h:55"><span data-icono="ojo"></span></span>Por qué apareció</h3><p>Las palabras y el organismo que hicieron que pase el filtro, para entender cada decisión.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="chispa"></span></span>Síntesis</h3><p>Aplicabilidad, contenido, alcance para SYS y acciones requeridas, con sus plazos cuando la norma los establece.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:350"><span data-icono="externo"></span></span>Texto oficial</h3><p>Acceso directo a la publicación en el Boletín Oficial, el BCRA o Rentas Córdoba.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:200"><span data-icono="documento"></span></span>Detalle</h3><p>Texto de la disposición, fundamentos, destinatarios, fechas de vigencia y normas relacionadas.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:55"><span data-icono="ojo"></span></span>Criterios de detección</h3><p>Términos y organismo que motivaron su inclusión en el informe.</p></div>
 </div>
 
-<h2>Cuándo se actualiza</h2>
-<div class="caja"><p>De lunes a viernes a las <strong>10:00</strong> y a las <strong>22:00</strong>, y los sábados a las <strong>12:00</strong> (hora de Argentina). Cada revisión suma solo lo nuevo; arriba de la página dice cuándo fue la última.</p><p>Llega un mail cuando aparece algo nuevo "Le afecta" o "Para revisar", y una sola vez cuando una fuente empieza a fallar. Si una fuente no responde, la revisión siguiente vuelve a intentar: los días que faltaron se recuperan solos.</p></div>
+<h2>Actualización y notificaciones</h2>
+<div class="caja"><p>Lunes a viernes a las 10:00 y a las 22:00, y sábados a las 12:00 (hora de Argentina). La fecha y hora de la última actualización se indican en el encabezado.</p><p>Se envía una notificación por correo electrónico ante cada norma nueva clasificada como "Le afecta" o "Para revisar", y ante la falta de disponibilidad de una fuente.</p></div>
 
-<h2>Límites</h2>
+<h2>Alcance</h2>
 <div class="caja"><ul>
-<li>Es una herramienta de alerta: <strong>no reemplaza la lectura de la norma</strong> por parte de un profesional.</li>
-<li>La IA puede equivocarse. Por eso lo que nombra la actividad de SYS nunca se esconde, y lo que la IA descarta queda visible, plegado, al final de cada día.</li>
-<li>Una norma que afecte a SYS sin nombrar nada propio de su actividad podría no pasar el filtro de palabras.</li>
-<li>De las provincias, solo revisa Córdoba, y ahí la normativa impositiva (lo que publica Rentas): el Boletín Oficial de Córdoba no se puede leer desde el servidor porque bloquea conexiones de fuera del país.</li>
-<li>No revisa los proyectos de ley del Congreso ni las secciones del Boletín Oficial distintas de la primera.</li>
+<li>Este servicio es una herramienta de alerta y no reemplaza el análisis jurídico profesional de la normativa.</li>
+<li>Las síntesis se generan automáticamente y deben verificarse con el texto oficial.</li>
+<li>Alcance provincial: Provincia de Córdoba, normativa tributaria publicada por Rentas Córdoba.</li>
+<li>No incluye proyectos de ley ni otras secciones del Boletín Oficial.</li>
 </ul></div>`;
 
 /** `dias` en cualquier orden; la página los muestra del más nuevo al más viejo. */
@@ -99,7 +90,7 @@ export async function armarSitio(dias: Resumen[], generado: string): Promise<str
 </nav>
 </div></header>
 <main class="pagina" id="vista"></main>
-<footer><div class="linea"><span>Fuentes oficiales: Boletín Oficial de la República Argentina, Banco Central (BCRA) y Rentas Córdoba.</span><span>Detección automática con reglas e IA. No reemplaza la lectura de la norma.</span></div></footer>
+<footer><div class="linea"><span>Fuentes oficiales: Boletín Oficial de la República Argentina, Banco Central de la República Argentina y Rentas Córdoba.</span><span>Herramienta de alerta. No reemplaza el análisis profesional de la normativa.</span></div></footer>
 <template id="ayuda">${AYUDA}</template>
 <script id="datos" type="application/json">${json}</script>
 <script>${js}</script>

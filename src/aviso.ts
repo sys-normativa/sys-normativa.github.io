@@ -21,7 +21,7 @@ export function armarAviso(fecha: string, nuevos: Hallazgo[], errores: string[],
   const partes: string[] = [];
   if (altas.length) partes.push(`${altas.length} le ${altas.length === 1 ? 'afecta' : 'afectan'}`);
   if (rev.length) partes.push(`${rev.length} para revisar`);
-  if (errores.length) partes.push(`⚠ ${errores.length} ${errores.length === 1 ? 'fuente falló' : 'fuentes fallaron'}`);
+  if (errores.length) partes.push(`⚠ ${errores.length} ${errores.length === 1 ? 'fuente no disponible' : 'fuentes no disponibles'}`);
   const [, m, d] = fecha.split('-');
   const titulo = `Normativa SYS ${Number(d)}/${Number(m)}: ${partes.join(', ')}`;
 
@@ -36,11 +36,11 @@ export function armarAviso(fecha: string, nuevos: Hallazgo[], errores: string[],
       `[Ver la norma](${h.url})`,
     ].join('\n');
 
-  const c = [`Novedades del ${fechaLarga(fecha)}. ${DESTINATARIO}`, '', `**[Abrir el monitor](${sitio})**`, ''];
-  if (errores.length) c.push('## ⚠ Fuentes que fallaron', 'Lo que no se pudo revisar puede tener novedades: hay que mirarlo a mano.', '', ...errores.map((e) => `- ${e}`), '');
+  const c = [`Novedades normativas del ${fechaLarga(fecha)}. ${DESTINATARIO}`, '', `**[Ver el informe completo](${sitio})**`, ''];
+  if (errores.length) c.push('## ⚠ Fuentes no disponibles', 'Se recomienda verificarlas manualmente; la próxima actualización volverá a consultarlas.', '', ...errores.map((e) => `- ${e}`), '');
   if (altas.length) c.push('## Le afecta a SYS', '', altas.map(item).join('\n\n'), '');
-  if (rev.length) c.push('## Para revisar', 'Tocan temas de SYS, pero puede que no le apliquen.', '', rev.map(item).join('\n\n'), '');
-  if (nuevos.some((h) => h.resumenIa)) c.push('<sub>Los resúmenes están hechos con IA y pueden equivocarse: verificar con la norma.</sub>');
+  if (rev.length) c.push('## Para revisar', 'Normas vinculadas a la actividad de SYS cuya aplicabilidad requiere evaluación.', '', rev.map(item).join('\n\n'), '');
+  if (nuevos.some((h) => h.resumenIa)) c.push('<sub>Síntesis generadas automáticamente. Verificar con el texto oficial.</sub>');
   return { titulo, cuerpo: c.join('\n') };
 }
 

@@ -14,10 +14,10 @@
       "paraQue": "",
       "tema": "operativo",
       "comoAfecta": [
-        "No va dirigida a los PSP (va a: entidades financieras, cámaras electrónicas de compensación), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
-        "Puede mover cuándo se acreditan las transferencias o vencen los plazos. Conviene avisarle a operaciones y, si hace falta, a los clientes."
+        "No está dirigida a los PSP (destinatarios: entidades financieras, cámaras electrónicas de compensación), pero trata materias vinculadas a la actividad de SYS.",
+        "Puede modificar plazos de acreditación de transferencias y vencimientos."
       ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
+      "queHacer": "Evaluar su aplicabilidad a SYS.",
       "fechasClave": [
         "Establecer como feriado bancario el 10/11/26 en todo el territorio de la República Argentina."
       ],
