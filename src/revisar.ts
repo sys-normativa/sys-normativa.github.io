@@ -168,8 +168,15 @@ try {
 // 5. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
 const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion });
 await escribirSitio(resumen.generado);
+
+// Una fuente caída se avisa por mail cuando empieza a fallar, no en cada
+// corrida (la página la sigue mostrando en rojo mientras dure).
+const fuenteDe = (e: string) => e.split(':')[0].replace(/ del \d{4}-\d{2}-\d{2}$/, '');
+const yaAvisadas = new Set(manual ? [] : (estado.fallasAvisadas ?? []));
+const erroresNuevos = errores.filter((e) => !yaAvisadas.has(fuenteDe(e)));
+if (!manual) estado.fallasAvisadas = [...new Set(errores.map(fuenteDe))];
 await guardarEstado(estado);
-await dejarAviso(fecha, nuevos, errores);
+await dejarAviso(fecha, nuevos, erroresNuevos);
 
 console.log(armarMarkdown(resumen));
 console.log(`\n${nuevos.length} normas nuevas en esta corrida. Página del monitor: salida/index.html`);

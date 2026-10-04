@@ -19,6 +19,8 @@ export interface Estado {
   cordobaHasta?: string;
   /** Noticias del BCRA ya leídas (identificadores del sitio), para no repetirlas. */
   prensaVistas?: string[];
+  /** Fuentes que estaban fallando en la última corrida (ya se avisó por mail). */
+  fallasAvisadas?: string[];
 }
 
 const RUTA = new URL('../datos/estado.json', import.meta.url);
