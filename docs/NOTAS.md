@@ -50,6 +50,11 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Guido descartó leer nada desde su compu ("o encontrás una ruta o lo sacamos").
 - **Solución (4/10):** Rentas Córdoba publica su normativa en un feed RSS que sí responde desde GitHub. Reemplaza al Boletín de Córdoba en la corrida diaria. Cubre lo impositivo (lo que le importa a SYS); se pierden las normas provinciales no impositivas. Se sacó el lector del Boletín de Córdoba. Punto de partida: `rentasVistas` = las 9 normas publicadas hasta el 2/10.
 
+## Menos ruido (4/10/2026)
+- Guido: "no quiero información al pedo, quiero que sea útil". Los resúmenes de IA decían casi todos "no le aplica", porque el filtro dejaba pasar mucho ruido.
+- Cambios: filtro más estricto (detalle en el análisis), la IA da veredicto + qué hacer, y lo que la IA descarta va plegado y sin mail. Tarjetas: resumen arriba, texto de la norma plegado.
+- Historial rearmado con todo esto: 3 normas que le afectan y 5 plegadas en 9 días. La RG 2229 (Boletín de Córdoba) se reincorporó a mano porque ese sitio no se puede volver a leer desde el servidor y Rentas todavía no la subió.
+
 ## Datos y límites
 - No hay base de datos: cada día es un JSON en `datos/informes/` (~7 KB). Un año ≈ 2 MB. La página embebe todo: al año pesa ~2 MB, carga bien. Si en unos años pesa demasiado, mostrar solo los últimos meses en la página.
 - Límites de GitHub (repo público, gratis): Actions sin límite de minutos; Pages hasta 1 GB por sitio; repo recomendado < 1 GB. Sobra.

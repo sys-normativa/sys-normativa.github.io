@@ -26,6 +26,7 @@ function fechaLarga(iso) {
 }
 
 const esAlta = (h) => h.evaluacion.nivel === 'alta';
+const esRevisar = (h) => h.evaluacion.nivel === 'revisar';
 const plural = (n, uno, varios) => `${n} ${n === 1 ? uno : varios}`;
 
 // ---------------------------------------------------------------------------
@@ -88,17 +89,33 @@ const estiloTema = (t) => ESTILO_TEMA[t] ?? ['documento', 225];
 // ---------------------------------------------------------------------------
 // Una norma
 
-/** El resumen de la IA, si lo hay. Va marcado como tal: se verifica con la norma. */
+const VEREDICTOS = {
+  aplica: ['alta', 'Aplica a SYS'],
+  dudoso: ['rev', 'Puede aplicar'],
+  no_aplica: ['nada', 'No aplica'],
+};
+
+/** El resumen de la IA: veredicto, qué cambia, cómo le afecta y qué hacer. Va marcado como IA. */
 function enPocasPalabras(h) {
-  if (!h.resumenIa) return '';
-  return `<div class="ia"><b>${icono('chispa')} En pocas palabras</b><p>${esc(h.resumenIa.queCambia)}</p><p>${esc(h.resumenIa.comoAfecta)}</p><span class="chico">Resumen automático hecho con IA: puede equivocarse. Lo de abajo sale textual de la norma.</span></div>`;
+  const ia = h.resumenIa;
+  if (!ia) return '';
+  const [clase, texto] = VEREDICTOS[ia.veredicto] ?? [];
+  return [
+    `<div class="ia"><b>${icono('chispa')} En pocas palabras${texto ? ` <span class="pill ${clase}">${texto}</span>` : ''}</b>`,
+    `<p>${esc(ia.queCambia)}</p><p>${esc(ia.comoAfecta)}</p>`,
+    ia.queHacer ? `<div class="hacer">${icono('check')}<div><strong>Qué hacer:</strong> ${esc(ia.queHacer)}</div></div>` : '',
+    '<span class="chico">Resumen hecho con IA: puede equivocarse. El texto de la norma está abajo.</span></div>',
+  ].join('');
 }
 
+const botonNorma = (h) => `<div class="acciones"><a class="boton" href="${esc(h.url)}" target="_blank" rel="noopener">Ver la norma completa ${icono('externo')}</a></div>`;
+
+/** Lo que sale textual de la norma, más el porqué de que apareció. */
 function explicacion(h) {
   const bloque = (ic, titulo, html) => `<div class="bloque"><b>${icono(ic)} ${titulo}</b>${html}</div>`;
   return [
     '<div class="bloques">',
-    bloque('documento', 'Qué cambia', `<p>${esc(h.queCambia)}</p>`),
+    bloque('documento', 'Qué cambia (textual)', `<p>${esc(h.queCambia)}</p>`),
     h.paraQue ? bloque('flecha', 'Para qué, según la norma', `<p>${esc(h.paraQue)}</p>`) : '',
     bloque('billetera', 'Cómo le afecta a SYS', h.comoAfecta.map((p) => `<p>${esc(p)}</p>`).join('')),
     h.fechasClave.length ? bloque('calendario', 'Fechas clave', `<ul>${h.fechasClave.map((f) => `<li>${esc(f)}</li>`).join('')}</ul>`) : '',
@@ -106,10 +123,8 @@ function explicacion(h) {
     h.relacionadas.length
       ? bloque('enlace', 'Normas relacionadas', `<ul>${h.relacionadas.map((e) => `<li><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.texto)}</a>${e.detalle ? `: ${esc(e.detalle)}` : ''}</li>`).join('')}</ul>`)
       : '',
+    bloque('ojo', 'Por qué apareció', `<p class="chico">${esc(h.evaluacion.motivos.join(', '))}.</p>`),
     '</div>',
-    `<div class="hacer">${icono('check')}<div><strong>Qué hacer:</strong> ${esc(h.queHacer)}</div></div>`,
-    `<div class="acciones"><a class="boton" href="${esc(h.url)}" target="_blank" rel="noopener">Ver la norma completa ${icono('externo')}</a></div>`,
-    `<details><summary>Por qué apareció</summary><p class="chico">${esc(h.evaluacion.motivos.join(', '))}.</p></details>`,
   ].join('');
 }
 
@@ -126,13 +141,26 @@ function meta(h) {
   return `${h.asunto ? `<span class="asunto">${esc(h.asunto)}</span><br>` : ''}${esc(h.emisor)} · ${esc(h.fecha)}`;
 }
 
-/** Tarjeta completa: las "Le afecta" abiertas; las "Para revisar", con la explicación plegada. */
+/**
+ * Arriba lo que hay que saber (resumen, veredicto y qué hacer) y el link; el
+ * texto de la norma, plegado. Sin resumen de IA, la explicación textual va a la vista.
+ */
 function tarjeta(h) {
   const cabeza = `<div class="cabeza">${iconoTema(h)}<div>${etiquetas(h)}<h3>${esc(h.titulo)}</h3><div class="meta">${meta(h)}</div></div></div>`;
-  const cuerpo = esAlta(h)
-    ? enPocasPalabras(h) + explicacion(h)
-    : `${enPocasPalabras(h) || `<p class="resumen-corto">${esc(h.comoAfecta[0])}</p>`}<details><summary>Ver la explicación completa</summary>${explicacion(h)}</details>`;
+  const generico = `<div class="hacer">${icono('check')}<div><strong>Qué hacer:</strong> ${esc(h.queHacer)}</div></div>`;
+  const cuerpo = h.resumenIa
+    ? `${enPocasPalabras(h)}${botonNorma(h)}<details><summary>Ver el texto de la norma y el detalle</summary>${explicacion(h)}</details>`
+    : esAlta(h)
+      ? `${explicacion(h)}${generico}${botonNorma(h)}`
+      : `<p class="resumen-corto">${esc(h.comoAfecta[0])}</p>${botonNorma(h)}<details><summary>Ver la explicación completa</summary>${explicacion(h)}</details>`;
   return `<article class="tarjeta ${esAlta(h) ? 'alta' : 'revisar'}">${cabeza}${cuerpo}</article>`;
+}
+
+/** Lo que la IA revisó y no aplica: una línea por norma, al final y plegado. */
+function descartadas(lista) {
+  if (!lista.length) return '';
+  const items = lista.map((h) => `<li><a href="${esc(h.url)}" target="_blank" rel="noopener">${esc(h.titulo)}</a> <span class="chico">— ${esc(h.resumenIa?.comoAfecta ?? '')}</span></li>`);
+  return `<details class="caja descartadas"><summary>${plural(lista.length, 'norma más que la IA revisó y no aplica', 'normas más que la IA revisó y no aplican')} a SYS</summary><p class="chico">Pasaron el primer filtro, pero no le cambian nada a SYS. Quedan acá por si acaso.</p><ul>${items.join('')}</ul></details>`;
 }
 
 // ---------------------------------------------------------------------------
@@ -159,7 +187,8 @@ function fuentesRevisadas(r) {
 
 function informe(r, sobreTitulo) {
   const altas = r.hallazgos.filter(esAlta);
-  const rev = r.hallazgos.filter((h) => !esAlta(h));
+  const rev = r.hallazgos.filter(esRevisar);
+  const desc = r.hallazgos.filter((h) => h.evaluacion.nivel === 'descartada');
   const cifra = (clase, n, l, d, destino) =>
     `<${destino ? `a href="${destino}"` : 'div'} class="cifra ${clase}"><div class="n">${n}</div><div class="l">${l}</div><div class="d">${d}</div></${destino ? 'a' : 'div'}>`;
   const c = [
@@ -180,8 +209,9 @@ function informe(r, sobreTitulo) {
   if (!altas.length && !rev.length) {
     c.push(`<div class="tranquilo">${icono('check')}<div><b>${r.errores.length ? 'Nada en las fuentes que respondieron' : 'Día tranquilo'}</b>${r.errores.length ? 'En las fuentes que sí se pudieron revisar no apareció nada que afecte a SYS.' : 'No apareció nada que afecte a SYS. No hay que hacer nada.'}</div></div>`);
   }
-  if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Nombran a SYS o a su actividad. Las tiene que ver compliance.</p>', ...altas.map(tarjeta));
-  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Tocan temas de SYS, pero puede que no le apliquen.</p>', ...rev.map(tarjeta));
+  if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Le cambian algo a SYS como billetera. Las tiene que ver compliance.</p>', ...altas.map(tarjeta));
+  if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Pueden aplicar según cómo opere SYS. Alcanza con una mirada rápida.</p>', ...rev.map(tarjeta));
+  c.push(descartadas(desc));
   c.push(
     '<details class="caja revisado"><summary>Qué se revisó en este informe</summary>',
     `<ul>${r.revisado.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`,
@@ -203,7 +233,7 @@ function vistaDias() {
   const items = DIAS.map((r) => {
     const f = partesFecha(r.fecha);
     const a = r.hallazgos.filter(esAlta).length;
-    const rev = r.hallazgos.length - a;
+    const rev = r.hallazgos.filter(esRevisar).length;
     const pills = [
       a ? `<span class="pill alta">${plural(a, 'le afecta', 'le afectan')}</span>` : '',
       rev ? `<span class="pill rev">${rev} para revisar</span>` : '',

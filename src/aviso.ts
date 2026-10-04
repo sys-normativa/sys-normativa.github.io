@@ -13,9 +13,10 @@ import { fechaLarga } from './informe.js';
 const DESTINATARIO = '@Guidoparisi91';
 
 export function armarAviso(fecha: string, nuevos: Hallazgo[], errores: string[], sitio: string): { titulo: string; cuerpo: string } | null {
-  if (!nuevos.length && !errores.length) return null;
+  // Lo que la IA descartó no se avisa: queda plegado en la página.
   const altas = nuevos.filter((h) => h.evaluacion.nivel === 'alta');
-  const rev = nuevos.filter((h) => h.evaluacion.nivel !== 'alta');
+  const rev = nuevos.filter((h) => h.evaluacion.nivel === 'revisar');
+  if (!altas.length && !rev.length && !errores.length) return null;
 
   const partes: string[] = [];
   if (altas.length) partes.push(`${altas.length} le ${altas.length === 1 ? 'afecta' : 'afectan'}`);
@@ -30,6 +31,7 @@ export function armarAviso(fecha: string, nuevos: Hallazgo[], errores: string[],
       `${h.emisor} · ${h.fecha}`,
       '',
       h.resumenIa ? `${h.resumenIa.queCambia} ${h.resumenIa.comoAfecta}` : h.comoAfecta.join(' '),
+      h.resumenIa?.queHacer ? `\n**Qué hacer:** ${h.resumenIa.queHacer}` : '',
       '',
       `[Ver la norma](${h.url})`,
     ].join('\n');

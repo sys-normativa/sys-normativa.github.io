@@ -1,6 +1,6 @@
 {
   "fecha": "2026-09-28",
-  "generado": "4/10/2026 a las 00:56",
+  "generado": "4/10/2026 a las 01:42",
   "hallazgos": [
     {
       "fuente": "BCRA",
@@ -33,11 +33,12 @@
         }
       ],
       "evaluacion": {
-        "nivel": "revisar",
+        "nivel": "descartada",
         "puntaje": 6,
         "motivos": [
           "proveedores de servicios de pago",
-          "entidades financieras"
+          "entidades financieras",
+          "la IA no ve impacto para SYS"
         ],
         "temas": [
           "psp",
@@ -45,19 +46,20 @@
         ]
       },
       "resumenIa": {
-        "queCambia": "La norma introduce excepciones en el régimen informativo para las redes de cajeros automáticos sin procesamiento propio que operen como adherentes de otra red local, detallando los requisitos de notificación mediante declaración jurada.",
-        "comoAfecta": "No le aplica a SYS Global Pay, ya que la comunicación está dirigida exclusivamente a las redes de cajeros automáticos y regula su propio régimen informativo ante el Banco Central.",
+        "veredicto": "no_aplica",
+        "queCambia": "El Banco Central dispuso excepciones al régimen informativo para redes de cajeros automáticos sin procesamiento propio.",
+        "comoAfecta": "La norma regula exclusivamente a las redes de cajeros automáticos, no a los PSP.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-28: 86 avisos de la primera sección.",
-    "Boletín de Córdoba del 2026-09-28: 2 normas.",
+    "Rentas Córdoba: 0 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 8 comunicaciones con fecha de ese día (A 8485, B 13238, C 102371, C 102370, C 102369, C 102368, C 102367, C 102366).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": []
 }

@@ -1,89 +1,14 @@
 {
   "fecha": "2026-09-22",
-  "generado": "4/10/2026 a las 00:55",
-  "hallazgos": [
-    {
-      "fuente": "Boletín Oficial de Córdoba",
-      "emisor": "Secretaría de Ingresos Públicos (Córdoba)",
-      "titulo": "Resolución N° 19 - Letra:D",
-      "asunto": "",
-      "fecha": "22/09/2026",
-      "url": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/09/1_Secc_220926.pdf#page=3&norma=resolucion-n-19-letra-d",
-      "tipo": "Publicada en el Boletín Oficial de Córdoba",
-      "queCambia": "MODIFICAR el ANEXO I - TÍTULO I AGENTES DE RE- TENCIÓN GENERAL de la Resolución N° 2023/D-00000045 de esta Secretaría, y sus modificatorias, según se indica a continuación: Dar de baja-: ANEXO I – TÍTULO I AGENTES DE RETENCIÓN GENERAL CUIT NOMBRE 30-70872992-9 AVEX S.A.",
-      "paraQue": "",
-      "tema": "iibb",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (Convenio Multilateral / IIBB, retenciones/percepciones), pero no nombra su actividad: puede que no le aplique.",
-        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 4,
-        "motivos": [
-          "Convenio Multilateral / IIBB",
-          "retenciones/percepciones",
-          "emitida por Rentas (Ingresos Brutos provincial)"
-        ],
-        "temas": [
-          "iibb",
-          "impuestos"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "La norma dispone dar de baja a las sociedades AVEX S.A. y Granja Tres Arroyos S.A.C.A.F.I. de la nómina de agentes de retención y percepción del Impuesto sobre los Ingresos Brutos en Córdoba.",
-        "comoAfecta": "No le aplica a SYS Global Pay. La resolución se refiere exclusivamente a empresas particulares ajenas a la billetera virtual.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Banco Central de la República Argentina",
-      "titulo": "Aviso Oficial",
-      "asunto": "",
-      "fecha": "22/09/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347826/20260922",
-      "tipo": "Publicada en el Boletín Oficial",
-      "queCambia": "EDICTO El Banco Central de la República Argentina notifica que mediante la Resolución N° 33/26 del Subgerente General de Cumplimiento y Control Superintendente de Entidades Financieras y Cambiarias, se resolvió dejar sin efecto la imputación formulada, entre otros, a la firma INTERBRIDGE S.R.L. (C.U.I.T. 30-71418574-4) y a la señora Adriana Aurelia Tejeda (DNI 14.364.225), por prescripción de la acción penal cambiaria y en consecuencia archivar el presente Sumario en lo cambiario 7283, Expediente N° 101/137/16. Publíquese por 5 (cinco) días en el Boletín Oficial.",
-      "paraQue": "",
-      "tema": "general",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (entidades financieras), pero no nombra su actividad: puede que no le aplique.",
-        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 3,
-        "motivos": [
-          "entidades financieras",
-          "emitida por el BCRA"
-        ],
-        "temas": [
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "El Banco Central dispuso dejar sin efecto la imputación y archivar un sumario cambiario específico contra terceros ajenos a la empresa, debido a la prescripción de la acción.",
-        "comoAfecta": "No le aplica a SYS Global Pay, ya que se trata de un edicto particular sobre un sumario individual a otras personas y firmas que no guardan relación con la operatoria de la billetera.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    }
-  ],
+  "generado": "4/10/2026 a las 01:41",
+  "hallazgos": [],
   "revisado": [
     "Boletín Oficial del 2026-09-22: 59 avisos de la primera sección.",
-    "Boletín de Córdoba del 2026-09-22: 5 normas.",
+    "Rentas Córdoba: 1 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 5 comunicaciones con fecha de ese día (B 13235, C 102344, C 102343, C 102342, C 102341).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: 1 de 1 normas."
+    "Resumen con IA: no hubo normas para resumir."
   ],
   "errores": []
 }

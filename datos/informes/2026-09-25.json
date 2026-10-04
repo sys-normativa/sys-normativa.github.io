@@ -1,6 +1,6 @@
 {
   "fecha": "2026-09-25",
-  "generado": "4/10/2026 a las 00:56",
+  "generado": "4/10/2026 a las 01:41",
   "hallazgos": [
     {
       "fuente": "Boletín Oficial",
@@ -22,14 +22,15 @@
       "dondeNombraASys": "Que mediante la Ley N° 27.739 se incorporó a la Ley N° 25.246 y sus modificaciones, el artículo 4° bis en el que se establecen las definiciones de “activos virtuales” y “proveedor de servicios de activos virtuales”, entre otras.",
       "relacionadas": [],
       "evaluacion": {
-        "nivel": "alta",
+        "nivel": "descartada",
         "puntaje": 10,
         "motivos": [
           "Ley 27.739 (PSP sujetos obligados)",
           "Ley 25.246 (lavado de activos)",
           "activos virtuales (PSAV)",
           "Ley 25.326 (datos personales)",
-          "entidades financieras"
+          "entidades financieras",
+          "la IA no ve impacto para SYS"
         ],
         "temas": [
           "lavado",
@@ -39,55 +40,20 @@
         ]
       },
       "resumenIa": {
-        "queCambia": "El Ministerio de Justicia creó el Programa Nacional de Política Criminal en Materia de Ciberdelincuencia y Evidencia Digital (PRONACIB) para coordinar la política criminal, la ciberseguridad, la evidencia digital y el abordaje de delitos vinculados con activos virtuales.",
-        "comoAfecta": "A SYS Global Pay no le impone obligaciones directas de cumplimiento normativo ante la UIF en esta instancia, pero el programa prevé la creación de mesas interinstitucionales con actores públicos o privados que podría involucrar a entidades del sector.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Banco Central (BCRA)",
-      "titulo": "Comunicación \"B\" 13236/2026",
-      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
-      "fecha": "25/09/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347982/20260925",
-      "tipo": "Comunicación normativa",
-      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
-      "paraQue": "",
-      "tema": "general",
-      "comoAfecta": [
-        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
-        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 3,
-        "motivos": [
-          "entidades financieras",
-          "emitida por el BCRA"
-        ],
-        "temas": [
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "El Banco Central comunica los valores de las tasas de referencia aplicables para la garantía de los depósitos, dirigidas específicamente a las entidades financieras.",
-        "comoAfecta": "No le aplica a SYS Global Pay, ya que la norma está dirigida exclusivamente a entidades financieras y no a los proveedores de servicios de pago que ofrecen cuentas de pago (PSPCP).",
+        "veredicto": "no_aplica",
+        "queCambia": "El Ministerio de Justicia creó el Programa Nacional de Política Criminal en Materia de Ciberdelincuencia y Evidencia Digital (PRONACIB).",
+        "comoAfecta": "No impone obligaciones operativas ni de cumplimiento a los sujetos obligados.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-25: 67 avisos de la primera sección.",
-    "Boletín de Córdoba del 2026-09-25: 6 normas.",
+    "Rentas Córdoba: 0 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 7 comunicaciones con fecha de ese día (C 102365, C 102364, C 102363, C 102362, C 102361, C 102360, C 102359).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": []
 }

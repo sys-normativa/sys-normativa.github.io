@@ -11,9 +11,15 @@
 import type { Hallazgo } from './explicar.js';
 import { TEMAS } from './temas.js';
 
+export type Veredicto = 'aplica' | 'dudoso' | 'no_aplica';
+
 export interface ResumenIa {
+  /** Si la norma le cambia algo a SYS como billetera. Las viejas no lo tienen. */
+  veredicto?: Veredicto;
   queCambia: string;
   comoAfecta: string;
+  /** Qué tiene que hacer SYS y desde cuándo (solo si aplica o es dudoso). */
+  queHacer?: string;
   modelo: string;
 }
 
@@ -27,6 +33,26 @@ const PAUSA_MS = 6_000;
 // Lo que se le manda de la norma. Alcanza para la carta y el comienzo del anexo.
 const MAX_TEXTO = 15_000;
 
+const VEREDICTOS: Veredicto[] = ['aplica', 'dudoso', 'no_aplica'];
+
+/**
+ * El nivel final combina las reglas con el veredicto de la IA:
+ * - Dirigida a los PSP por el BCRA: le afecta, diga lo que diga la IA.
+ * - La IA dice que no aplica: se descarta (queda plegado al final de la
+ *   página, con el motivo, por si acaso; no se avisa por mail).
+ * - Las reglas dicen "para revisar" y la IA confirma que aplica: le afecta.
+ * - La IA dice que es dudoso: queda para revisar.
+ * Sin veredicto (IA caída o desactivada) manda lo que dijeron las reglas.
+ */
+export function nivelFinal(h: Pick<Hallazgo, 'evaluacion'>, veredicto?: Veredicto): Hallazgo['evaluacion']['nivel'] {
+  const nivel = h.evaluacion.nivel;
+  if (!veredicto || h.evaluacion.motivos.includes('dirigida a los proveedores de servicios de pago')) return nivel;
+  if (nivel === 'descartada') return nivel;
+  if (veredicto === 'no_aplica') return 'descartada';
+  if (veredicto === 'aplica') return 'alta';
+  return 'revisar';
+}
+
 const URL_API = (modelo: string) => `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent`;
 const esperar = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -39,13 +65,20 @@ export function claveIa(): string | undefined {
   return process.env.GEMINI_API_KEY || undefined;
 }
 
-const INSTRUCCIONES = `Sos analista de compliance en Argentina. Le explicás normas a una empresa: SYS Global Pay, billetera virtual para empresas, registrada en el BCRA como proveedor de servicios de pago que ofrece cuentas de pago (PSPCP). Sus clientes son empresas, que la usan para gastos corporativos con pagos QR y transferencias. Es sujeto obligado ante la UIF.
+const INSTRUCCIONES = `Sos analista de compliance en Argentina. Tu trabajo es decirle al equipo de compliance de SYS si una norma le cambia algo y qué tiene que hacer.
 
-Reglas:
-- Español claro y profesional, sin modismos ni tecnicismos innecesarios. Frases cortas.
-- Usá solo lo que dice el material. No inventes plazos, montos ni obligaciones. Si algo no surge del texto, no lo afirmes.
-- "queCambia": una o dos oraciones con lo que dispone la norma, en concreto.
-- "comoAfecta": una o dos oraciones sobre si le aplica a SYS y qué tendría que hacer o revisar. Si no le aplica o no queda claro, decilo.`;
+SYS: billetera virtual para empresas (gastos corporativos con pagos QR y transferencias), registrada en el BCRA como proveedor de servicios de pago que ofrece cuentas de pago (PSPCP). Sus clientes son empresas. Su base está en Córdoba. Es sujeto obligado ante la UIF. Como PSPCP es agente de recaudación de Ingresos Brutos (SIRCUPA) e informa a ARCA los movimientos de sus clientes.
+
+Alcance: solo cuenta lo que afecta el negocio de SYS como billetera: su registro y obligaciones como PSP, la operatoria de pagos y transferencias, los fondos y la información a clientes, los reportes al BCRA, a la UIF y a ARCA, los impuestos que la billetera retiene, percibe o informa, la seguridad informática y la prevención del fraude y del lavado, y los feriados bancarios (cambian cuándo se acreditan las transferencias con los bancos). Las obligaciones que tiene cualquier empresa (sueldos, aportes, cargas sociales, sus propios impuestos) NO cuentan: eso lo lleva su contador.
+
+Respondé:
+- "veredicto": "aplica" si la norma le cambia algo a SYS dentro de ese alcance; "no_aplica" si no; "dudoso" solo si depende de algo que no se sabe (por ejemplo, si SYS opera en el exterior o emite tarjetas).
+- "queCambia": una oración concreta con lo que dispone la norma (quién, qué, desde cuándo si lo dice).
+- "comoAfecta": si aplica, una oración con qué le cambia a SYS en concreto; si no aplica, el motivo en menos de 15 palabras.
+- "queHacer": si aplica o es dudoso, la acción concreta y el plazo si la norma lo da (ej.: "Usar el padrón de octubre para las retenciones desde el 1/10."). Nada de "revisar", "verificar" ni "analizar el impacto". Si no aplica, vacío.
+- Si la norma solo actualiza un texto ordenado o reemplaza hojas, no trae reglas nuevas: decí qué comunicación trae el cambio de fondo y que esa es la que hay que leer.
+
+Reglas: español claro y profesional, frases cortas, sin modismos. Decí siempre "SYS", nunca "nosotros". Usá solo lo que dice el material: no inventes plazos, montos ni obligaciones. Una fecha de vigencia solo si está escrita en el texto de la norma; las fechas de las normas citadas no son vigencias.`;
 
 function material(h: Hallazgo, texto: string): string {
   return [
@@ -79,8 +112,11 @@ async function pedir(modelo: string, clave: string, cuerpo: unknown): Promise<{ 
       return { ok: false, reintentable: res.status === 429 || res.status >= 500, error: `HTTP ${res.status}: ${datos.error?.message ?? ''}`.slice(0, 200) };
     }
     const json = JSON.parse(datos.candidates?.[0]?.content?.parts?.[0]?.text ?? '{}') as Partial<ResumenIa>;
-    if (!json.queCambia || !json.comoAfecta) return { ok: false, reintentable: true, error: 'respuesta incompleta' };
-    return { ok: true, r: { queCambia: json.queCambia.trim(), comoAfecta: json.comoAfecta.trim(), modelo } };
+    if (!json.queCambia || !json.comoAfecta || !VEREDICTOS.includes(json.veredicto as Veredicto)) return { ok: false, reintentable: true, error: 'respuesta incompleta' };
+    return {
+      ok: true,
+      r: { veredicto: json.veredicto, queCambia: json.queCambia.trim(), comoAfecta: json.comoAfecta.trim(), queHacer: json.queHacer?.trim() || undefined, modelo },
+    };
   } catch (e) {
     return { ok: false, reintentable: true, error: (e as Error).message };
   }
@@ -96,8 +132,14 @@ export async function resumirConIa(h: Hallazgo, texto: string, clave: string): P
       responseMimeType: 'application/json',
       responseSchema: {
         type: 'OBJECT',
-        properties: { queCambia: { type: 'STRING' }, comoAfecta: { type: 'STRING' } },
-        required: ['queCambia', 'comoAfecta'],
+        properties: {
+          veredicto: { type: 'STRING', enum: VEREDICTOS },
+          queCambia: { type: 'STRING' },
+          comoAfecta: { type: 'STRING' },
+          queHacer: { type: 'STRING' },
+        },
+        required: ['veredicto', 'queCambia', 'comoAfecta', 'queHacer'],
+        propertyOrdering: ['veredicto', 'queCambia', 'comoAfecta', 'queHacer'],
       },
     },
   };
@@ -130,6 +172,9 @@ export async function resumirTodos(hallazgos: Hallazgo[], textos: Map<Hallazgo, 
     if (typeof r === 'string') error = r;
     else {
       h.resumenIa = r;
+      const antes = h.evaluacion.nivel;
+      h.evaluacion.nivel = nivelFinal(h, r.veredicto);
+      if (h.evaluacion.nivel !== antes) h.evaluacion.motivos.push(`la IA ${r.veredicto === 'aplica' ? 'confirma que aplica' : 'no ve impacto para SYS'}`);
       hechos++;
     }
   }

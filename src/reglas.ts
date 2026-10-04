@@ -36,9 +36,11 @@ const TERMINOS: Regla[] = [
   { motivo: 'PSP/PSPCP', tema: 'psp', patron: /\bpspcp\b|\bpsp\b/, peso: 4 },
   { motivo: 'CVU', tema: 'psp', patron: /\bcvu\b|clave virtual uniforme/, peso: 4 },
   { motivo: 'SIRCUPA (IIBB sobre cuentas de pago)', tema: 'iibb', patron: /sircupa/, peso: 5 },
+  { motivo: 'SIRTAC / regímenes de recaudación de IIBB', tema: 'iibb', patron: /sirtac|agentes? de recaudacion/, peso: 2 },
 
   // Medios de pago que SYS usa (QR, transferencias) y su infraestructura.
-  { motivo: 'pagos con transferencia / QR', tema: 'pagos', patron: /pagos? con transferencia|codigo qr|\bqr\b/, peso: 3 },
+  // "QR" suelto no: aparece en cualquier norma que diga "se paga con VEP o QR".
+  { motivo: 'pagos con transferencia / QR', tema: 'pagos', patron: /pagos? con transferencia|qr interoperable|pagos? (con|mediante) (codigo )?qr|aceptadores de pago/, peso: 3 },
   { motivo: 'transferencias inmediatas', tema: 'pagos', patron: /transferencias? (inmediata|electronica)s? de fondos/, peso: 3 },
   { motivo: 'sistema nacional de pagos', tema: 'pagos', patron: /sistema nacional de pagos/, peso: 3 },
   { motivo: 'DEBIN / débito inmediato', tema: 'pagos', patron: /\bdebin\b|debito inmediato/, peso: 3 },
@@ -72,9 +74,11 @@ const TERMINOS: Regla[] = [
 
 // Organismos que regulan a SYS. Una norma suya necesita menos coincidencias
 // para aparecer, pero el organismo solo nunca alcanza.
-const ORGANISMOS: { motivo: string; tema: Tema; patron: RegExp }[] = [
+// `basta`: sus normas le importan a SYS aunque no la nombren (la UIF regula a
+// todos los sujetos obligados a la vez).
+const ORGANISMOS: { motivo: string; tema: Tema; patron: RegExp; basta?: boolean }[] = [
   { motivo: 'emitida por el BCRA', tema: 'general', patron: /banco central de la republica argentina/ },
-  { motivo: 'emitida por la UIF', tema: 'lavado', patron: /unidad de informacion financiera/ },
+  { motivo: 'emitida por la UIF', tema: 'lavado', patron: /unidad de informacion financiera/, basta: true },
   { motivo: 'emitida por la CNV', tema: 'cnv', patron: /comision nacional de valores/ },
   { motivo: 'emitida por ARCA', tema: 'impuestos', patron: /agencia de recaudacion y control aduanero$|agencia de recaudacion y control aduanero - (direccion general impositiva|subdireccion general de (fiscalizacion|recaudacion))/ },
   { motivo: 'emitida por la Comisión Arbitral', tema: 'iibb', patron: /comision arbitral/ },
@@ -87,13 +91,17 @@ const ORGANISMOS: { motivo: string; tema: Tema; patron: RegExp }[] = [
 ];
 
 // Avisos que mencionan términos del filtro pero nunca son normativa:
-// citaciones a sumarios, edictos, licitaciones.
-const RUIDO = /cita y emplaza|citase|notificase|emplazase|licitacion publica|sumario (en lo cambiario|financiero) n/;
+// citaciones y archivos de sumarios, edictos, licitaciones.
+const RUIDO = /cita y emplaza|citase|notificase|emplazase|licitacion publica|sumario (en lo cambiario|cambiario|financiero)|dejar sin efecto la imputacion/;
+
+// Lo que dispone la norma es nombrar, aceptar renuncias o mover personal.
+const PERSONAL = /^\W*(articulo 1\W*\s*)?(designase|designanse|desígnase|dase por designad|prorrogase .{0,60}designacion|aceptase la renuncia|dase por concluid|asignase .{0,40}funciones)/;
 
 const UMBRAL_ALTA = 5;
 const UMBRAL_REVISAR = 3;
 const PESO_ORGANISMO = 2;
 const PESO_FUERTE = 3;
+const PESO_MEDIO = 2;
 
 export function evaluar(organismo: string, texto: string): Evaluacion {
   const org = normalizar(organismo.trim());
@@ -101,6 +109,7 @@ export function evaluar(organismo: string, texto: string): Evaluacion {
   const motivos: string[] = [];
   let puntaje = 0;
   let hayTerminoFuerte = false;
+  let hayTerminoMedio = false;
   const pesoPorTema = new Map<Tema, number>();
   const sumar = (tema: Tema, peso: number) => pesoPorTema.set(tema, (pesoPorTema.get(tema) ?? 0) + peso);
 
@@ -110,6 +119,7 @@ export function evaluar(organismo: string, texto: string): Evaluacion {
       motivos.push(r.motivo);
       sumar(r.tema, r.peso);
       if (r.peso >= PESO_FUERTE) hayTerminoFuerte = true;
+      if (r.peso >= PESO_MEDIO) hayTerminoMedio = true;
     }
   }
   if (puntaje === 0) return { nivel: 'descartada', puntaje, motivos, temas: [] };
@@ -125,10 +135,20 @@ export function evaluar(organismo: string, texto: string): Evaluacion {
   const temas = [...pesoPorTema].sort((a, b) => b[1] - a[1]).map(([tema]) => tema);
 
   if (RUIDO.test(t.slice(0, 1500))) return { nivel: 'descartada', puntaje, motivos: [...motivos, 'aviso de trámite (citación/edicto)'], temas };
+  const dispone = /\b(resuelve|resuelven|decreta|dispone|disponen)\s*:/.exec(t);
+  if (dispone && PERSONAL.test(t.slice(dispone.index + dispone[0].length, dispone.index + 400).trim())) {
+    return { nivel: 'descartada', puntaje, motivos: [...motivos, 'designación o movimiento de personal'], temas };
+  }
 
   // Sumar muchos términos débiles ("entidades financieras", "retenciones") no
-  // alcanza para afirmar que le afecta: hace falta nombrar algo propio de SYS.
-  const nivel: Nivel = puntaje >= UMBRAL_ALTA && hayTerminoFuerte ? 'alta' : puntaje >= UMBRAL_REVISAR ? 'revisar' : 'descartada';
+  // alcanza: para "Le afecta" hace falta nombrar algo propio de SYS, y para
+  // "Para revisar", al menos un tema de peso medio (o un organismo como la UIF).
+  const nivel: Nivel =
+    puntaje >= UMBRAL_ALTA && hayTerminoFuerte
+      ? 'alta'
+      : puntaje >= UMBRAL_REVISAR && (hayTerminoMedio || deOrganismo?.basta)
+        ? 'revisar'
+        : 'descartada';
   return { nivel, puntaje, motivos, temas };
 }
 

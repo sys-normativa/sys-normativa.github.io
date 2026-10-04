@@ -1,119 +1,7 @@
 {
   "fecha": "2026-09-24",
-  "generado": "4/10/2026 a las 00:56",
+  "generado": "4/10/2026 a las 01:41",
   "hallazgos": [
-    {
-      "fuente": "Boletín Oficial de Córdoba",
-      "emisor": "Dirección General de Rentas (Córdoba)",
-      "titulo": "Resolución Normativa N° 37",
-      "asunto": "",
-      "fecha": "24/09/2026",
-      "url": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/09/1_Secc_240926.pdf#page=1&norma=resolucion-normativa-n-37",
-      "tipo": "Publicada en el Boletín Oficial de Córdoba",
-      "queCambia": "INCORPORAR a continuación del Artículo 340 (1) de la Resolución Normativa N° 1/2023, publicada en el Boletín Oficial de fecha 23-11-2023, y sus modificatorias, el siguiente inciso 33) a la “SECCIÓN 6: SITUACIONES ESPECIALES”: “33) Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar - Ley N° 11.137 Artículo 340 (2).- Las entidades adheridas al “Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar” previsto en la Ley N° 11.137, deberán declarar los ingresos alcanzados por la alícuota especial del Cero por Ciento (0,00%) de la siguiente manera: a) Entidades comprendidas en el Artículo 6 de la Ley N° 11.137: deberán declararse en los códigos de…",
-      "paraQue": "",
-      "tema": "iibb",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (Convenio Multilateral / IIBB, entidades financieras), pero no nombra su actividad: puede que no le aplique.",
-        "Retenciones de Ingresos Brutos sobre lo que entra a las cuentas de pago. Puede cambiar cuánto se les retiene a los clientes de SYS o qué tiene que hacer SYS como agente."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [
-        "La presente Resolución entrará en vigencia a partir del día siguiente al de su publicación en el Boletín Oficial y resultará de aplicación respecto de los hechos imponibles que se perfeccionen a partir de la fecha indicada en el Convenio de Adhesión suscripto…"
-      ],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 4,
-        "motivos": [
-          "Convenio Multilateral / IIBB",
-          "entidades financieras",
-          "emitida por Rentas (Ingresos Brutos provincial)"
-        ],
-        "temas": [
-          "iibb",
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "La norma establece la forma en que las entidades financieras y emisoras de tarjetas de crédito adheridas al Programa Provincial de Alivio y Reordenamiento del Endeudamiento Familiar deben declarar los ingresos alcanzados por la alícuota especial del cero por ciento en el Impuesto sobre los Ingresos Brutos en Córdoba.",
-        "comoAfecta": "No le aplica a SYS. La norma está dirigida a entidades financieras y emisoras de tarjetas de crédito, y SYS opera como proveedor de servicios de pago para empresas.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Ministerio de Economía - Secretaría de Coordinación de Producción",
-      "titulo": "Resolución 15/2026",
-      "asunto": "",
-      "fecha": "24/09/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347887/20260924",
-      "tipo": "Publicada en el Boletín Oficial",
-      "queCambia": "Desígnanse al Subsecretario de Evaluación y Seguimiento de Gestión de Producción de la SECRETARÍA DE COORDINACIÓN DE PRODUCCIÓN del MINISTERIO DE ECONOMÍA, magíster Joaquín Manuel RODÓN HEREDIA (D.N.I. N° 30.407.366), como miembro titular del Comité de Administración del Fondo de Garantías Argentino (FoGAr), y al Director Nacional de Estudios para la Producción de la ex UNIDAD GABINETE DE ASESORES del ex MINISTERIO DE DESARROLLO PRODUCTIVO, actualmente en la órbita del MINISTERIO DE ECONOMÍA, Licenciado en Administración de Empresas Nicolás Javier BERTELLO (D.N.I. N° 26.462.885), como miembro suplente, ambos en representación del MINISTERIO DE ECONOMÍA.",
-      "paraQue": "En atención al cambio de autoridades en las dependencias involucradas, lo que implicó el cese de los correspondientes miembros ante el mencionado Comité de Administración, resulta oportuno efectuar nuevas designaciones de los miembros titulares y suplentes, a fin de tornar operativo su funcionamiento.",
-      "tema": "general",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (entidades financieras), pero no nombra su actividad: puede que no le aplique.",
-        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 3,
-        "motivos": [
-          "entidades financieras",
-          "emitida por Economía"
-        ],
-        "temas": [
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "La norma designa a los nuevos miembros titulares y suplentes del Comité de Administración del Fondo de Garantías Argentino (FoGAr).",
-        "comoAfecta": "No le aplica directamente a SYS Global Pay, ya que la resolución solo trata sobre la integración de autoridades del FoGAr y no impone obligaciones operativas o de cumplimiento para los proveedores de servicios de pago.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Banco Central (BCRA)",
-      "titulo": "Comunicación \"B\" 13235/2026",
-      "asunto": "Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.",
-      "fecha": "24/09/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/347933/20260924",
-      "tipo": "Comunicación normativa",
-      "queCambia": "El BCRA escribe para comunicarles, en Anexo, los valores de las tasas de referencia aplicables a partir de la fecha que se indica.",
-      "paraQue": "",
-      "tema": "general",
-      "comoAfecta": [
-        "No va dirigida a los PSP (va a: entidades financieras), pero toca temas de SYS. Hay que ver si el cambio también alcanza a SYS.",
-        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 3,
-        "motivos": [
-          "entidades financieras",
-          "emitida por el BCRA"
-        ],
-        "temas": [
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "El Banco Central comunica los nuevos valores de las tasas de referencia aplicables a la garantía de los depósitos.",
-        "comoAfecta": "La norma está dirigida exclusivamente a las entidades financieras. No le aplica directamente a SYS Global Pay por ser un proveedor de servicios de pago.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
     {
       "fuente": "BCRA",
       "emisor": "Banco Central (BCRA)",
@@ -140,11 +28,12 @@
         }
       ],
       "evaluacion": {
-        "nivel": "revisar",
+        "nivel": "descartada",
         "puntaje": 3,
         "motivos": [
           "Ley 25.246 (lavado de activos)",
-          "entidades financieras"
+          "entidades financieras",
+          "la IA no ve impacto para SYS"
         ],
         "temas": [
           "lavado",
@@ -152,15 +41,16 @@
         ]
       },
       "resumenIa": {
-        "queCambia": "El Banco Central dispone levantar la suspensión para operar en el Mercado de Cambios que pesaba sobre determinadas personas humanas.",
-        "comoAfecta": "La norma va dirigida a entidades financieras y operadores de cambio, por lo que no le aplica directamente a SYS Global Pay como PSPCP.",
+        "veredicto": "no_aplica",
+        "queCambia": "El Banco Central levantó la suspensión para operar en el Mercado de Cambios a un listado de personas físicas.",
+        "comoAfecta": "SYS no opera en el Mercado de Cambios oficial.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }
   ],
   "revisado": [
     "Boletín Oficial del 2026-09-24: 75 avisos de la primera sección.",
-    "Boletín de Córdoba del 2026-09-24: 4 normas.",
+    "Rentas Córdoba: 3 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 10 comunicaciones con fecha de ese día (B 13237, C 102358, C 102357, C 102356, C 102355, C 102354, C 102353, C 102352, C 102351, C 102350).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",

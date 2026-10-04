@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { armarAviso } from './aviso.js';
+import { nivelFinal } from './ia.js';
 import type { Hallazgo } from './explicar.js';
 import { claveComunicacion, diasEntre } from './procesar.js';
 
@@ -30,4 +31,21 @@ test('la misma comunicación por la web del BCRA o por el Boletín Oficial', () 
 test('días entre dos fechas, cruzando de mes', () => {
   assert.deepEqual(diasEntre('2026-09-29', '2026-10-02'), ['2026-09-30', '2026-10-01', '2026-10-02']);
   assert.deepEqual(diasEntre('2026-10-02', '2026-10-02'), []);
+});
+
+test('nivel final: reglas + veredicto de la IA', () => {
+  const con = (nivel: 'alta' | 'revisar', motivos: string[] = []) => ({ evaluacion: { nivel, puntaje: 5, motivos, temas: [] } });
+  assert.equal(nivelFinal(con('alta', ['dirigida a los proveedores de servicios de pago']), 'no_aplica'), 'alta');
+  assert.equal(nivelFinal(con('alta'), 'no_aplica'), 'descartada');
+  assert.equal(nivelFinal(con('alta'), 'dudoso'), 'revisar');
+  assert.equal(nivelFinal(con('revisar'), 'aplica'), 'alta');
+  assert.equal(nivelFinal(con('revisar'), 'dudoso'), 'revisar');
+  assert.equal(nivelFinal(con('revisar'), 'no_aplica'), 'descartada');
+  assert.equal(nivelFinal(con('revisar')), 'revisar', 'sin IA mandan las reglas');
+});
+
+test('lo que la IA descartó no genera aviso', () => {
+  const desc = norma('revisar', 'Resolución 1/2026');
+  desc.evaluacion.nivel = 'descartada';
+  assert.equal(armarAviso('2026-10-02', [desc], [], 'https://sitio'), null);
 });

@@ -54,3 +54,33 @@ test('RG ARCA 5804/2025: el tema es impuestos aunque nombre a los PSP', () => {
   assert.equal(ev.nivel, 'alta');
   assert.equal(ev.temas[0], 'impuestos');
 });
+
+// Ruido real del historial (22/9 al 2/10/2026) que no tiene que llegar a la página.
+
+test('Com. B de tasas de referencia de garantía de depósitos -> descartada', () => {
+  const ev = evaluar('BANCO CENTRAL DE LA REPÚBLICA ARGENTINA', 'A LAS ENTIDADES FINANCIERAS: Circular OPASI 2 – Garantía de los depósitos – Tasas de referencia.');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('edicto que archiva un sumario cambiario -> descartada', () => {
+  const ev = evaluar('BANCO CENTRAL DE LA REPÚBLICA ARGENTINA', 'El BCRA dispuso dejar sin efecto la imputación y archivar el Sumario Cambiario N° 7812 ... proveedores de servicios de pago');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('designación de personal -> descartada aunque toque un tema de SYS', () => {
+  const ev = evaluar('MINISTERIO DE ECONOMÍA', 'activos virtuales ... RESUELVE: ARTÍCULO 1°.- Desígnanse miembros titulares y suplentes del Comité de Administración');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('"se paga con VEP o QR" no cuenta como tema de pagos QR', () => {
+  const ev = evaluar('ENTE NACIONAL REGULADOR DE LA ELECTRICIDAD', 'cuarta cuota de la Tasa de Fiscalización ... abonarse mediante e-Recauda con VEP o QR ... entidades financieras');
+  assert.equal(ev.nivel, 'descartada');
+});
+
+test('CNV con solo "entidades financieras" -> descartada', () => {
+  assert.equal(evaluar('COMISIÓN NACIONAL DE VALORES', 'colocación primaria de valores negociables ... entidades financieras').nivel, 'descartada');
+});
+
+test('UIF con términos débiles -> para revisar (sus normas valen para todos los sujetos obligados)', () => {
+  assert.equal(evaluar('UNIDAD DE INFORMACIÓN FINANCIERA', 'Los sujetos obligados deberán ... entidades financieras').nivel, 'revisar');
+});

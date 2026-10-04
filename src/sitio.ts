@@ -22,14 +22,15 @@ const AYUDA = `
 
 <h2>Qué significa cada color</h2>
 <div class="caja leyenda">
-<div><span class="pill alta">Le afecta</span><span>Nombra a SYS o a su actividad (proveedores de servicios de pago, cuentas de pago, billeteras), o el BCRA la dirige a los PSP. <strong>La tiene que ver compliance.</strong></span></div>
-<div><span class="pill rev">Para revisar</span><span>Toca temas de SYS, pero puede que no le aplique. Alcanza con una mirada rápida.</span></div>
+<div><span class="pill alta">Le afecta</span><span>Le cambia algo a SYS como billetera, o el BCRA la dirige a los PSP. Trae qué hacer. <strong>La tiene que ver compliance.</strong></span></div>
+<div><span class="pill rev">Para revisar</span><span>Puede aplicar según cómo opere SYS (por ejemplo, si opera con el exterior). Alcanza con una mirada rápida.</span></div>
+<div><span class="pill nada">No aplica</span><span>Pasó el primer filtro, pero no le cambia nada a SYS. Queda plegada al final de cada día, con el motivo, y no genera mail.</span></div>
 <div><span class="pill alta">⚠ Fuente falló</span><span>No se pudo leer alguna fuente (por ejemplo, la web del BCRA estaba caída). Lo que no se leyó puede tener novedades: hay que mirarlo a mano. El monitor <strong>nunca</strong> dice "no hubo nada" si no pudo revisar.</span></div>
 </div>
 
 <h2>Cómo leer cada norma</h2>
 <div class="grilla dos">
-<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="chispa"></span></span>En pocas palabras</h3><p>Resumen de dos líneas hecho con IA. Ayuda a entender rápido, pero puede equivocarse: lo que vale es lo que sigue, que sale textual de la norma.</p></div>
+<div class="caja"><h3><span class="icono-tema" style="--h:245"><span data-icono="chispa"></span></span>En pocas palabras</h3><p>Qué cambia, si le aplica a SYS y qué tiene que hacer, hecho con IA. Puede equivocarse: el texto de la norma está siempre a un clic.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:200"><span data-icono="documento"></span></span>Qué cambia y para qué</h3><p>Lo que dispone la norma y el objetivo que declara, con sus propias palabras.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:350"><span data-icono="billetera"></span></span>Cómo le afecta a SYS</h3><p>A quién va dirigida y qué parte del negocio de SYS toca.</p></div>
 <div class="caja"><h3><span class="icono-tema" style="--h:55"><span data-icono="calendario"></span></span>Fechas y relacionadas</h3><p>Desde cuándo rige, qué plazo da y qué otras normas cita, con link. A veces el cambio de fondo está en una de ellas.</p></div>

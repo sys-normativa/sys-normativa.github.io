@@ -112,6 +112,17 @@ La columna "Monitor" dice si hoy se detecta automáticamente.
 
 ---
 
+## Qué llega a la página (desde el 4/10/2026)
+
+Objetivo: que compliance vea solo lo que le cambia algo a SYS como billetera, con qué hacer. Las obligaciones de cualquier empresa (sueldos, aportes, sus propios impuestos) quedan afuera: las lleva el contador.
+
+1. **Reglas** (sin IA): para "Para revisar" hace falta al menos un tema de peso medio (no alcanza con "entidades financieras" + el organismo), salvo la UIF, cuyas normas valen para todos los sujetos obligados. Se descartan edictos y archivos de sumarios, designaciones de personal y el "QR" mencionado de pasada ("se paga con VEP o QR"). Las comunicaciones "B" de tasas de referencia ya no pasan.
+2. **IA** (Gemini): da un veredicto (aplica / puede aplicar / no aplica), qué cambia, cómo le afecta y **qué hacer** con plazo. Si dice "no aplica", la norma va a una lista plegada al final del día, con el motivo, y no genera mail. Si confirma que aplica, pasa a "Le afecta". Lo que el BCRA dirige a los PSP es "Le afecta" siempre. Si la IA no responde, mandan las reglas.
+
+Resultado sobre el historial del 22/9 al 2/10: de 25 normas mostradas se pasó a 3 que le afectan (RG 2229 de Rentas: usar el padrón de octubre; A 8487: feriado bancario del 10/11; A 8488: leer la A 8472) y 5 plegadas.
+
+---
+
 ## Cómo explica el informe cada norma
 
 Cada norma que pasa el filtro trae, **sin IA**, recortes literales de la propia norma más un texto fijo por tema:

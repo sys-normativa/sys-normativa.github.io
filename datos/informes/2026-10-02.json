@@ -1,6 +1,6 @@
 {
   "fecha": "2026-10-02",
-  "generado": "4/10/2026 a las 00:57",
+  "generado": "4/10/2026 a las 01:42",
   "hallazgos": [
     {
       "fuente": "BCRA",
@@ -48,100 +48,21 @@
         ]
       },
       "resumenIa": {
-        "queCambia": "El Banco Central actualizó el texto ordenado sobre Proveedores de Servicios de Pago para incorporar las disposiciones de la Comunicación A 8472. Detalla las definiciones operativas de la actividad y ratifica que los proveedores y sus directivos están sujetos a sanciones ante incumplimientos.",
-        "comoAfecta": "A SYS Global Pay le aplica por ser un proveedor de servicios de pago registrado. El equipo de compliance debe revisar el texto ordenado actualizado en la web del Banco Central para conocer en detalle las definiciones operativas y el régimen de responsabilidades vigente.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Ministerio de Economía - Secretaría de Industria, Comercio y de la Pequeña y Mediana Empresa",
-      "titulo": "Resolución 400/2026",
-      "asunto": "",
-      "fecha": "02/10/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348407/20261002",
-      "tipo": "Publicada en el Boletín Oficial",
-      "queCambia": "Establécese que aquellas entidades financieras comprendidas en el Artículo 2° de la Ley N° 21.526 y sus modificaciones, que no revistan el carácter de “empresas grandes” en virtud de las actualizaciones anuales publicadas al efecto por la AGENCIA DE RECAUDACIÓN Y CONTROL ADUANERO (ARCA), entidad autárquica en el ámbito del MINISTERIO DE ECONOMÍA, conforme lo dispuesto en el Artículo 2° de la Resolución General N° 4.367 de fecha 19 de diciembre de 2018 de la ex ADMINISTRACIÓN FEDERAL DE INGRESOS PÚBLICOS (AFIP), entidad autárquica en el ámbito del ex MINISTERIO DE HACIENDA, no serán sujetos obligados al “Régimen de Factura de Crédito Electrónica MiPyMEs” creado por la Ley N° 27.440, a partir…",
-      "paraQue": "Bajo el Título “Impulso al Financiamiento de PyMEs”, la Ley N° 27.440 y sus modificaciones estableció el llamado Régimen de “Factura de Crédito Electrónica MIPyMEs” que tiene como objetivo mejorar las condiciones de financiamiento de las Micro, Pequeñas y Medianas Empresas, mediante la percepción anticipada de los créditos y de los documentos por cobrar, que puedan disponer en contra de sus…",
-      "tema": "general",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (sujetos obligados, retenciones/percepciones, entidades financieras), pero no nombra su actividad: puede que no le aplique.",
-        "Es una norma general del sistema financiero. Lo más probable es que no le aplique a SYS, pero vale una mirada rápida."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [
-        "La presente medida entrará en vigencia a partir del día de su publicación en el Boletín Oficial."
-      ],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 5,
-        "motivos": [
-          "sujetos obligados",
-          "retenciones/percepciones",
-          "entidades financieras",
-          "emitida por Economía"
-        ],
-        "temas": [
-          "general",
-          "lavado",
-          "impuestos"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "Se excluye del Régimen de Factura de Crédito Electrónica MiPyMEs a las entidades financieras de la Ley N° 21.526 que no sean consideradas empresas grandes.",
-        "comoAfecta": "A SYS Global Pay no le aplica directamente, ya que está registrada como proveedor de servicios de pago (PSPCP) y no como entidad financiera de la Ley N° 21.526.",
-        "modelo": "gemini-3.5-flash-lite"
-      }
-    },
-    {
-      "fuente": "Boletín Oficial",
-      "emisor": "Comisión Nacional de Valores",
-      "titulo": "Resolución General 1170/2026",
-      "asunto": "",
-      "fecha": "02/10/2026",
-      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348414/20261002",
-      "tipo": "Publicada en el Boletín Oficial",
-      "queCambia": "Sustituir el artículo 7° de la Sección II del Capítulo VI del Título VI de las NORMAS (N.T. 2013 y mod.), por el siguiente texto: “ARTÍCULO 7°.- El ACRyP deberá entregar, a solicitud del depositante, el documento habilitante para la ejecución del VNEI de que se trate cuando: no hubiera recibido el pago por parte del obligado al vencimiento del plazo o la presentación del VNEI al cobro, y, además, no hubiere recibido una instrucción del agente para efectuar un canje en las condiciones dispuestas en el artículo 5° del presente Capítulo, excepto por los cheques de pago diferido (a menos que cualquier normativa de jerarquía superior aplicable lo habilite o exija expresamente).",
-      "paraQue": "Por otra parte, resulta oportuno precisar el alcance de las actividades afines o complementarias del ACRyP, explicitando su facultad para prestar servicios destinados a registrar transferencias de VNEI previamente negociados en un Mercado autorizado por la CNV, que se encuentren vencidos e impagos y bajo custodia de dicho agente, con el objeto de reflejar en sus registros los cambios de…",
-      "tema": "cnv",
-      "comoAfecta": [
-        "Toca temas cercanos a SYS (entidades financieras), pero no nombra su actividad: puede que no le aplique.",
-        "Le importa si SYS remunera los saldos con un fondo común de inversión o toca activos virtuales. Está pendiente de confirmar con SYS."
-      ],
-      "queHacer": "Darle una mirada rápida para confirmar si le aplica a SYS. Si no, se descarta.",
-      "fechasClave": [
-        "La presente RG entrará en vigencia a partir del día siguiente al de su publicación en el B.O."
-      ],
-      "dondeNombraASys": "",
-      "relacionadas": [],
-      "evaluacion": {
-        "nivel": "revisar",
-        "puntaje": 3,
-        "motivos": [
-          "entidades financieras",
-          "emitida por la CNV"
-        ],
-        "temas": [
-          "cnv",
-          "general"
-        ]
-      },
-      "resumenIa": {
-        "queCambia": "La norma modifica las disposiciones sobre Agentes de Custodia, Registro y Pago y otros actores del mercado de capitales para regular la registración de transferencias de valores negociables vencidos e impagos.",
-        "comoAfecta": "No le aplica de forma directa a SYS Global Pay, ya que la norma regula a agentes y actores del mercado de capitales bajo la órbita de la Comisión Nacional de Valores y no menciona a los proveedores de servicios de pago que ofrecen cuentas de pago.",
+        "veredicto": "aplica",
+        "queCambia": "El Banco Central actualiza el texto ordenado sobre Proveedores de Servicios de Pago incorporando las modificaciones de la Comunicación A 8472 sobre definiciones operativas y sanciones.",
+        "comoAfecta": "SYS debe conocer las nuevas definiciones normativas sobre redes, adquirencia y el régimen de sanciones aplicable a los PSP.",
+        "queHacer": "Leer la Comunicación A 8472 que introdujo el cambio de fondo en el texto ordenado del BCRA.",
         "modelo": "gemini-3.5-flash-lite"
       }
     }
   ],
   "revisado": [
     "Boletín Oficial del 2026-10-02: 70 avisos de la primera sección.",
-    "Boletín de Córdoba del 2026-10-02: 5 normas.",
+    "Rentas Córdoba: 0 normas publicadas ese día.",
     "Prensa del BCRA: 0 noticias de ese día.",
     "BCRA: 7 comunicaciones con fecha de ese día (A 8488, B 13240, C 102396, C 102395, C 102394, C 102393, C 102392).",
     "Textos ordenados del BCRA: se vigilan desde el 3/10/2026 en adelante (informe armado después).",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": []
 }
