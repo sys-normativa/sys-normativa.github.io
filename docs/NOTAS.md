@@ -29,18 +29,28 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - La clave es de la cuenta personal de Google de Guido ("Default Gemini Project"). Si usa esa cuenta para otras cosas con la API, comparten cupo.
 - **Decisión de Guido:** el repo puede ser **público**, no hay nada secreto.
 
-## Propuesta de presentación y hosting (pendiente de que Guido decida)
-- **Dónde corre:** GitHub Actions en repo **público**, 2 veces por día. Gratis y sin límite de minutos.
-- **Link:** GitHub Pages publica `salida/index.html`. Gratis en repo público. Es el lugar donde entran todos los días.
-- **Aviso por mail (opcional):** solo cuando hay algo que "Le afecta" o falló una fuente, con el link.
-- **Clave de Gemini:** como secreto del repo.
-- Hace falta que Guido cree la cuenta/repo de GitHub (o diga cuál usar). Nada se sube sin su OK.
+## En producción desde el 3/10/2026
+- **Link:** https://guidoparisi91.github.io/sys-normativa/
+- **Repo (público):** https://github.com/Guidoparisi91/sys-normativa. Decisión de Guido: público, no hay nada secreto.
+- **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): días hábiles a las 8:00 y 19:00 (hora argentina). Se puede correr a mano desde la pestaña Actions → "Run workflow".
+- Cada corrida guarda `datos/` en el repo (commit "Guardar informe del …") y publica la página. Si una fuente falla, el informe igual se publica y el workflow queda en rojo.
+- **Aviso por mail:** cuando hay algo nuevo (o falla una fuente) se crea un issue que menciona a @Guidoparisi91; GitHub lo manda al mail de la cuenta. Hay que confirmar en GitHub → Settings → Notifications que ese mail sea guidoparisi91@gmail.com. Prueba enviada: issue #1.
+- **Clave de Gemini:** secreto `GEMINI_API_KEY` del repo (y `.env` en la compu).
+- **Historial:** arranca con los 4 días hábiles anteriores (29/9 al 2/10), armados con `npm run historial`: Boletín de ese día + comunicaciones del BCRA con esa fecha. Los 4 días sueltos de la validación se sacaron del historial (la validación sigue documentada en el análisis).
+- Una comunicación del BCRA que ya salió un día no se repite cuando después aparece en el Boletín Oficial.
+- Días sin Boletín (fines de semana, feriados) y sin novedades no generan informe vacío.
 
-## Próximos pasos (a definir con Guido)
-1. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar).
-2. OK de Guido a GitHub Actions + Pages (repo público) y armar el workflow.
-3. Aviso por mail opcional, solo cuando hay algo.
-4. Para mostrarle a SYS: demo con el historial de los 5 días de `salida/` (los 4 casos reales + el 2/10, con la A 8488 que no salió en el Boletín).
-5. Regenerar la clave de Gemini (se pegó en el chat).
-6. Segunda etapa: boletines provinciales (Ingresos Brutos), Congreso, prensa del BCRA.
-7. Afinar "Para revisar": hoy trae unas 3 o 4 normas por día que suelen no aplicar.
+## Datos y límites
+- No hay base de datos: cada día es un JSON en `datos/informes/` (~7 KB). Un año ≈ 2 MB. La página embebe todo: al año pesa ~2 MB, carga bien. Si en unos años pesa demasiado, mostrar solo los últimos meses en la página.
+- Límites de GitHub (repo público, gratis): Actions sin límite de minutos; Pages hasta 1 GB por sitio; repo recomendado < 1 GB. Sobra.
+- GitHub apaga los cron tras 60 días sin commits; el commit diario de `datos/` lo evita.
+- Aviso de GitHub (3/10/2026): las acciones `checkout@v4`, `setup-node@v4`, `configure-pages@v5`, `deploy-pages@v4`, `upload-artifact@v4` usan Node 20, que está deprecado; hoy corren igual. Actualizar las versiones cuando salgan las nuevas.
+- `ubuntu-latest` pasa a Ubuntu 26 desde el 19/10/2026; no debería afectar.
+
+## Próximos pasos
+1. **Darle más personalidad al diseño** de la página (pedido de Guido, después del link).
+2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar).
+3. Regenerar la clave de Gemini (se pegó en el chat): actualizar `.env` y el secreto del repo.
+4. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
+5. Si los mails diarios resultan muchos: avisar solo cuando hay algo que "Le afecta".
+6. Afinar "Para revisar".
