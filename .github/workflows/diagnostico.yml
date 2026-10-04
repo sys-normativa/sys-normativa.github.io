@@ -1,0 +1,17 @@
+# Temporal: prueba qué direcciones del Boletín de Córdoba responden desde GitHub.
+name: Diagnóstico Córdoba
+on: workflow_dispatch
+jobs:
+  probar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          UA="Mozilla/5.0 (compatible; SYS-Normativa/0.1)"
+          NAV="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36"
+          for u in https://boletinoficial.cba.gov.ar/ https://boletinoficial.cba.gov.ar/2026/10/02/ https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/10/1_Secc_021026.pdf http://boletinoficial.cba.gov.ar/2026/10/02/; do
+            for a in "$UA" "$NAV"; do
+              echo "$(curl -s -o /dev/null -w '%{http_code}' -A "$a" -L "$u") $u [${a:0:30}]"
+            done
+          done
+          curl -s -A "$NAV" https://boletinoficial.cba.gov.ar/2026/10/02/ | head -c 600
+          echo; curl -s https://ipinfo.io/country
