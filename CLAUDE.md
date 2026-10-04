@@ -35,7 +35,7 @@ npm run typecheck
 - `src/fuentes/bcraComunicaciones.ts`: PDF en `/archivos/Pdfs/comytexord/{A|B|C}{n}.pdf`. Detecta las nuevas preguntando por el número siguiente. Tolera 5 huecos seguidos. `PISO` es el número desde donde busca en la primera corrida.
 - `src/fuentes/bcraTextosOrdenados.ts`: lee solo la carátula ("Última comunicación incorporada"). Si cambia, avisa. Es la red de seguridad.
 - `src/reglas.ts`: filtro de relevancia por palabras con peso más el organismo emisor. Para "Le afecta" hace falta un término propio de SYS: muchos términos débiles juntos no alcanzan. Las comunicaciones del BCRA dirigidas a "proveedores de servicios de pago" van directo a "Le afecta"; las demás del BCRA llegan como mucho a "Para revisar".
-- **Producción:** https://sys-normativa.github.io/ (repo público sys-normativa/sys-normativa.github.io). `.github/workflows/monitor.yml` corre días hábiles 8:00 y 19:00, guarda `datos/`, publica `salida/` en Pages y avisa con un issue (mail de GitHub). Cada push a `main` sale en la próxima corrida.
+- **Producción:** https://sys-normativa.github.io/ (repo público sys-normativa/sys-normativa.github.io). `.github/workflows/monitor.yml` corre lunes a viernes 8, 12, 16, 20 y 23:30 y sábados 12 (hora argentina), guarda `datos/`, publica `salida/` en Pages y avisa con un issue (mail de GitHub). Cada push a `main` sale en la próxima corrida.
 - `src/procesar.ts`: lo común a la corrida diaria y a `historial.ts`. `guardarDia` suma lo nuevo al informe del día sin repetir.
 - `src/aviso.ts`: arma el aviso; el workflow lo publica como issue.
 - `src/estado.ts` → `datos/estado.json`: última comunicación leída por tipo y versión de cada texto ordenado. No hay base de datos.

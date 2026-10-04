@@ -3,7 +3,7 @@
 // https://www.boletinoficial.gob.ar/seccion/primera/AAAAMMDD
 // Cada aviso trae el texto completo de la norma en su página de detalle.
 
-import { enParalelo, pedirTexto } from '../http.js';
+import { enParalelo, pedir, pedirTexto } from '../http.js';
 import { decodificarEntidades, htmlATexto } from '../texto.js';
 
 const BASE = 'https://www.boletinoficial.gob.ar';
@@ -51,13 +51,25 @@ export function parsearCuerpo(html: string): string {
 
 /** fecha en formato AAAAMMDD. Devuelve [] si ese día no hubo edición. */
 export async function avisosDelDia(fecha: string): Promise<AvisoBO[]> {
-  const lista = parsearLista(await pedirTexto(`${BASE}/seccion/primera/${fecha}`));
+  const res = await pedir(`${BASE}/seccion/primera/${fecha}`);
+  if (!res.ok) throw new Error(`HTTP ${res.status} al pedir la sección del día`);
+  // Un día sin edición (fin de semana, feriado) el sitio redirige a la portada.
+  if (res.redirected) return [];
+  const lista = parsearLista(await res.text());
   const delDia = lista.filter((r) => r.ruta.endsWith(`/${fecha}`));
-  return enParalelo(delDia, 4, async (r) => ({
+  // La página del día respondió pero no se reconoce ningún aviso: lo más
+  // probable es que haya cambiado el formato. Nunca se informa como "no hubo
+  // edición", porque eso escondería las normas del día.
+  if (!delDia.length) throw new Error('la página del día respondió, pero no se pudo leer ningún aviso (¿cambió el formato del sitio?)');
+  const avisos = await enParalelo(delDia, 4, async (r) => ({
     id: r.id,
     url: BASE + r.ruta,
     organismo: r.organismo,
     titulo: r.titulo,
     texto: parsearCuerpo(await pedirTexto(BASE + r.ruta)),
   }));
+  // Lo mismo con el texto de cada aviso: sin texto, el filtro solo vería el título.
+  const sinTexto = avisos.filter((a) => !a.texto).length;
+  if (sinTexto > avisos.length / 4) throw new Error(`no se pudo leer el texto de ${sinTexto} de ${avisos.length} avisos (¿cambió el formato del sitio?)`);
+  return avisos;
 }

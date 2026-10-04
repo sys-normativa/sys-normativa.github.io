@@ -1,8 +1,9 @@
 # Corre el monitor solo, publica la página y avisa por mail si hay algo nuevo.
 #
-# Horario: días hábiles a las 8:00 y a las 19:00 de Argentina (11:00 y 22:00 UTC).
-# GitHub puede atrasar el arranque unos minutos. Lo que salga un fin de semana
-# aparece en la corrida del lunes.
+# Horario (Argentina = UTC-3): de lunes a viernes a las 8:00, 12:00, 16:00,
+# 20:00 y 23:30, y los sábados a las 12:00. Varias corridas para que no
+# importe a qué hora publica cada fuente: cada una suma solo lo nuevo.
+# GitHub puede atrasar el arranque unos minutos.
 #
 # El aviso se publica como "issue" del repo: GitHub lo manda por mail al dueño.
 
@@ -10,7 +11,9 @@ name: Monitor normativo
 
 on:
   schedule:
-    - cron: '0 11,22 * * 1-5'
+    - cron: '0 11,15,19,23 * * 1-5' # 8, 12, 16 y 20 h
+    - cron: '30 2 * * 2-6' # 23:30 h de lunes a viernes (en UTC ya es el día siguiente)
+    - cron: '0 15 * * 6' # sábados 12 h
   workflow_dispatch: # botón "Run workflow" para correrlo a mano
     inputs:
       prueba_aviso:

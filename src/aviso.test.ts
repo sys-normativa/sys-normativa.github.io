@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { armarAviso } from './aviso.js';
 import type { Hallazgo } from './explicar.js';
-import { claveComunicacion } from './procesar.js';
+import { claveComunicacion, diasEntre } from './procesar.js';
 
 const norma = (nivel: 'alta' | 'revisar', titulo: string): Hallazgo => ({
   fuente: 'BCRA', emisor: 'Banco Central (BCRA)', titulo, asunto: '', fecha: '02/10/2026', url: 'https://x', tipo: 'Norma nueva',
@@ -25,4 +25,9 @@ test('la misma comunicación por la web del BCRA o por el Boletín Oficial', () 
   assert.equal(claveComunicacion('Comunicación "A" 8486'), 'A8486');
   assert.equal(claveComunicacion('Comunicación "A" 8486/2026'), 'A8486');
   assert.equal(claveComunicacion('Resolución 400/2026'), null);
+});
+
+test('días entre dos fechas, cruzando de mes', () => {
+  assert.deepEqual(diasEntre('2026-09-29', '2026-10-02'), ['2026-09-30', '2026-10-01', '2026-10-02']);
+  assert.deepEqual(diasEntre('2026-10-02', '2026-10-02'), []);
 });

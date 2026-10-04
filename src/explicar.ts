@@ -365,7 +365,8 @@ export function explicarTextoOrdenado(t: { tema: string; temaSys: Tema; url: str
     titulo: `Se actualizó el texto ordenado "${t.tema}"`,
     asunto: `Ahora incorpora la Comunicación "${tipo}" ${numero}`,
     fecha: t.fechaTexto,
-    url: t.url,
+    // Cada versión es una novedad distinta: el link lleva la comunicación incorporada.
+    url: `${t.url}#${ahora.replace(/\s+/g, '')}`,
     tipo: 'Cambio en un texto ordenado',
     queCambia: `El BCRA actualizó la versión consolidada de "${t.tema}". Antes llegaba hasta la Comunicación ${antes}; ahora incorpora la ${ahora}. El texto ordenado marca lo nuevo en negrita y lo que se saca, tachado.`,
     paraQue: '',

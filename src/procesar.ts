@@ -22,6 +22,14 @@ export function ahoraEnArgentina(): string {
   return f.format(new Date()).replace(',', ' a las');
 }
 
+/** Los días entre `desde` (sin incluir) y `hasta` (incluido), como AAAA-MM-DD. */
+export function diasEntre(desde: string, hasta: string): string[] {
+  const out: string[] = [];
+  const d = new Date(`${desde}T12:00:00Z`);
+  for (d.setUTCDate(d.getUTCDate() + 1); d.toISOString().slice(0, 10) <= hasta; d.setUTCDate(d.getUTCDate() + 1)) out.push(d.toISOString().slice(0, 10));
+  return out;
+}
+
 /** "02/10/2026" -> "2026-10-02". */
 export function fechaIso(ddmmaaaa: string): string {
   const [d, m, y] = ddmmaaaa.split('/');
@@ -92,8 +100,8 @@ export function claveComunicacion(titulo: string): string | null {
   return m ? `${m[1]}${m[2]}` : null;
 }
 
-/** Comunicaciones del BCRA ya informadas en otros días. */
-async function comunicacionesYaInformadas(menos: string): Promise<Set<string>> {
+/** Lo ya informado en otros días: links de cada norma y número de cada comunicación del BCRA. */
+async function yaInformado(menos: string): Promise<Set<string>> {
   const claves = new Set<string>();
   let archivos: string[] = [];
   try {
@@ -105,6 +113,7 @@ async function comunicacionesYaInformadas(menos: string): Promise<Set<string>> {
     const r = JSON.parse(await readFile(new URL(f, INFORMES), 'utf8')) as Resumen;
     for (const h of r.hallazgos) {
       const k = claveComunicacion(h.titulo);
+      claves.add(h.url);
       if (k) claves.add(k);
     }
   }
@@ -132,11 +141,11 @@ export async function guardarDia(
   const vistos = new Set(anterior?.hallazgos.map((h) => h.url));
   // Una comunicación que ya salió otro día (p. ej. en la web del BCRA y días
   // después en el Boletín Oficial) no se repite: queda donde apareció primero.
-  const otrosDias = await comunicacionesYaInformadas(fecha);
+  const otrosDias = await yaInformado(fecha);
   const nuevos = ordenar(
     lote.hallazgos.filter((h) => {
       const k = claveComunicacion(h.titulo);
-      return !vistos.has(h.url) && !(k && otrosDias.has(k));
+      return !vistos.has(h.url) && !otrosDias.has(h.url) && !(k && otrosDias.has(k));
     }),
   );
 

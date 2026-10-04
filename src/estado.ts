@@ -8,6 +8,13 @@ import type { TipoCom } from './fuentes/bcraComunicaciones.js';
 export interface Estado {
   ultimaComunicacion: Partial<Record<TipoCom, number>>;
   textosOrdenados: Record<string, string>;
+  /** Último día del Boletín Oficial leído completo (sin contar hoy, que se relee en cada corrida). */
+  boletinHasta?: string;
+  /**
+   * Números salteados: no existían cuando ya había uno más alto publicado.
+   * Se vuelven a buscar en cada corrida por si se publican tarde.
+   */
+  pendientes?: Partial<Record<TipoCom, { numero: number; desde: string }[]>>;
 }
 
 const RUTA = new URL('../datos/estado.json', import.meta.url);

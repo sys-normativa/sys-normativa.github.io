@@ -155,7 +155,7 @@ Las respuestas cambian qué se vigila y con qué peso.
 
 **Propuesta: GitHub Actions + GitHub Pages en un repositorio público.** Guido confirmó (3/10/2026) que no hay nada secreto: todo es información de los boletines.
 
-- **Corrida:** todos los días a las 8:00 y a las 19:00 (hora argentina). El BCRA publica durante el día, por eso son dos. En repos públicos, Actions no tiene límite de minutos.
+- **Corrida:** de lunes a viernes a las 8, 12, 16, 20 y 23:30, y sábados a las 12 (hora argentina). Varias corridas para que no importe a qué hora publica cada fuente; cada una suma solo lo nuevo. En repos públicos, Actions no tiene límite de minutos.
 - **Link:** la página del monitor (`salida/index.html`) se publica en GitHub Pages, gratis en repos públicos. Una sola dirección para entrar todos los días.
 - **Estado e historial:** `datos/estado.json` y `datos/informes/` se guardan en el mismo repo después de cada corrida. No hace falta base de datos.
 - **Clave de Gemini:** va como "secreto" del repo, nunca en el código.
@@ -166,6 +166,21 @@ Las respuestas cambian qué se vigila y con qué peso.
 - GitHub **apaga los cron de un repo sin actividad por 60 días.** El commit diario del estado lo mantiene activo, pero si el monitor deja de commitear, hay que volver a activarlo a mano.
 - Si mañana el BCRA o el Boletín cambian el formato de su web, el monitor **falla de forma visible**: el informe lista "Fuentes que fallaron", nunca dice "no hubo nada" en silencio. Igual alguien tiene que leer ese aviso.
 - En un repo público también quedan a la vista estos documentos (incluidas las preguntas para SYS y las notas del proyecto).
+
+---
+
+## Resguardos para no perder nada (4/10/2026)
+
+El peor error es decir "no hubo nada" cuando sí hubo. Cada fuente tiene un control para que una falla se vea:
+
+- **Boletín Oficial, día sin edición vs. falla:** un día sin edición el sitio redirige a la portada; eso es "no hubo edición". Si la página del día responde pero no se reconoce ningún aviso, o no se puede leer el texto de más de un cuarto de ellos, es un **error visible** (posible cambio de formato).
+- **Boletín Oficial, días que fallaron:** se recuerda el último día leído completo (`boletinHasta` en `datos/estado.json`). Cada corrida lee desde ahí hasta hoy (hasta 10 días), así un día caído se recupera solo. El día anterior se relee una vez más por si se agregó algo tarde.
+- **BCRA, cambio de dirección de los PDF:** antes de buscar novedades se confirma que la última comunicación leída sigue existiendo. Si no, es error (si no, se vería "0 nuevas" para siempre).
+- **BCRA, comunicaciones publicadas fuera de orden:** si falta un número entre dos publicados, queda como pendiente y se vuelve a buscar en cada corrida durante 30 días.
+- **Textos ordenados:** son la red de seguridad; si una comunicación se escapara, el cambio en el texto ordenado la delata.
+- **Sin repetidos:** una norma ya informada (por link, o por número si es del BCRA) no vuelve a aparecer.
+
+**Lo que ningún control cubre:** que el filtro por reglas descarte una norma que sí importaba (por eso el filtro es generoso), lo que no se publica en estas fuentes (boletines provinciales, Congreso, prensa del BCRA) y alguna sección del Boletín distinta de la primera.
 
 ---
 

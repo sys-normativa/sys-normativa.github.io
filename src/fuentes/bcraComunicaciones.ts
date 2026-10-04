@@ -52,7 +52,7 @@ export async function leerComunicacion(tipo: TipoCom, n: number): Promise<Comuni
   return { tipo, numero: n, url: urlDe(tipo, n), texto: text, ...parsearEncabezado(text) };
 }
 
-async function existe(tipo: TipoCom, n: number): Promise<boolean> {
+export async function existe(tipo: TipoCom, n: number): Promise<boolean> {
   return (await bajarPdf(tipo, n)) !== null;
 }
 
@@ -84,18 +84,23 @@ export async function buscarUltimo(tipo: TipoCom): Promise<number> {
   return lo;
 }
 
-/** Comunicaciones publicadas después de `ultimoVisto`, en orden. */
-export async function nuevasDesde(tipo: TipoCom, ultimoVisto: number): Promise<ComunicacionBCRA[]> {
+/**
+ * Comunicaciones publicadas después de `ultimoVisto`, en orden, y los números
+ * salteados entre ellas (pueden publicarse más tarde: hay que volver a buscarlos).
+ */
+export async function nuevasDesde(tipo: TipoCom, ultimoVisto: number): Promise<{ nuevas: ComunicacionBCRA[]; salteados: number[] }> {
   const nuevas: ComunicacionBCRA[] = [];
-  let huecos = 0;
-  for (let n = ultimoVisto + 1; huecos < HUECOS_TOLERADOS; n++) {
+  const salteados: number[] = [];
+  let faltantes: number[] = [];
+  for (let n = ultimoVisto + 1; faltantes.length < HUECOS_TOLERADOS; n++) {
     const c = await leerComunicacion(tipo, n);
     if (c) {
       nuevas.push(c);
-      huecos = 0;
+      salteados.push(...faltantes);
+      faltantes = [];
     } else {
-      huecos++;
+      faltantes.push(n);
     }
   }
-  return nuevas;
+  return { nuevas, salteados };
 }
