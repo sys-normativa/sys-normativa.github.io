@@ -50,9 +50,9 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 ## Próximos pasos
 1. ~~Link más lindo~~ **Hecho (4/10/2026):** el repo pasó a la organización `sys-normativa` (gratuita, se maneja desde la cuenta de Guido) como `sys-normativa.github.io`. Link: https://sys-normativa.github.io/
    - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
-   - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Falta que Guido confirme que le llegó.
+   - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Le llegó (confirmado el 4/10).
    - Historial: Guido no quiere ir más de un mes atrás; se sumaron 5 días (22 al 28/9) y alcanza. Los mails de aviso le llegan (confirmado el 4/10).
 2. Mandarle a SYS las preguntas del análisis (provincias, tarjetas, remuneración de saldos, exterior, a quién avisar). **Guido le va a preguntar a SYS en qué provincias trabaja** (dicho el 4/10); con eso se suman los boletines provinciales de Ingresos Brutos.
-4. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
-5. Si los mails diarios resultan muchos: avisar solo cuando hay algo que "Le afecta".
-6. Afinar "Para revisar".
+3. Segunda etapa de fuentes: boletines provinciales (Ingresos Brutos), empezando por ARBA y AGIP según lo que diga SYS; después Congreso y prensa del BCRA.
+4. Si los mails diarios resultan muchos: avisar solo cuando hay algo que "Le afecta".
+5. Afinar "Para revisar".
