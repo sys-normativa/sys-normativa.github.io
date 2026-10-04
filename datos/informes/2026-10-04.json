@@ -1,0 +1,18 @@
+{
+  "fecha": "2026-10-04",
+  "generado": "4/10/2026 a las 01:03",
+  "hallazgos": [],
+  "revisado": [
+    "Boletín Oficial del 2026-10-04: no hubo edición.",
+    "BCRA \"A\": 0 nuevas (última leída: A 8488).",
+    "BCRA \"B\": 0 nuevas (última leída: B 13240).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102396).",
+    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
+    "Prensa del BCRA: 0 noticias nuevas.",
+    "Resumen con IA: no hubo normas para resumir."
+  ],
+  "errores": [
+    "Boletín de Córdoba del 2026-10-03: HTTP 403 en https://boletinoficial.cba.gov.ar/2026/10/03/",
+    "Boletín de Córdoba del 2026-10-04: HTTP 403 en https://boletinoficial.cba.gov.ar/2026/10/04/"
+  ]
+}
