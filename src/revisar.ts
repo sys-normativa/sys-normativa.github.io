@@ -42,7 +42,10 @@ const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString
 
 async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
   const hasta = estado[clave];
-  const dias = manual || !hasta ? [fecha] : diasEntre(hasta, fecha).slice(-MAX_DIAS_ATRAS);
+  // Los domingos no hay Boletín, y pedirle ese día al sitio falla siempre
+  // (5/10/2026): no se pregunta. Los sábados sí, por si sale una edición.
+  const domingo = (dia: string) => new Date(`${dia}T12:00:00Z`).getUTCDay() === 0;
+  const dias = manual || !hasta ? [fecha] : diasEntre(hasta, fecha).slice(-MAX_DIAS_ATRAS).filter((d) => d === fecha || !domingo(d));
   // Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
   // nunca incluye hoy, que se relee en cada corrida.
   let completoHasta = hasta ?? ayer;
