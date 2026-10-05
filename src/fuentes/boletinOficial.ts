@@ -53,10 +53,12 @@ export function parsearCuerpo(html: string): string {
 
 /** fecha en formato AAAAMMDD. Devuelve [] si ese día no hubo edición. */
 export async function avisosDelDia(fecha: string): Promise<AvisoBO[]> {
-  const res = await pedir(`${BASE}/seccion/primera/${fecha}`);
-  if (!res.ok) throw new Error(`HTTP ${res.status} al pedir la sección del día`);
   // Un día sin edición (fin de semana, feriado) el sitio redirige a la portada.
-  if (res.redirected) return [];
+  // La redirección no se sigue: desde GitHub la portada falla ("fetch failed",
+  // domingo 4/10/2026) y no hace falta leerla.
+  const res = await pedir(`${BASE}/seccion/primera/${fecha}`, 3, { seguirRedireccion: false });
+  if (res.status >= 300 && res.status < 400) return [];
+  if (!res.ok) throw new Error(`HTTP ${res.status} al pedir la sección del día`);
   const lista = parsearLista(await res.text());
   const delDia = lista.filter((r) => r.ruta.endsWith(`/${fecha}`));
   // La página del día respondió pero no se reconoce ningún aviso: lo más

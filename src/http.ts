@@ -3,16 +3,18 @@
 
 const UA = 'Mozilla/5.0 (compatible; SYS-Normativa/0.1)';
 
-export async function pedir(url: string, intentos = 3): Promise<Response> {
+export async function pedir(url: string, intentos = 3, { seguirRedireccion = true } = {}): Promise<Response> {
   let ultimoError: unknown;
   for (let i = 0; i < intentos; i++) {
     try {
       const res = await fetch(url, {
         headers: { 'User-Agent': UA },
         signal: AbortSignal.timeout(30_000),
+        redirect: seguirRedireccion ? 'follow' : 'manual',
       });
-      // 404 es una respuesta válida (p. ej. "esa comunicación todavía no existe").
-      if (res.ok || res.status === 404) return res;
+      // 404 es una respuesta válida (p. ej. "esa comunicación todavía no existe"),
+      // y una redirección también cuando se pidió no seguirla.
+      if (res.ok || res.status === 404 || (!seguirRedireccion && res.status >= 300 && res.status < 400)) return res;
       ultimoError = new Error(`HTTP ${res.status} en ${url}`);
     } catch (e) {
       ultimoError = e;
