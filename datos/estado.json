@@ -15,7 +15,7 @@
     "t-rmgcti": "A 8401",
     "t-excbio": "A 8481"
   },
-  "boletinHasta": "2026-10-03",
+  "boletinHasta": "2026-10-04",
   "pendientes": {
     "A": [],
     "B": [],
@@ -33,9 +33,7 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [
-    "Boletín Oficial"
-  ],
+  "fallasAvisadas": [],
   "rentasVistas": [
     "p=101460",
     "p=68684",
