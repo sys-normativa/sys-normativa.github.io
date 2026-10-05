@@ -84,9 +84,9 @@ export async function armarSitio(dias: Resumen[], generado: string): Promise<str
 </div>
 <div class="actualizado-movil" id="actualizado-movil"></div>
 <nav class="pestanas" aria-label="Secciones">
-<a href="#ultimo" data-icono="inicio"> Último informe</a>
-<a href="#dias" data-icono="calendario"> Por día</a>
 <a href="#ayuda" data-icono="ayuda"> Cómo funciona</a>
+<a href="#dias" data-icono="calendario"> Por día</a>
+<a href="#ultimo" data-icono="inicio"> Último informe</a>
 </nav>
 </div></header>
 <main class="pagina" id="vista"></main>

@@ -73,6 +73,10 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Aviso de GitHub (3/10/2026): las acciones `checkout@v4`, `setup-node@v4`, `configure-pages@v5`, `deploy-pages@v4`, `upload-artifact@v4` usan Node 20, que está deprecado; hoy corren igual. Actualizar las versiones cuando salgan las nuevas.
 - `ubuntu-latest` pasa a Ubuntu 26 desde el 19/10/2026; no debería afectar.
 
+## Cambios del 5/10/2026
+- Pestañas en el orden que pidió Guido: Cómo funciona, Por día, Último informe. La página sigue abriendo en Último informe. En celular las tres entran enteras (antes se cortaba "Cómo funciona").
+- Pendiente de decisión de Guido: el tablero muestra "1 Le afecta" junto a "0 Para revisar / Sin novedades" y se lee contradictorio. Propuesta: renombrar los niveles a "Impacto directo" y "Posible impacto", y poner "Ninguna" en vez de "Sin novedades" cuando el contador está en 0.
+
 ## Próximos pasos
 0. **Confirmar que corre solo (desde el 5/10):** la primera corrida automática (lunes 5/10, 10:00) GitHub no la largó a tiempo. Se pasó a minutos fuera de la hora en punto con respaldo. Mirar en Actions que aparezcan corridas con evento "schedule".
 1. ~~Link más lindo~~ **Hecho (4/10/2026):** el repo pasó a la organización `sys-normativa` (gratuita, se maneja desde la cuenta de Guido) como `sys-normativa.github.io`. Link: https://sys-normativa.github.io/

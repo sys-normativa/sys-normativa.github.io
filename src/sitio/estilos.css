@@ -73,6 +73,14 @@ svg.i { width: 1em; height: 1em; flex: none; vertical-align: -.125em; }
 .pestanas a:hover { background: rgba(255, 255, 255, .1); color: #fff; }
 .pestanas a[aria-selected="true"] { background: #fff; color: #1e1b4b; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .5); }
 .pestanas a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+/* En celular las tres pestañas entran enteras: mismo ancho, sin desplazar. */
+@media (max-width: 560px) {
+  .pestanas { gap: 4px; }
+  .pestanas a { flex: 1 1 0; justify-content: center; padding: 8px 6px; font-size: 13px; gap: 5px; }
+}
+@media (max-width: 400px) {
+  .pestanas a > svg { display: none; }
+}
 
 /* ------------------------------------------------------------------ */
 /* Página */
