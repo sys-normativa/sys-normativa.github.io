@@ -75,7 +75,8 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 
 ## Cambios del 5/10/2026
 - Pestañas en el orden que pidió Guido: Cómo funciona, Por día, Último informe. La página sigue abriendo en Último informe. En celular las tres entran enteras (antes se cortaba "Cómo funciona").
-- **Problema abierto:** GitHub no largó ninguna corrida programada el 5/10 (ni la de las 10:00 ni el respaldo de las 11:23), aunque el workflow está activo y GitHub no reportaba fallas. Se agregó que cada push a `main` corra el monitor y publique, así los cambios se ven enseguida. Para la corrida diaria, proponerle a Guido un disparador externo gratuito (cron-job.org llamando a "Run workflow" con un token): requiere crear cuenta, decide él.
+- **Corrida programada a confirmar:** GitHub no largó la de las 10:00 del 5/10. Se agregó que cada push a `main` corra el monitor y publique, así los cambios se ven enseguida (primera prueba 5/10 10:37: publicó bien). Falta ver que el respaldo de las 11:23 salga solo; si las programadas siguen sin salir, proponerle a Guido un disparador externo gratuito (cron-job.org llamando a "Run workflow" con un token), que requiere crear cuenta.
+- Esa corrida marcó en rojo el Boletín del domingo 4/10 ("fetch failed", corte de conexión pasajero; ese día no hay edición). Se reintenta solo en la próxima corrida y el aviso se borra del informe del día cuando sale bien.
 - Pendiente de decisión de Guido: el tablero muestra "1 Le afecta" junto a "0 Para revisar / Sin novedades" y se lee contradictorio. Propuesta: renombrar los niveles a "Impacto directo" y "Posible impacto", y poner "Ninguna" en vez de "Sin novedades" cuando el contador está en 0.
 
 ## Próximos pasos
