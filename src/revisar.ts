@@ -37,14 +37,20 @@ let huboEdicion = true;
 // 1. Boletín Oficial: el de hoy, más los días anteriores que no se pudieron
 // leer completos (si una corrida falla, la siguiente los recupera). Ayer se
 // relee una vez más por si se agregó algo tarde. Lo ya informado no se repite.
-const MAX_DIAS_ATRAS = 10;
+// Si el monitor estuvo parado más que esto, se leen los últimos días y se avisa
+// cuáles quedaron sin revisar: nunca se saltean en silencio.
+const MAX_DIAS_ATRAS = 31;
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
 async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
   const hasta = estado[clave];
   // Se miran todos los días, fines de semana incluidos: el Boletín a veces
   // sale sábado o domingo (p. ej. 11/4/2020 y 26/4/2020).
-  const dias = manual || !hasta ? [fecha] : diasEntre(hasta, fecha).slice(-MAX_DIAS_ATRAS);
+  const pendientes = manual || !hasta ? [fecha] : diasEntre(hasta, fecha);
+  const dias = pendientes.slice(-MAX_DIAS_ATRAS);
+  if (dias.length < pendientes.length) {
+    errores.push(`${nombre}: no se revisaron las ediciones del ${pendientes[0]} al ${pendientes[pendientes.length - dias.length - 1]} porque el monitor estuvo detenido más de ${MAX_DIAS_ATRAS} días. Se recomienda verificarlas manualmente.`);
+  }
   // Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
   // nunca incluye hoy, que se relee en cada corrida.
   let completoHasta = hasta ?? ayer;

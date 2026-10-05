@@ -289,4 +289,19 @@ window.addEventListener('hashchange', mostrar);
 const textoActualizado = `Actualizado ${DATOS.generado}`;
 document.getElementById('actualizado').insertAdjacentText('beforeend', textoActualizado);
 document.getElementById('actualizado-movil').textContent = `${textoActualizado} (hora de Argentina)`;
+
+// Si la página lleva más tiempo sin actualizarse que el que hay entre dos
+// corridas, se avisa: lo publicado después todavía no fue revisado. Entre el
+// sábado al mediodía y el lunes a la mañana no hay corridas.
+(function avisarSiVencio() {
+  const ahora = new Date(Date.now() - 3 * 3_600_000); // hora argentina
+  const dia = ahora.getUTCDay();
+  const finDeSemana = dia === 0 || (dia === 1 && ahora.getUTCHours() < 12);
+  const horas = (Date.now() - Date.parse(DATOS.generadoIso)) / 3_600_000;
+  if (!(horas > (finDeSemana ? 50 : 16))) return;
+  const el = document.getElementById('vencido');
+  el.innerHTML = `<div class="aviso">${icono('alerta')}<div><b>El monitor no se actualiza desde el ${esc(DATOS.generado)}.</b> Las publicaciones posteriores todavía no fueron revisadas.</div></div>`;
+  el.hidden = false;
+  document.querySelector('.actualizado .pulso')?.classList.add('detenido');
+})();
 mostrar();

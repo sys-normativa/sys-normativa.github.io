@@ -56,6 +56,8 @@ export async function armarSitio(dias: Resumen[], generado: string): Promise<str
   const [css, js] = await Promise.all([leer('estilos.css'), leer('app.js')]);
   const datos = {
     generado,
+    // Para avisar en la página si el monitor dejó de actualizarse.
+    generadoIso: new Date().toISOString(),
     temas: Object.fromEntries(Object.entries(TEMAS).map(([id, t]) => [id, t.nombre])),
     dias: [...dias].sort((a, b) => b.fecha.localeCompare(a.fecha)),
   };
@@ -89,6 +91,7 @@ export async function armarSitio(dias: Resumen[], generado: string): Promise<str
 <a href="#ultimo" data-icono="inicio"> Último informe</a>
 </nav>
 </div></header>
+<div class="vencido" id="vencido" hidden></div>
 <main class="pagina" id="vista"></main>
 <footer><div class="linea"><span>Fuentes oficiales: Boletín Oficial de la República Argentina, Banco Central de la República Argentina y Rentas Córdoba.</span><span>Herramienta de alerta. No reemplaza el análisis profesional de la normativa.</span></div></footer>
 <template id="ayuda">${AYUDA}</template>

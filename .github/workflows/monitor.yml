@@ -77,6 +77,9 @@ jobs:
             echo "Sin cambios para guardar."
           else
             git commit -m "Guardar informe del $(TZ=America/Argentina/Buenos_Aires date +%F)"
+            # Si mientras corría se subió otro cambio, se suma encima en vez de
+            # fallar: si no se guarda el estado, la próxima corrida repite avisos.
+            git pull --rebase
             git push
           fi
 

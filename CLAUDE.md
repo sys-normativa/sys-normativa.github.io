@@ -50,6 +50,13 @@ npm run typecheck
 - `src/informe.ts`: el informe del día como datos (`datos/informes/AAAA-MM-DD.json`) y en Markdown para la consola.
 - `src/sitio.ts` + `src/sitio/`: la página única `salida/index.html` (pestañas: cómo funciona, por día, último informe; abre en el último informe), con todos los informes embebidos. Abre con doble clic y se publica tal cual.
 
+**Regla de cobertura de cada fuente (obligatoria para las que se sumen).** Ninguna fuente se consulta "por el día de hoy": cada una guarda en `datos/estado.json` hasta dónde leyó, y en cada corrida trae **todo** lo publicado desde ahí, fines de semana y feriados incluidos. Si no puede garantizar que leyó todo, lo dice como error en el informe (y sale el mail); nunca lo saltea en silencio. Hoy:
+- Boletín Oficial: por fecha (`boletinHasta`). Recorre cada día desde el último completo, incluido sábado y domingo (a veces hay edición), y vuelve a mirar el día anterior. Más de 31 días sin correr: avisa qué ediciones quedaron sin revisar.
+- Comunicaciones BCRA: por número (`ultimaComunicacion`). Los números salteados se siguen buscando 30 días (`pendientes`).
+- Textos ordenados: por versión de la carátula.
+- Rentas Córdoba y prensa del BCRA: por lista de vistas. Si todo lo que se ve es nuevo, avisa que puede haber más.
+- Además, la página avisa si dejó de actualizarse (16 h entre semana, 50 h el fin de semana), por si GitHub no corre.
+
 **Todo lo que ve el cliente (página, guía, mails) tiene que ser claro y profesional**: tono formal, sin jerga técnica, sin detalles internos (repo, pruebas, métricas de validación) ni expresiones coloquiales.
 
 **Si se agrega o cambia una regla en `reglas.ts`**, actualizar `docs/analisis-regulatorio.md` y sumar un caso en `src/reglas.test.ts`, de ser posible con una norma real.
