@@ -32,7 +32,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 ## En producción desde el 3/10/2026
 - **Link:** https://sys-normativa.github.io/
 - **Repo (público):** https://github.com/sys-normativa/sys-normativa.github.io. Decisión de Guido: público, no hay nada secreto.
-- **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): lunes a viernes a las 10 y a las 22, y sábados a las 12 (hora argentina). Elegido el 4/10 con Guido: a las 10 ya salió el Boletín y a las 22 el BCRA ya publicó lo del día. Se puede correr a mano desde la pestaña Actions → "Run workflow".
+- **Corre solo** con GitHub Actions (`.github/workflows/monitor.yml`): lunes a viernes a las 9:47 y a las 21:47, y sábados a las 11:47 (hora argentina), cada una con respaldo hora y media después (11:23, 23:23, 13:23). Elegido el 4/10 con Guido (10 y 22); el 5/10 se corrió fuera de la hora en punto porque la primera corrida automática (lunes 10:00) GitHub no la largó a tiempo: a la hora en punto atrasa o saltea tareas programadas. Se puede correr a mano desde la pestaña Actions → "Run workflow".
 - Cada corrida guarda `datos/` en el repo (commit "Guardar informe del …") y publica la página. Si una fuente falla, el informe igual se publica y el workflow queda en rojo.
 - **Aviso por mail:** cuando hay algo nuevo (o falla una fuente) se crea un issue que menciona a @Guidoparisi91; GitHub lo manda al mail de la cuenta. Hay que confirmar en GitHub → Settings → Notifications que ese mail sea guidoparisi91@gmail.com. Prueba enviada: issue #1.
 - **Clave de Gemini:** secreto `GEMINI_API_KEY` del repo (y `.env` en la compu).
@@ -74,6 +74,7 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - `ubuntu-latest` pasa a Ubuntu 26 desde el 19/10/2026; no debería afectar.
 
 ## Próximos pasos
+0. **Confirmar que corre solo (desde el 5/10):** la primera corrida automática (lunes 5/10, 10:00) GitHub no la largó a tiempo. Se pasó a minutos fuera de la hora en punto con respaldo. Mirar en Actions que aparezcan corridas con evento "schedule".
 1. ~~Link más lindo~~ **Hecho (4/10/2026):** el repo pasó a la organización `sys-normativa` (gratuita, se maneja desde la cuenta de Guido) como `sys-normativa.github.io`. Link: https://sys-normativa.github.io/
    - Diseño renovado el 4/10/2026: encabezado con marca, tablero tipo semáforo, iconos y colores por tema, línea de tiempo en "Por día", guía en tarjetas.
    - Aviso por mail: el primer aviso de prueba (issue #1) lo creó Guido mismo y GitHub no avisa de lo propio; el #2 lo creó el robot y GitHub lo registró como mención. Le llegó (confirmado el 4/10).

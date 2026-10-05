@@ -184,7 +184,7 @@ Las respuestas cambian qué se vigila y con qué peso.
 
 **Propuesta: GitHub Actions + GitHub Pages en un repositorio público.** Guido confirmó (3/10/2026) que no hay nada secreto: todo es información de los boletines.
 
-- **Corrida:** de lunes a viernes a las 10 (ya salió el Boletín) y a las 22 (el BCRA ya publicó lo del día), y sábados a las 12 (hora argentina). Cada corrida suma solo lo nuevo; si una falla, la siguiente recupera lo que faltó. En repos públicos, Actions no tiene límite de minutos.
+- **Corrida:** de lunes a viernes a las 9:47 (ya salió el Boletín) y a las 21:47 (el BCRA ya publicó lo del día), y sábados a las 11:47 (hora argentina), cada una con un respaldo hora y media después por si GitHub la saltea. Cada corrida suma solo lo nuevo; si una falla, la siguiente recupera lo que faltó. En repos públicos, Actions no tiene límite de minutos.
 - **Link:** la página del monitor (`salida/index.html`) se publica en GitHub Pages, gratis en repos públicos. Una sola dirección para entrar todos los días.
 - **Estado e historial:** `datos/estado.json` y `datos/informes/` se guardan en el mismo repo después de cada corrida. No hace falta base de datos.
 - **Clave de Gemini:** va como "secreto" del repo, nunca en el código.

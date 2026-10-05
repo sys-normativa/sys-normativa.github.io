@@ -3,7 +3,7 @@
 Monitor diario de normas que pueden afectar a **SYS Global Pay** (billetera virtual para empresas).
 Proyecto independiente: no comparte código, datos ni cuentas con ningún otro proyecto.
 
-**En producción:** https://sys-normativa.github.io (corre solo con GitHub Actions: lunes a viernes a las 10 y a las 22, sábados a las 12, hora argentina; avisa por mail con un issue del repo).
+**En producción:** https://sys-normativa.github.io (corre solo con GitHub Actions: lunes a viernes a las 9:47 y a las 21:47, sábados a las 11:47, hora argentina, cada una con respaldo hora y media después; avisa por mail con un issue del repo).
 
 Lee:
 - el **Boletín Oficial** (primera sección completa),
