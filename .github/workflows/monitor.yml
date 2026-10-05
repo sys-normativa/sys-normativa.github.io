@@ -21,6 +21,8 @@ on:
     - cron: '23 2 * * 2-6' # 23:23 respaldo
     - cron: '47 14 * * 6' # sábados 11:47
     - cron: '23 16 * * 6' # sábados 13:23 respaldo
+  push: # cada cambio subido sale publicado enseguida (los guardados del robot no disparan esto)
+    branches: [main]
   workflow_dispatch: # botón "Run workflow" para correrlo a mano
     inputs:
       prueba_aviso:
