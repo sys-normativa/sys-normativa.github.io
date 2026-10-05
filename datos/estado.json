@@ -1,8 +1,8 @@
 {
   "ultimaComunicacion": {
-    "A": 8488,
-    "B": 13240,
-    "C": 102396
+    "A": 8489,
+    "B": 13241,
+    "C": 102401
   },
   "textosOrdenados": {
     "t-snp-psp": "A 8488",
@@ -22,6 +22,7 @@
     "C": []
   },
   "prensaVistas": [
+    "post-107287",
     "post-107128",
     "post-105708",
     "post-105613",
@@ -33,7 +34,10 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [],
+  "fallasAvisadas": [
+    "Boletín Oficial",
+    "Rentas Córdoba"
+  ],
   "rentasVistas": [
     "p=101460",
     "p=68684",

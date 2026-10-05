@@ -1,16 +1,17 @@
 {
   "fecha": "2026-10-05",
-  "generado": "5/10/2026 a las 10:58",
+  "generado": "5/10/2026 a las 18:32",
   "hallazgos": [],
   "revisado": [
-    "Boletín Oficial del 2026-10-05: 73 normas.",
-    "BCRA \"A\": 0 nuevas (última leída: A 8488).",
-    "BCRA \"B\": 0 nuevas (última leída: B 13240).",
-    "BCRA \"C\": 0 nuevas (última leída: C 102396).",
+    "BCRA \"A\": 1 nuevas (última leída: A 8489).",
+    "BCRA \"B\": 1 nuevas (última leída: B 13241).",
+    "BCRA \"C\": 5 nuevas (última leída: C 102401).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
-    "Rentas Córdoba: 0 normas nuevas.",
-    "Prensa del BCRA: 0 noticias nuevas.",
+    "Prensa del BCRA: 1 noticias nuevas.",
     "Resumen con IA: no hubo normas para resumir."
   ],
-  "errores": []
+  "errores": [
+    "Boletín Oficial del 2026-10-05: fetch failed",
+    "Rentas Córdoba: el feed respondió, pero sin entradas (¿cambió el formato del sitio?)"
+  ]
 }
