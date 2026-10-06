@@ -10,6 +10,8 @@ export interface Estado {
   textosOrdenados: Record<string, string>;
   /** Último día del Boletín Oficial leído completo (sin contar hoy, que se relee en cada corrida). */
   boletinHasta?: string;
+  /** El Boletín de hoy ya se leyó completo en una corrida anterior (y cuántas normas tenía). */
+  boletinHoy?: { fecha: string; normas: number };
   /**
    * Números salteados: no existían cuando ya había uno más alto publicado.
    * Se vuelven a buscar en cada corrida por si se publican tarde.
