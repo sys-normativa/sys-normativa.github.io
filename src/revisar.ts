@@ -9,6 +9,7 @@
 // Una fuente que falla no frena a las demás: queda anotada en el informe,
 // porque un "hoy no hubo nada" falso es el peor error posible.
 
+import { writeFile } from 'node:fs/promises';
 import { avisosDelDia, type AvisoBO } from './fuentes/boletinOficial.js';
 import { listarRentas } from './fuentes/rentasCordoba.js';
 import { leerNoticia, listarNoticias } from './fuentes/bcraPrensa.js';
@@ -42,24 +43,6 @@ let huboEdicion = true;
 const MAX_DIAS_ATRAS = 31;
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
-// El Boletín de hoy es lo más importante de la pasada de la mañana: si falla,
-// se espera y se vuelve a probar dentro de la misma corrida, en vez de dejarlo
-// para la pasada de la noche (5/10/2026: GitHub no pudo leerlo dos veces).
-const REINTENTOS_HOY = manual ? 0 : 3;
-const ESPERA_HOY_MIN = Number(process.env.BO_ESPERA_MIN ?? 10);
-
-async function leerConPaciencia(dia: string, leer: (dia: string) => Promise<AvisoBO[]>): Promise<AvisoBO[]> {
-  for (let i = 0; ; i++) {
-    try {
-      return await leer(dia);
-    } catch (e) {
-      if (dia !== fecha || i >= REINTENTOS_HOY) throw e;
-      console.error(`Boletín del ${dia}: ${(e as Error).message}. Se reintenta en ${ESPERA_HOY_MIN} min.`);
-      await new Promise((r) => setTimeout(r, ESPERA_HOY_MIN * 60_000));
-    }
-  }
-}
-
 async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
   const hasta = estado[clave];
   // Se miran todos los días, fines de semana incluidos: el Boletín a veces
@@ -76,7 +59,7 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia
   let edicionHoy = false;
   for (const dia of dias) {
     try {
-      const avisos = await leerConPaciencia(dia, leer);
+      const avisos = await leer(dia);
       lote.avisosBO(avisos, dia);
       if (dia === fecha) {
         edicionHoy = avisos.length > 0;
@@ -259,4 +242,9 @@ await dejarAviso(fecha, nuevos, erroresNuevos);
 
 console.log(armarMarkdown(resumen));
 console.log(`\n${nuevos.length} normas nuevas en esta corrida. Página del monitor: salida/index.html`);
+// Si no se pudo leer el Boletín o el BCRA, el workflow vuelve a correr en
+// 15 minutos, y así hasta que ande (ver monitor.yml).
+if (process.env.REINTENTAR_ARCHIVO && errores.some((e) => /^(Boletín Oficial|BCRA|Texto ordenado)/.test(e))) {
+  await writeFile(process.env.REINTENTAR_ARCHIVO, errores.join('\n'), 'utf8');
+}
 if (errores.length) process.exitCode = 1;

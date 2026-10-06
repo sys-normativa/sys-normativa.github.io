@@ -25,6 +25,10 @@ on:
     branches: [main]
   workflow_dispatch: # botón "Run workflow" para correrlo a mano
     inputs:
+      reintento:
+        description: 'Número de reintento (lo completa el propio monitor)'
+        type: number
+        default: 0
       prueba_aviso:
         description: 'Mandar un aviso de prueba por mail'
         type: boolean
@@ -33,6 +37,7 @@ on:
 permissions:
   contents: write # guardar el informe del día en el repo
   issues: write # aviso por mail
+  actions: write # reprogramarse si falló el Boletín o el BCRA
   pages: write
   id-token: write
 
@@ -43,7 +48,7 @@ concurrency:
 jobs:
   revisar:
     runs-on: ubuntu-latest
-    timeout-minutes: 75 # si el Boletín falla, la corrida lo reintenta hasta 3 veces cada 10 min
+    timeout-minutes: 45
     environment:
       name: github-pages
       url: ${{ steps.publicar.outputs.page_url }}
@@ -66,6 +71,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AVISO_ARCHIVO: ${{ runner.temp }}/aviso.json
+          REINTENTAR_ARCHIVO: ${{ runner.temp }}/reintentar.txt
           SITIO_URL: https://sys-normativa.github.io/
 
       - name: Guardar el informe en el repo
@@ -122,8 +128,27 @@ jobs:
         id: publicar
         uses: actions/deploy-pages@v4
 
+      # Si no se pudo leer el Boletín o el BCRA, se vuelve a correr en 15 min, y
+      # así hasta que ande. Cada tanda se corta a las 8 h (32 intentos): para
+      # entonces ya llegó la pasada siguiente, que arranca otra si hace falta.
+      # El mail de la falla sale una sola vez, no en cada intento.
+      - name: Reintentar en 15 minutos si falló el Boletín o el BCRA
+        id: reintentar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ inputs.reintento || 0 }}
+        run: |
+          if [ -f "$RUNNER_TEMP/reintentar.txt" ] && [ "$N" -lt 32 ]; then
+            echo "Reintento $((N + 1)) en 15 minutos."
+            echo "programado=1" >> "$GITHUB_OUTPUT"
+            sleep 900
+            gh workflow run monitor.yml --ref main -f reintento=$((N + 1))
+          else
+            echo "No hace falta reintentar."
+          fi
+
       - name: Marcar en rojo si falló alguna fuente
-        if: steps.revisar.outcome == 'failure'
+        if: steps.revisar.outcome == 'failure' && steps.reintentar.outputs.programado != '1'
         run: |
           echo "Alguna fuente no se pudo revisar: ver el informe del día."
           exit 1
