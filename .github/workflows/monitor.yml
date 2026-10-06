@@ -1,13 +1,14 @@
 # Corre el monitor solo, publica la página y avisa por mail si hay algo nuevo.
 #
-# Horario (Argentina = UTC-3): de lunes a viernes a las 9:47 (el Boletín
-# Oficial ya salió) y a las 21:47 (el BCRA ya publicó lo del día), y los
-# sábados a las 11:47. Cada una tiene un respaldo hora y media después.
-#
-# Los minutos raros son a propósito: GitHub no garantiza el horario y a la hora
-# en punto atrasa o saltea corridas por la cantidad de tareas que arrancan
-# juntas. El respaldo cubre la que se saltee. Como cada corrida suma solo lo
-# nuevo, si las dos corren el respaldo no repite nada ni manda otro mail.
+# Quién lo lanza (horas de Argentina):
+# - cron-job.org, todos los días a las 9:47 (el Boletín Oficial ya salió) y a
+#   las 21:47 (el BCRA ya publicó lo del día), con "Run workflow".
+# - Cada cambio subido a main.
+# - Control de GitHub cada 3 horas. GitHub no respeta sus propios horarios
+#   (del 4 al 6/10/2026 largó 3 de 8 corridas, con 6 a 8 h de atraso), así que
+#   no se usa para revisar a horario sino como control: si la última revisión
+#   tiene menos de 13 h, termina sin hacer nada; si tiene más, cron-job.org
+#   dejó de lanzarlo, y entonces revisa igual y manda un mail avisándolo.
 #
 # El aviso se publica como "issue" del repo: GitHub lo manda por mail al dueño.
 
@@ -15,12 +16,7 @@ name: Monitor normativo
 
 on:
   schedule:
-    - cron: '47 12 * * 1-5' # 9:47 de lunes a viernes
-    - cron: '23 14 * * 1-5' # 11:23 respaldo
-    - cron: '47 0 * * 2-6' # 21:47 de lunes a viernes (en UTC ya es el día siguiente)
-    - cron: '23 2 * * 2-6' # 23:23 respaldo
-    - cron: '47 14 * * 6' # sábados 11:47
-    - cron: '23 16 * * 6' # sábados 13:23 respaldo
+    - cron: '17 */3 * * *' # control cada 3 horas (0:17, 3:17, 6:17... en UTC; 21:17, 0:17, 3:17... en Argentina)
   push: # cada cambio subido sale publicado enseguida (los guardados del robot no disparan esto)
     branches: [main]
   workflow_dispatch: # botón "Run workflow" para correrlo a mano
@@ -41,13 +37,42 @@ permissions:
   pages: write
   id-token: write
 
-concurrency:
-  group: monitor
-  cancel-in-progress: false
-
 jobs:
-  revisar:
+  # Solo actúa en el control programado de GitHub: ¿cron-job.org viene
+  # lanzando las revisiones? Las demás formas de lanzarlo pasan derecho.
+  control:
     runs-on: ubuntu-latest
+    outputs:
+      revisar: ${{ steps.mirar.outputs.revisar }}
+      atrasado: ${{ steps.mirar.outputs.atrasado }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: datos/estado.json
+          sparse-checkout-cone-mode: false
+
+      - id: mirar
+        env:
+          EVENTO: ${{ github.event_name }}
+        run: |
+          if [ "$EVENTO" != "schedule" ]; then echo "revisar=1" >> "$GITHUB_OUTPUT"; exit 0; fi
+          horas=$(node -p "const u = require('./datos/estado.json').ultimaCorrida; u ? Math.floor((Date.now() - Date.parse(u)) / 3600000) : 999")
+          echo "Última revisión hace $horas h."
+          if [ "$horas" -ge 13 ]; then
+            echo "revisar=1" >> "$GITHUB_OUTPUT"
+            echo "atrasado=$horas" >> "$GITHUB_OUTPUT"
+          else
+            echo "Al día: no hace falta revisar."
+          fi
+
+  revisar:
+    needs: control
+    if: needs.control.outputs.revisar == '1'
+    runs-on: ubuntu-latest
+    # Una revisión por vez: las que llegan mientras tanto esperan su turno.
+    concurrency:
+      group: monitor
+      cancel-in-progress: false
     timeout-minutes: 45
     environment:
       name: github-pages
@@ -102,6 +127,16 @@ jobs:
             "cuerpo": "Esto es una prueba. @Guidoparisi91 si te llegó este mail, los avisos funcionan.\n\n**[Abrir el monitor](https://sys-normativa.github.io/)**"
           }
           FIN
+
+      - name: Avisar si cron-job.org dejó de lanzar el monitor
+        if: needs.control.outputs.atrasado != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HORAS: ${{ needs.control.outputs.atrasado }}
+        run: |
+          printf '%s\n' "@Guidoparisi91 cron-job.org no lanzó las últimas revisiones (9:47 y 21:47). El control de GitHub revisó igual, pero hay que mirar la tarea en cron-job.org: puede estar pausada o con la clave de GitHub vencida." "" "**[Abrir el monitor](https://sys-normativa.github.io/)**" > "$RUNNER_TEMP/atraso.md"
+          url=$(gh issue create --title "Monitor: no se revisó a horario (última revisión hace $HORAS h)" --body-file "$RUNNER_TEMP/atraso.md")
+          gh issue close "$url"
 
       - name: Avisar por mail
         env:

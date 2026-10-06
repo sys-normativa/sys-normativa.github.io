@@ -25,6 +25,8 @@ export interface Estado {
   fallasAvisadas?: string[];
   /** Desde cuándo falla cada fuente (o día del Boletín), para mostrarlo al cliente solo si dura. */
   fallasDesde?: Record<string, string>;
+  /** Cuándo terminó la última revisión (ISO). El control de GitHub la usa para saber si cron-job.org dejó de lanzarlo. */
+  ultimaCorrida?: string;
 }
 
 const RUTA = new URL('../datos/estado.json', import.meta.url);

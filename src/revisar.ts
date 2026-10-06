@@ -10,7 +10,8 @@
 // porque un "hoy no hubo nada" falso es el peor error posible.
 
 import { writeFile } from 'node:fs/promises';
-import { avisosDelDia, type AvisoBO } from './fuentes/boletinOficial.js';
+import { avisosDelDia } from './fuentes/boletinOficial.js';
+import { recorrerBoletin } from './boletin.js';
 import { listarRentas } from './fuentes/rentasCordoba.js';
 import { leerNoticia, listarNoticias } from './fuentes/bcraPrensa.js';
 import { buscarUltimo, existe, leerComunicacion, nuevasDesde, type TipoCom } from './fuentes/bcraComunicaciones.js';
@@ -33,63 +34,12 @@ const estado = await leerEstado();
 const lote = new Lote();
 const revisado: string[] = [];
 const errores: string[] = [];
-let huboEdicion = true;
 
-// 1. Boletín Oficial: el de hoy, más los días anteriores que no se pudieron
-// leer completos (si una corrida falla, la siguiente los recupera). Ayer se
-// relee una vez más por si se agregó algo tarde. Lo ya informado no se repite.
-// Si el monitor estuvo parado más que esto, se leen los últimos días y se avisa
-// cuáles quedaron sin revisar: nunca se saltean en silencio.
-const MAX_DIAS_ATRAS = 31;
-const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
-
-async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
-  const hasta = estado[clave];
-  // Se miran todos los días, fines de semana incluidos: el Boletín a veces
-  // sale sábado o domingo (p. ej. 11/4/2020 y 26/4/2020).
-  const pendientes = manual || !hasta ? [fecha] : diasEntre(hasta, fecha);
-  const dias = pendientes.slice(-MAX_DIAS_ATRAS);
-  if (dias.length < pendientes.length) {
-    errores.push(`${nombre}: no se revisaron las ediciones del ${pendientes[0]} al ${pendientes[pendientes.length - dias.length - 1]} porque el monitor estuvo detenido más de ${MAX_DIAS_ATRAS} días. Se recomienda verificarlas manualmente.`);
-  }
-  // Hasta qué día quedó todo leído: avanza solo por días seguidos sin error, y
-  // nunca incluye hoy, que se relee en cada corrida.
-  let completoHasta = hasta ?? ayer;
-  let seguidos = true;
-  let edicionHoy = false;
-  for (const dia of dias) {
-    try {
-      const avisos = await leer(dia);
-      lote.avisosBO(avisos, dia);
-      if (dia === fecha) {
-        edicionHoy = avisos.length > 0;
-        if (!manual) estado.boletinHoy = { fecha: dia, normas: avisos.length };
-      }
-      const cuando = dia === fecha ? '' : ' (día anterior, vuelto a mirar por si quedó algo)';
-      revisado.push(avisos.length ? `${nombre} del ${dia}: ${avisos.length} normas${cuando}.` : `${nombre} del ${dia}: no hubo edición.`);
-      if (dia < fecha && seguidos) completoHasta = dia;
-    } catch (e) {
-      seguidos = false;
-      // Hoy se relee en cada corrida. Si una revisión anterior de hoy ya lo
-      // leyó completo, la falla de la relectura no es un error: el día sigue
-      // pendiente y la próxima corrida lo vuelve a leer (5/10/2026).
-      // Solo cuenta si se leyeron normas: una corrida de madrugada ve "sin
-      // edición" porque el Boletín del día todavía no salió, y eso no puede
-      // tapar una falla posterior.
-      const yaLeido = dia === fecha && estado.boletinHoy?.fecha === dia ? estado.boletinHoy.normas : 0;
-      // Y hoy sigue contando como día con edición: si no, el informe del día
-      // se borraba como si fuera un feriado (6/10/2026).
-      if (yaLeido) {
-        edicionHoy = true;
-        revisado.push(`${nombre} del ${dia}: ${yaLeido} normas.`);
-      } else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
-    }
-  }
-  if (!manual) estado[clave] = completoHasta;
-  return edicionHoy;
-}
-
-huboEdicion = await recorrerBoletin('Boletín Oficial', 'boletinHasta', (dia) => avisosDelDia(dia.replaceAll('-', '')));
+// 1. Boletín Oficial (detalle en boletin.ts). Lo ya informado no se repite.
+const bo = await recorrerBoletin('Boletín Oficial', estado, fecha, Boolean(manual), (dia) => avisosDelDia(dia.replaceAll('-', '')), (avisos, dia) => lote.avisosBO(avisos, dia));
+revisado.push(...bo.revisado);
+errores.push(...bo.errores);
+const huboEdicion = bo.edicionHoy;
 
 // 2. Comunicaciones del BCRA
 const forzado = argumento('bcra-desde');
@@ -241,6 +191,7 @@ const fuenteDe = (e: string) => e.split(':')[0].replace(/ del \d{4}-\d{2}-\d{2}$
 const yaAvisadas = new Set(manual ? [] : (estado.fallasAvisadas ?? []));
 const erroresNuevos = errores.filter((e) => !yaAvisadas.has(fuenteDe(e)));
 if (!manual) estado.fallasAvisadas = [...new Set(errores.map(fuenteDe))];
+if (!manual) estado.ultimaCorrida = ahora;
 await guardarEstado(estado);
 await dejarAviso(fecha, nuevos, erroresNuevos);
 

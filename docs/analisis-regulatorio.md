@@ -203,13 +203,15 @@ Las respuestas cambian qué se vigila y con qué peso.
 El peor error es decir "no hubo nada" cuando sí hubo. Cada fuente tiene un control para que una falla se vea:
 
 - **Boletín Oficial, día sin edición vs. falla:** un día sin edición el sitio redirige a la portada; eso es "no hubo edición". Si la página del día responde pero no se reconoce ningún aviso, o no se puede leer el texto de más de un cuarto de ellos, es un **error visible** (posible cambio de formato).
-- **Boletín Oficial, días que fallaron:** se recuerda el último día leído completo (`boletinHasta` en `datos/estado.json`). Cada corrida lee desde ahí hasta hoy (hasta 10 días), así un día caído se recupera solo. El día anterior se relee una vez más por si se agregó algo tarde.
+- **Boletín Oficial, días que fallaron:** se recuerda el último día leído completo (`boletinHasta` en `datos/estado.json`). Cada corrida lee desde ahí hasta hoy (hasta 31 días; si faltan más, lo avisa), así un día caído se recupera solo. El día anterior se relee una vez más por si se agregó algo tarde.
 - **BCRA, cambio de dirección de los PDF:** antes de buscar novedades se confirma que la última comunicación leída sigue existiendo. Si no, es error (si no, se vería "0 nuevas" para siempre).
 - **BCRA, comunicaciones publicadas fuera de orden:** si falta un número entre dos publicados, queda como pendiente y se vuelve a buscar en cada corrida durante 30 días.
 - **Textos ordenados:** son la red de seguridad; si una comunicación se escapara, el cambio en el texto ordenado la delata.
 - **Sin repetidos:** una norma ya informada (por link, o por número si es del BCRA) no vuelve a aparecer.
 
-**Lo que ningún control cubre:** que el filtro por reglas descarte una norma que sí importaba (por eso el filtro es generoso), lo que no se publica en estas fuentes (boletines provinciales, Congreso, prensa del BCRA) y alguna sección del Boletín distinta de la primera.
+**Lo que ningún control cubre:** que el filtro por reglas descarte una norma que sí importaba (por eso el filtro es generoso), lo que no se publica en estas fuentes (boletines provinciales salvo lo que Rentas Córdoba sube a su sitio, Congreso) y alguna sección del Boletín distinta de la primera.
+
+**Rentas Córdoba sube tarde y no todo (verificado el 6/10/2026):** la RG 2228/2026 (padrón de septiembre de SIRCUPA) nunca apareció en su feed, y la RG 2229/2026 (padrón de octubre, Boletín de Córdoba del 30/9) seis días después todavía no estaba. Lo que Rentas no sube, el monitor no lo ve.
 
 ---
 
