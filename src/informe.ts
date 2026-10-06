@@ -16,6 +16,8 @@ export interface Resumen {
   errores: string[];
   /** Lo que ve el cliente: fuentes que llevan más de 24 h sin poder leerse, en texto formal. */
   demoras?: string[];
+  /** Lo que ve el cliente: fuentes que fallan hace menos de 24 h ("actualización en curso"). */
+  enCurso?: string[];
 }
 
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];

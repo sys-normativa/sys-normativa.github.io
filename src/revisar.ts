@@ -238,7 +238,10 @@ if (!manual) estado.fallasDesde = fallasDesde;
 const demoras = [...new Set(errores.map(claveFalla))]
   .filter((k) => Date.parse(ahora) - Date.parse(fallasDesde[k]) >= DEMORA_VISIBLE)
   .map((k) => `${k}: la consulta se encuentra demorada; se completará automáticamente en la próxima actualización.`);
-const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion, demoras });
+// Las que fallan hace menos de 24 h: el cliente las ve "en actualización",
+// nunca como revisadas.
+const enCurso = [...new Set(errores.map(claveFalla))].filter((k) => !demoras.some((d) => d.startsWith(`${k}:`)));
+const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion, demoras, enCurso });
 await escribirSitio(resumen.generado);
 
 // Una fuente caída se avisa por mail cuando empieza a fallar, no en cada

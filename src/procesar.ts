@@ -166,7 +166,7 @@ export async function guardarDia(
   lote: Lote,
   revisado: string[],
   errores: string[],
-  { huboEdicion = true, demoras = [] as string[] } = {},
+  { huboEdicion = true, demoras = [] as string[], enCurso = [] as string[] } = {},
 ): Promise<{ resumen: Resumen; nuevos: Hallazgo[] }> {
   let anterior: Resumen | undefined;
   try {
@@ -202,6 +202,7 @@ export async function guardarDia(
     revisado,
     errores,
     demoras,
+    enCurso,
   };
   const archivo = new URL(`${fecha}.json`, INFORMES);
   if (huboEdicion || resumen.hallazgos.length || errores.length) {

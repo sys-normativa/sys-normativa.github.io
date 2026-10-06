@@ -168,6 +168,7 @@ function descartadas(lista) {
 
 function fuentesRevisadas(r) {
   const fallo = (nombre) => r.errores.some((e) => e.toLowerCase().startsWith(nombre));
+  const pendiente = (nombre) => !fallo(nombre) && (r.enCurso ?? []).some((e) => e.toLowerCase().startsWith(nombre));
   const reviso = (nombre) => r.errores.concat(r.revisado).some((e) => e.toLowerCase().startsWith(nombre));
   // Los informes armados hacia atrás no pudieron mirar los textos ordenados.
   const sinTextos = r.revisado.some((x) => x.includes('se vigilan desde'));
@@ -180,7 +181,12 @@ function fuentesRevisadas(r) {
     ...(sinTextos ? [] : [['Textos ordenados', fallo('texto ordenado')]]),
     ...(reviso('prensa del bcra') ? [['Prensa del BCRA', fallo('prensa del bcra')]] : []),
   ];
-  const chips = f.map(([n, mal]) => `<span class="fuente${mal ? ' mal' : ''}">${icono(mal ? 'cruz' : 'check')} ${n}</span>`);
+  const claves = { 'Boletín Oficial': 'boletín oficial', 'Boletín de Córdoba': 'boletín de córdoba', 'Rentas Córdoba': 'rentas córdoba', 'Comunicaciones del BCRA': 'bcra "', 'Textos ordenados': 'texto ordenado', 'Prensa del BCRA': 'prensa del bcra' };
+  const chips = f.map(([n, mal]) =>
+    !mal && pendiente(claves[n])
+      ? `<span class="fuente neutra">${icono('reloj')} ${n}: actualización en curso</span>`
+      : `<span class="fuente${mal ? ' mal' : ''}">${icono(mal ? 'cruz' : 'check')} ${n}</span>`,
+  );
   if (sinTextos) chips.push(`<span class="fuente neutra">${icono('reloj')} Textos ordenados: monitoreados desde el 03/10/2026</span>`);
   return `<div class="fuentes">${chips.join('')}</div>`;
 }
@@ -199,7 +205,9 @@ function informe(r, sobreTitulo) {
     cifra(rev.length ? 'rev' : 'cero', rev.length, 'Para revisar', rev.length ? 'Aplicabilidad a evaluar' : 'Sin novedades', rev.length ? '#bloque-rev' : ''),
     r.errores.length
       ? cifra('mal', icono('alerta'), plural(r.errores.length, 'fuente no disponible', 'fuentes no disponibles'), 'Verificar manualmente', '#fallaron')
-      : cifra('ok', icono('check'), 'Fuentes verificadas', 'Todas las fuentes disponibles', ''),
+      : r.enCurso?.length
+        ? cifra('cero', icono('reloj'), 'Actualización en curso', 'Se completa en los próximos minutos', '')
+        : cifra('ok', icono('check'), 'Fuentes verificadas', 'Todas las fuentes disponibles', ''),
     '</div>',
     fuentesRevisadas(r),
   ];
@@ -207,7 +215,8 @@ function informe(r, sobreTitulo) {
     c.push(`<div class="aviso" id="fallaron">${icono('alerta')}<div>Una o más fuentes no estuvieron disponibles. Se recomienda verificarlas manualmente; la próxima actualización volverá a consultarlas.<ul>${r.errores.map((e) => `<li>${esc(e)}</li>`).join('')}</ul></div></div>`);
   }
   if (!altas.length && !rev.length) {
-    c.push(`<div class="tranquilo">${icono('check')}<div><b>${r.errores.length ? 'Sin novedades en las fuentes disponibles' : 'Sin novedades'}</b>${r.errores.length ? 'Las fuentes consultadas no publicaron normas con impacto para SYS.' : 'No se publicaron normas con impacto para SYS.'}</div></div>`);
+    const parcial = r.errores.length || r.enCurso?.length;
+    c.push(`<div class="tranquilo">${icono('check')}<div><b>${parcial ? 'Sin novedades en las fuentes ya revisadas' : 'Sin novedades'}</b>${parcial ? 'Las fuentes consultadas no publicaron normas con impacto para SYS.' : 'No se publicaron normas con impacto para SYS.'}</div></div>`);
   }
   if (altas.length) c.push(`<h2 class="alta" id="bloque-alta">Le afecta a SYS <span class="cuenta">${altas.length}</span></h2>`, '<p class="bajada">Normas con impacto en la operatoria o las obligaciones de SYS.</p>', ...altas.map(tarjeta));
   if (rev.length) c.push(`<h2 class="revisar" id="bloque-rev">Para revisar <span class="cuenta">${rev.length}</span></h2>`, '<p class="bajada">Normas vinculadas a la actividad de SYS cuya aplicabilidad requiere evaluación.</p>', ...rev.map(tarjeta));
@@ -238,7 +247,11 @@ function vistaDias() {
       a ? `<span class="pill alta">${plural(a, 'le afecta', 'le afectan')}</span>` : '',
       rev ? `<span class="pill rev">${rev} para revisar</span>` : '',
       !a && !rev ? '<span class="pill nada">Sin novedades</span>' : '',
-      r.errores.length ? `<span class="pill alta">⚠ ${plural(r.errores.length, 'fuente no disponible', 'fuentes no disponibles')}</span>` : '<span class="pill ok">✓ Fuentes verificadas</span>',
+      r.errores.length
+        ? `<span class="pill alta">⚠ ${plural(r.errores.length, 'fuente no disponible', 'fuentes no disponibles')}</span>`
+        : r.enCurso?.length
+          ? '<span class="pill nada">Actualización en curso</span>'
+          : '<span class="pill ok">✓ Fuentes verificadas</span>',
     ].join('');
     return `<a class="dia ${a ? 'con-alta' : rev ? 'con-rev' : ''}" href="#dia/${r.fecha}"><div class="fecha"><b>${f.d}</b><span>${MESES[f.m - 1].slice(0, 3)}</span></div><div class="que"><b>${esc(f.dia)}</b><div class="pills">${pills}</div></div><span class="ir">›</span></a>`;
   });
