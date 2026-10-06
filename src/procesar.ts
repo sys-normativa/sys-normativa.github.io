@@ -114,6 +114,26 @@ const ordenar = (hs: Hallazgo[]) => hs.sort((a, b) => ORDEN[a.evaluacion.nivel] 
 
 const INFORMES = new URL('../datos/informes/', import.meta.url);
 
+/**
+ * Una fuente que falló a la noche y se leyó en una corrida posterior no puede
+ * quedar "en actualización" para siempre en el informe de aquel día: lo que
+ * publicó se leyó (y figura en el informe del día en que se leyó).
+ */
+export async function limpiarDiasAnteriores(hoy: string, siguenFallando: Set<string>): Promise<void> {
+  const desde = new Date(Date.parse(`${hoy}T12:00:00Z`) - 31 * 86_400_000).toISOString().slice(0, 10);
+  for (const f of await readdir(INFORMES).catch(() => [] as string[])) {
+    const dia = f.slice(0, 10);
+    if (!/^\d{4}-\d{2}-\d{2}\.json$/.test(f) || dia >= hoy || dia < desde) continue;
+    const r = JSON.parse(await readFile(new URL(f, INFORMES), 'utf8')) as Resumen;
+    if (!r.enCurso?.length && !r.demoras?.length) continue;
+    const sigue = (clave: string) => siguenFallando.has(clave);
+    const enCurso = (r.enCurso ?? []).filter(sigue);
+    const demoras = (r.demoras ?? []).filter((d) => sigue(d.split(':')[0]));
+    if (enCurso.length === (r.enCurso ?? []).length && demoras.length === (r.demoras ?? []).length) continue;
+    await writeFile(new URL(f, INFORMES), JSON.stringify({ ...r, enCurso, demoras }, null, 2) + '\n', 'utf8');
+  }
+}
+
 /** Una comunicación del BCRA es la misma aunque llegue por la web del BCRA o por el Boletín Oficial. */
 export function claveComunicacion(titulo: string): string | null {
   const m = /^Comunicaci[oó]n "([ABC])" (\d+)/.exec(titulo);

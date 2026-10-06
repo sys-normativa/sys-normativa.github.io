@@ -18,7 +18,7 @@ import { dejarAviso } from './aviso.js';
 import { guardarEstado, leerEstado } from './estado.js';
 import { explicarTextoOrdenado } from './explicar.js';
 import { armarMarkdown } from './informe.js';
-import { diasEntre, guardarDia, hoyEnArgentina, Lote } from './procesar.js';
+import { diasEntre, guardarDia, hoyEnArgentina, limpiarDiasAnteriores, Lote } from './procesar.js';
 import { escribirSitio } from './sitio.js';
 
 function argumento(nombre: string): string | undefined {
@@ -90,8 +90,11 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia
       // Hoy se relee en cada corrida. Si una revisión anterior de hoy ya lo
       // leyó completo, la falla de la relectura no es un error: el día sigue
       // pendiente y la próxima corrida lo vuelve a leer (5/10/2026).
-      const yaLeido = dia === fecha && estado.boletinHoy?.fecha === dia ? estado.boletinHoy.normas : undefined;
-      if (yaLeido !== undefined) revisado.push(yaLeido ? `${nombre} del ${dia}: ${yaLeido} normas.` : `${nombre} del ${dia}: no hubo edición.`);
+      // Solo cuenta si se leyeron normas: una corrida de madrugada ve "sin
+      // edición" porque el Boletín del día todavía no salió, y eso no puede
+      // tapar una falla posterior.
+      const yaLeido = dia === fecha && estado.boletinHoy?.fecha === dia ? estado.boletinHoy.normas : 0;
+      if (yaLeido) revisado.push(`${nombre} del ${dia}: ${yaLeido} normas.`);
       else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
     }
   }
@@ -242,6 +245,7 @@ const demoras = [...new Set(errores.map(claveFalla))]
 // nunca como revisadas.
 const enCurso = [...new Set(errores.map(claveFalla))].filter((k) => !demoras.some((d) => d.startsWith(`${k}:`)));
 const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion, demoras, enCurso });
+if (!manual) await limpiarDiasAnteriores(fecha, new Set(Object.keys(fallasDesde)));
 await escribirSitio(resumen.generado);
 
 // Una fuente caída se avisa por mail cuando empieza a fallar, no en cada
