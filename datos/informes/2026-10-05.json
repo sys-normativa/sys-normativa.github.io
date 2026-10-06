@@ -1,19 +1,17 @@
 {
   "fecha": "2026-10-05",
-  "generado": "5/10/2026 a las 22:36",
+  "generado": "5/10/2026 a las 22:40",
   "hallazgos": [],
   "revisado": [
+    "Boletín Oficial del 2026-10-05: 73 normas.",
     "BCRA \"A\": 0 nuevas (última leída: A 8489).",
     "BCRA \"B\": 0 nuevas (última leída: B 13241).",
-    "BCRA \"C\": 1 nuevas (última leída: C 102402).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102402).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
     "Rentas Córdoba: 0 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
     "Resumen con IA: no hubo normas para resumir."
   ],
-  "errores": [
-    "Boletín Oficial del 2026-10-05: The operation was aborted due to timeout",
-    "Texto ordenado \"Exterior y cambios\": terminated"
-  ],
+  "errores": [],
   "demoras": []
 }

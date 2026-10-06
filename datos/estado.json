@@ -34,10 +34,7 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [
-    "Boletín Oficial",
-    "Texto ordenado \"Exterior y cambios\""
-  ],
+  "fallasAvisadas": [],
   "rentasVistas": [
     "p=101460",
     "p=68684",
@@ -49,8 +46,9 @@
     "p=100623",
     "p=100746"
   ],
-  "fallasDesde": {
-    "Boletín Oficial del 2026-10-05": "2026-10-06T01:36:51.783Z",
-    "Texto ordenado \"Exterior y cambios\"": "2026-10-06T01:36:51.783Z"
+  "fallasDesde": {},
+  "boletinHoy": {
+    "fecha": "2026-10-05",
+    "normas": 73
   }
 }
