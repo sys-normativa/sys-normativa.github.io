@@ -9,6 +9,7 @@
 // Una fuente que falla no frena a las demás: queda anotada en el informe,
 // porque un "hoy no hubo nada" falso es el peor error posible.
 
+import { readFile } from 'node:fs/promises';
 import { avisosDelDia, type AvisoBO } from './fuentes/boletinOficial.js';
 import { listarRentas } from './fuentes/rentasCordoba.js';
 import { leerNoticia, listarNoticias } from './fuentes/bcraPrensa.js';
@@ -40,6 +41,10 @@ let huboEdicion = true;
 // Si el monitor estuvo parado más que esto, se leen los últimos días y se avisa
 // cuáles quedaron sin revisar: nunca se saltean en silencio.
 const MAX_DIAS_ATRAS = 31;
+// Lo que ya leyó bien una corrida anterior de hoy (si la hubo).
+const leidoAntes: string[] = await readFile(new URL(`../datos/informes/${fecha}.json`, import.meta.url), 'utf8')
+  .then((t) => (JSON.parse(t) as { revisado: string[] }).revisado.map((l) => l.replace(/ \(en la revisión anterior;.*$/, '.')))
+  .catch(() => []);
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
 async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia: string) => Promise<AvisoBO[]>): Promise<boolean> {
@@ -66,7 +71,12 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia
       if (dia < fecha && seguidos) completoHasta = dia;
     } catch (e) {
       seguidos = false;
-      errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
+      // Hoy se relee en cada corrida. Si una revisión anterior de hoy ya lo
+      // leyó completo, la falla de la relectura no es un error: el día sigue
+      // pendiente y la próxima corrida lo vuelve a leer (5/10/2026).
+      const yaLeido = dia === fecha ? leidoAntes.find((l) => l.startsWith(`${nombre} del ${dia}:`)) : undefined;
+      if (yaLeido) revisado.push(`${yaLeido.replace(/\.$/, '')} (en la revisión anterior; la nueva consulta no respondió y se repite en la próxima).`);
+      else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
     }
   }
   if (!manual) estado[clave] = completoHasta;

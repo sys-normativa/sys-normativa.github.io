@@ -63,6 +63,11 @@ export async function listarRentas(pagina = 1): Promise<NormaRentas[]> {
   const res = await pedir(pagina === 1 ? FEED : `${FEED}?paged=${pagina}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} al pedir el feed`);
   const xml = await res.text();
+  // Cuando el sitio está en mantenimiento redirige a una página aparte
+  // (mantenimiento.rentascordoba.gob.ar, 5/10/2026). No es un cambio de formato.
+  if (/mantenimiento/i.test(res.url) || /<title>[^<]*mantenimiento/i.test(xml)) {
+    throw new Error('el sitio de Rentas está en mantenimiento; se vuelve a consultar en la próxima revisión, sin perder lo publicado mientras tanto');
+  }
   // El feed siempre trae entradas: si no se reconoce ninguna, cambió el formato.
   if (!/<item>/.test(xml)) throw new Error('el feed respondió, pero sin entradas (¿cambió el formato del sitio?)');
   return parsearFeed(xml);

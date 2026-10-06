@@ -3,7 +3,12 @@
 
 const UA = 'Mozilla/5.0 (compatible; SYS-Normativa/0.1)';
 
-export async function pedir(url: string, intentos = 3, { seguirRedireccion = true } = {}): Promise<Response> {
+// Esperas entre intentos: los cortes desde GitHub hacia los sitios del Estado
+// suelen durar unos segundos o un par de minutos (p. ej. el Boletín Oficial,
+// 5/10/2026 a la noche: "fetch failed" tres veces en 6 segundos).
+const ESPERAS = [5_000, 20_000, 60_000];
+
+export async function pedir(url: string, intentos = ESPERAS.length + 1, { seguirRedireccion = true } = {}): Promise<Response> {
   let ultimoError: unknown;
   for (let i = 0; i < intentos; i++) {
     try {
@@ -19,9 +24,20 @@ export async function pedir(url: string, intentos = 3, { seguirRedireccion = tru
     } catch (e) {
       ultimoError = e;
     }
-    await new Promise((r) => setTimeout(r, 2_000 * (i + 1)));
+    if (i < intentos - 1) await new Promise((r) => setTimeout(r, ESPERAS[Math.min(i, ESPERAS.length - 1)]));
   }
-  throw ultimoError;
+  throw explicarFalla(ultimoError, intentos);
+}
+
+/** "fetch failed" no le dice nada al lector del informe: se traduce. */
+function explicarFalla(e: unknown, intentos: number): Error {
+  const err = e as Error & { cause?: { code?: string } };
+  if (err?.name === 'TimeoutError') return new Error(`el sitio no respondió a tiempo (${intentos} intentos)`);
+  if (err?.message === 'fetch failed') {
+    const codigo = err.cause?.code ? `, ${err.cause.code}` : '';
+    return new Error(`no se pudo conectar con el sitio (${intentos} intentos${codigo})`);
+  }
+  return err instanceof Error ? err : new Error(String(e));
 }
 
 export async function pedirTexto(url: string): Promise<string> {

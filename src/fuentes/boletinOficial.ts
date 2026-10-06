@@ -56,7 +56,7 @@ export async function avisosDelDia(fecha: string): Promise<AvisoBO[]> {
   // Un día sin edición (fin de semana, feriado) el sitio redirige a la portada.
   // La redirección no se sigue: desde GitHub la portada falla ("fetch failed",
   // domingo 4/10/2026) y no hace falta leerla.
-  const res = await pedir(`${BASE}/seccion/primera/${fecha}`, 3, { seguirRedireccion: false });
+  const res = await pedir(`${BASE}/seccion/primera/${fecha}`, undefined, { seguirRedireccion: false });
   if (res.status >= 300 && res.status < 400) return [];
   if (!res.ok) throw new Error(`HTTP ${res.status} al pedir la sección del día`);
   const lista = parsearLista(await res.text());
