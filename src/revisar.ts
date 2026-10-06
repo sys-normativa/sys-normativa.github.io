@@ -43,7 +43,7 @@ let huboEdicion = true;
 const MAX_DIAS_ATRAS = 31;
 // Lo que ya leyó bien una corrida anterior de hoy (si la hubo).
 const leidoAntes: string[] = await readFile(new URL(`../datos/informes/${fecha}.json`, import.meta.url), 'utf8')
-  .then((t) => (JSON.parse(t) as { revisado: string[] }).revisado.map((l) => l.replace(/ \(en la revisión anterior;.*$/, '.')))
+  .then((t) => (JSON.parse(t) as { revisado: string[] }).revisado)
   .catch(() => []);
 const ayer = new Date(Date.parse(`${fecha}T12:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
 
@@ -75,7 +75,7 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia
       // leyó completo, la falla de la relectura no es un error: el día sigue
       // pendiente y la próxima corrida lo vuelve a leer (5/10/2026).
       const yaLeido = dia === fecha ? leidoAntes.find((l) => l.startsWith(`${nombre} del ${dia}:`)) : undefined;
-      if (yaLeido) revisado.push(`${yaLeido.replace(/\.$/, '')} (en la revisión anterior; la nueva consulta no respondió y se repite en la próxima).`);
+      if (yaLeido) revisado.push(yaLeido);
       else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
     }
   }
@@ -210,7 +210,19 @@ try {
 }
 
 // 6. Guardar, rearmar la página y dejar el aviso si hay algo nuevo.
-const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion });
+// Las fallas le llegan a Guido por mail. El cliente no ve cortes pasajeros:
+// en su página una fuente figura demorada solo si lleva más de 24 h fallando,
+// y con un texto formal, nunca el error técnico.
+const DEMORA_VISIBLE = 24 * 3_600_000;
+const claveFalla = (e: string) => e.split(':')[0];
+const ahora = new Date().toISOString();
+const fallasDesde: Record<string, string> = {};
+for (const e of errores) fallasDesde[claveFalla(e)] = estado.fallasDesde?.[claveFalla(e)] ?? ahora;
+if (!manual) estado.fallasDesde = fallasDesde;
+const demoras = [...new Set(errores.map(claveFalla))]
+  .filter((k) => Date.parse(ahora) - Date.parse(fallasDesde[k]) >= DEMORA_VISIBLE)
+  .map((k) => `${k}: la consulta se encuentra demorada; se completará automáticamente en la próxima actualización.`);
+const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion, demoras });
 await escribirSitio(resumen.generado);
 
 // Una fuente caída se avisa por mail cuando empieza a fallar, no en cada

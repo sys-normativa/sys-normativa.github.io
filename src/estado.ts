@@ -21,6 +21,8 @@ export interface Estado {
   prensaVistas?: string[];
   /** Fuentes que estaban fallando en la última corrida (ya se avisó por mail). */
   fallasAvisadas?: string[];
+  /** Desde cuándo falla cada fuente (o día del Boletín), para mostrarlo al cliente solo si dura. */
+  fallasDesde?: Record<string, string>;
 }
 
 const RUTA = new URL('../datos/estado.json', import.meta.url);

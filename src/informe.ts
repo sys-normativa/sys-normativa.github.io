@@ -12,7 +12,10 @@ export interface Resumen {
   generado: string;
   hallazgos: Hallazgo[];
   revisado: string[];
+  /** Fallas técnicas de la corrida: para el mail a Guido, nunca para el cliente. */
   errores: string[];
+  /** Lo que ve el cliente: fuentes que llevan más de 24 h sin poder leerse, en texto formal. */
+  demoras?: string[];
 }
 
 const DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];

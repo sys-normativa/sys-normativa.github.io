@@ -108,7 +108,10 @@ export async function escribirSitio(generado: string): Promise<void> {
   const salida = new URL('../salida/', import.meta.url);
   const dias: Resumen[] = [];
   for (const f of (await readdir(informes)).filter((x) => /^\d{4}-\d{2}-\d{2}\.json$/.test(x))) {
-    dias.push(JSON.parse(await readFile(new URL(f, informes), 'utf8')) as Resumen);
+    const r = JSON.parse(await readFile(new URL(f, informes), 'utf8')) as Resumen;
+    // La página es del cliente: nunca lleva el error técnico, solo las demoras
+    // que duran (ver revisar.ts). Los informes viejos no tienen demoras.
+    dias.push({ ...r, errores: r.demoras ?? [] });
   }
   await mkdir(salida, { recursive: true });
   await writeFile(new URL('index.html', salida), await armarSitio(dias, generado), 'utf8');
