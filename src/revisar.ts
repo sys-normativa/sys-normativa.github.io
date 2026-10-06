@@ -77,8 +77,12 @@ async function recorrerBoletin(nombre: string, clave: 'boletinHasta', leer: (dia
       // edición" porque el Boletín del día todavía no salió, y eso no puede
       // tapar una falla posterior.
       const yaLeido = dia === fecha && estado.boletinHoy?.fecha === dia ? estado.boletinHoy.normas : 0;
-      if (yaLeido) revisado.push(`${nombre} del ${dia}: ${yaLeido} normas.`);
-      else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
+      // Y hoy sigue contando como día con edición: si no, el informe del día
+      // se borraba como si fuera un feriado (6/10/2026).
+      if (yaLeido) {
+        edicionHoy = true;
+        revisado.push(`${nombre} del ${dia}: ${yaLeido} normas.`);
+      } else errores.push(`${nombre} del ${dia}: ${(e as Error).message}`);
     }
   }
   if (!manual) estado[clave] = completoHasta;

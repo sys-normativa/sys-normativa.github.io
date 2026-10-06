@@ -106,6 +106,11 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - No quiere que el monitor reintente sin fin cuando el Boletín del día todavía no salió.
 - Quedó propuesto, sin decidir: marcar el informe de la mañana como parcial ("se completa con la revisión de las 21:47") para que nunca diga "sin novedades" antes de que termine el día.
 
+## Revisión del 6/10/2026
+- Corridas del 6/10 (hora de inicio aprox.): 3:55 y 6:05 son los horarios propios de GitHub del lunes a la noche (21:47 y 23:23) largados con 6-7 h de atraso; 9:47 la lanzó cron-job.org (anduvo, terminó 9:50).
+- **El Boletín del 6/10 ya estaba publicado a las 3:57 (69 normas)** → la pasada de las 9:47 llega bien.
+- **Error corregido:** la pasada de las 9:47 no pudo releer el Boletín (ya leído a la madrugada) y, al no contarlo como día con edición, borró el informe del martes como si fuera feriado. Ahora un Boletín ya leído hoy cuenta como edición. Informe del 6/10 recuperado.
+
 ## Próximos pasos
 0. **Revisar el 6/10:** (a) que la pasada de las 9:47 la haya lanzado cron-job.org (en Actions, evento `workflow_dispatch` a las ~9:47) y haya leído el Boletín del 6/10 con normas; (b) la hora a la que salió el Boletín del 6/10 y si 9:47 sirve; (c) la pasada de las 21:47; (d) si hubo fallas, que se haya reprogramado sola y que el cliente no haya visto nada técnico; (e) decidir lo del informe de la mañana "parcial".
    - Pendiente de Guido en cron-job.org: activar el mail de fallas (pestaña Notificaciones), anotar el vencimiento de la clave de GitHub.
