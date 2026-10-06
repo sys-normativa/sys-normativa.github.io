@@ -43,7 +43,7 @@ concurrency:
 jobs:
   revisar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 75 # si el Boletín falla, la corrida lo reintenta hasta 3 veces cada 10 min
     environment:
       name: github-pages
       url: ${{ steps.publicar.outputs.page_url }}
