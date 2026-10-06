@@ -2,7 +2,7 @@
   "ultimaComunicacion": {
     "A": 8489,
     "B": 13241,
-    "C": 102401
+    "C": 102402
   },
   "textosOrdenados": {
     "t-snp-psp": "A 8488",
@@ -36,7 +36,7 @@
   ],
   "fallasAvisadas": [
     "Boletín Oficial",
-    "Rentas Córdoba"
+    "Texto ordenado \"Exterior y cambios\""
   ],
   "rentasVistas": [
     "p=101460",
@@ -48,5 +48,9 @@
     "p=101128",
     "p=100623",
     "p=100746"
-  ]
+  ],
+  "fallasDesde": {
+    "Boletín Oficial del 2026-10-05": "2026-10-06T01:36:51.783Z",
+    "Texto ordenado \"Exterior y cambios\"": "2026-10-06T01:36:51.783Z"
+  }
 }
