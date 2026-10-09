@@ -123,7 +123,8 @@ Contexto y decisiones de este proyecto. Se guarda acá, dentro de la carpeta, a 
 - Rentas Córdoba subió la RG 2229/2026 recién el 9/10 (salió el 30/9). No se va a repetir: ya está en el informe del 30/9 y se reconoce como la misma norma (`claveCordoba`). La RG 2228 sigue sin aparecer en el feed.
 
 ## Próximos pasos
-- **Pedido de Guido (9/10):** sumar 2 mails que reciban los avisos cuando haya algo que revisar. Hoy el aviso es un issue de GitHub que solo llega a cuentas de GitHub. Falta decidir cómo mandarlo a mails comunes.
+- **Pedido de Guido (9/10): avisos a 2 mails más.** GitHub solo manda mails a cuentas de GitHub, así que se descartó (además el formato no es formal). Decisión: mandar por Gmail con contraseña de aplicación (gratis, ~500 mails/día). Código hecho (`src/mail.ts`, paso "Mandar el mail" del workflow, test): solo "Le afecta" y "Para revisar", en copia oculta, texto formal; las fallas técnicas siguen yendo solo a Guido por issue. Sin los secretos no hace nada.
+  - Falta: que Guido cargue en GitHub los secretos `GMAIL_USUARIO`, `GMAIL_APP_PASSWORD` y `AVISO_MAILS` (las direcciones no van en el código porque el repo es público); subir el cambio; correr "Run workflow" con "Mandar un aviso de prueba" y confirmar que llegó.
 0. **Córdoba (lo más importante que falta):** buscar desde GitHub otra fuente de las normas de Rentas que el feed no trae (portal de la Legislatura/digesto, otras páginas de cba.gov.ar) con un workflow de diagnóstico; si ninguna anda desde afuera del país, decidir con Guido. Mientras tanto, el padrón mensual de SIRCUPA también lo publica la Comisión Arbitral, que sí se ve en el Boletín nacional.
    - Ver el primer control de GitHub con la última revisión vieja (o probarlo pausando cron-job.org un día) para confirmar que llega el mail.
    - Pendiente de Guido: activar el mail de fallas de cron-job.org y anotar el vencimiento de la clave de GitHub (ahora, si vence, llega el mail del control).

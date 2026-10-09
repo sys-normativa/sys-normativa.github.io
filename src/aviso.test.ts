@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { armarAviso } from './aviso.js';
+import { armarAviso, armarMail } from './aviso.js';
 import { nivelFinal } from './ia.js';
 import type { Hallazgo } from './explicar.js';
 import { claveComunicacion, diasEntre } from './procesar.js';
@@ -47,4 +47,15 @@ test('lo que la IA descartó no genera aviso', () => {
   const desc = norma('revisar', 'Resolución 1/2026');
   desc.evaluacion.nivel = 'descartada';
   assert.equal(armarAviso('2026-10-02', [desc], [], 'https://sitio'), null);
+});
+
+test('el mail externo lleva solo normas, nunca errores técnicos', () => {
+  const desc = norma('revisar', 'Resolución 1/2026');
+  desc.evaluacion.nivel = 'descartada';
+  assert.equal(armarMail('2026-10-02', [desc], 'https://sitio'), null);
+  const m = armarMail('2026-10-02', [norma('alta', 'Ley 27826'), norma('revisar', 'Resolución <400>/2026')], 'https://sitio');
+  assert.equal(m?.asunto, 'Monitor normativo SYS – 2/10: 1 norma que afecta a SYS y 1 para revisar');
+  assert.match(m!.html, /Resolución &lt;400&gt;\/2026/);
+  assert.match(m!.texto, /Informe completo: https:\/\/sitio/);
+  assert.doesNotMatch(m!.html + m!.texto, /@Guidoparisi91|fuente no disponible/);
 });

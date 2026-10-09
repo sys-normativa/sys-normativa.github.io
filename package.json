@@ -7,6 +7,7 @@
   "scripts": {
     "revisar": "tsx src/revisar.ts",
     "pagina": "tsx src/pagina.ts",
+    "mail": "tsx src/mail.ts",
     "historial": "tsx src/historial.ts",
     "validar": "tsx src/validar.ts",
     "estudio": "tsx src/estudio.ts",
@@ -15,10 +16,12 @@
     "test": "node --import tsx --test src/*.test.ts"
   },
   "dependencies": {
+    "nodemailer": "10.0.10",
     "unpdf": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "@types/nodemailer": "^8.0.2",
     "tsx": "^4.19.0",
     "typescript": "^5.6.0"
   }

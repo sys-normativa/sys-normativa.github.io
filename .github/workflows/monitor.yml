@@ -11,6 +11,8 @@
 #   dejó de lanzarlo, y entonces revisa igual y manda un mail avisándolo.
 #
 # El aviso se publica como "issue" del repo: GitHub lo manda por mail al dueño.
+# Además, las normas nuevas (nunca los errores técnicos) se mandan por Gmail a
+# los mails del secreto AVISO_MAILS (ver src/mail.ts).
 
 name: Monitor normativo
 
@@ -96,6 +98,7 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           AVISO_ARCHIVO: ${{ runner.temp }}/aviso.json
+          MAIL_ARCHIVO: ${{ runner.temp }}/mail.json
           REINTENTAR_ARCHIVO: ${{ runner.temp }}/reintentar.txt
           SITIO_URL: https://sys-normativa.github.io/
 
@@ -152,6 +155,26 @@ jobs:
           else
             echo "Nada nuevo: no se manda aviso."
           fi
+
+      - name: Mandar el mail a los destinatarios
+        id: mail
+        continue-on-error: true
+        run: npm run mail -- ${{ inputs.prueba_aviso && '--prueba' || '' }}
+        env:
+          GMAIL_USUARIO: ${{ secrets.GMAIL_USUARIO }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          AVISO_MAILS: ${{ secrets.AVISO_MAILS }}
+          MAIL_ARCHIVO: ${{ runner.temp }}/mail.json
+          SITIO_URL: https://sys-normativa.github.io/
+
+      - name: Avisar si no salió el mail
+        if: steps.mail.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s\n' "@Guidoparisi91 no se pudo mandar el mail a los destinatarios. Puede ser la contraseña de aplicación de Gmail (revocada o mal cargada) o el secreto AVISO_MAILS. El informe se publicó igual." "" "**[Abrir el monitor](https://sys-normativa.github.io/)**" > "$RUNNER_TEMP/mailfallo.md"
+          url=$(gh issue create --title "Monitor: no salió el mail a los destinatarios" --body-file "$RUNNER_TEMP/mailfallo.md")
+          gh issue close "$url"
 
       - uses: actions/configure-pages@v5
 
