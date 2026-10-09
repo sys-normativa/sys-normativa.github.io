@@ -1,0 +1,66 @@
+{
+  "fecha": "2026-10-09",
+  "generado": "9/10/2026 a las 09:48",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Régimen Penal Tributario - Ley de Procedimiento Tributario",
+      "titulo": "Ley 27826",
+      "asunto": "",
+      "fecha": "09/10/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/348757/20261009",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "El Senado y Cámara de Diputados de la Nación Argentina reunidos en Congreso, etc. sancionan con fuerza de Ley: TÍTULO I Modificaciones a las leyes 27.799 y 11.683 (texto ordenado en 1998 y sus modificaciones) Capítulo I Artículo 1º- Sustitúyese el artículo sin número a continuación del artículo 56 de la ley 11.683, texto ordenado en 1998 y sus modificaciones, por el siguiente: Artículo…: A los fines de lo dispuesto en el inciso a) del artículo anterior, se considerará que existe una discrepancia significativa cuando se verifique, al menos, una de las siguientes condiciones: i) Si de la impugnación realizada por la Agencia de Recaudación y Control Aduanero resultare un incremento del…",
+      "paraQue": "",
+      "tema": "lavado",
+      "comoAfecta": [
+        "Trata materias vinculadas a SYS (Ley 25.246 (lavado de activos), sujetos obligados, retenciones/percepciones), sin mencionar expresamente su actividad.",
+        "SYS es sujeto obligado ante la UIF desde la Ley 27.739 (identificación de clientes, monitoreo y reporte de operaciones sospechosas). Sus cambios pueden requerir ajustes en el alta de clientes o en el monitoreo."
+      ],
+      "queHacer": "Evaluar su aplicabilidad a SYS.",
+      "fechasClave": [
+        "La opción de adhesión a la modalidad simplificada de declaración jurada del Impuesto a las Ganancias podrá ejercerse para los períodos fiscales iniciados a partir del 1° de enero de 2025, inclusive.",
+        "A estos efectos, y hasta el 31 de diciembre de 2027, para los fondos utilizados conforme lo previsto en el párrafo precedente por los contribuyentes alcanzados por la presunción de exactitud establecida en el artículo 40 de la presente ley, resultará…",
+        "Las disposiciones de este capítulo tendrán efectos para los períodos fiscales iniciados a partir del 1º de enero de 2025, inclusive, con las siguientes excepciones: a) lo dispuesto en el artículo 11, que se regirá por lo allí previsto; y b) lo relativo a los…"
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 4,
+        "motivos": [
+          "Ley 25.246 (lavado de activos)",
+          "sujetos obligados",
+          "retenciones/percepciones",
+          "la IA confirma que aplica"
+        ],
+        "temas": [
+          "lavado",
+          "impuestos"
+        ],
+        "fuerte": false
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "La Ley 27826 establece que la constancia de adhesión a la modalidad simplificada de declaración jurada del Impuesto a las Ganancias debe ser considerada por los sujetos obligados como un antecedente favorable para la identificación y monitoreo de operaciones.",
+        "comoAfecta": "SYS debe integrar la constancia de adherido al régimen simplificado como antecedente favorable en sus procesos de debida diligencia de clientes y utilizar las APIs de ARCA para validar la situación de sus clientes.",
+        "queHacer": "Consultar las interfaces de programación de aplicaciones (API) de ARCA para validar la situación de los clientes respecto al régimen simplificado e incorporarlo en el monitoreo de debida diligencia.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-10-08: 60 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-10-09: 81 normas.",
+    "BCRA \"A\": 0 nuevas (última leída: A 8490).",
+    "BCRA \"B\": 0 nuevas (última leída: B 13245).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102416).",
+    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
+    "Rentas Córdoba: 0 normas nuevas.",
+    "Prensa del BCRA: 0 noticias nuevas.",
+    "Resumen con IA: 1 de 1 normas."
+  ],
+  "errores": [],
+  "demoras": [],
+  "enCurso": []
+}
