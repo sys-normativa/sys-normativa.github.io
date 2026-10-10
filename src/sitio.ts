@@ -40,7 +40,7 @@ const AYUDA = `
 </div>
 
 <h2>Actualización y notificaciones</h2>
-<div class="caja"><p>Lunes a viernes por la mañana (entre las 9:45 y las 11:30) y por la noche (entre las 21:45 y las 23:30), y sábados al mediodía (hora de Argentina). La fecha y hora de la última actualización se indican en el encabezado.</p><p>Se envía una notificación por correo electrónico ante cada norma nueva clasificada como "Le afecta" o "Para revisar", y ante la falta de disponibilidad de una fuente.</p></div>
+<div class="caja"><p>Todos los días, incluidos fines de semana y feriados, por la mañana (alrededor de las 9:50) y por la noche (alrededor de las 21:50), hora de Argentina. Cada día tiene su informe, aunque no se hayan publicado normas. La fecha y hora de la última actualización se indican en el encabezado.</p><p>Se envía una notificación por correo electrónico ante cada norma nueva clasificada como "Le afecta" o "Para revisar".</p></div>
 
 <h2>Alcance</h2>
 <div class="caja"><ul>

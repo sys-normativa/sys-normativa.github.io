@@ -56,7 +56,7 @@ npm run typecheck
 - Comunicaciones BCRA: por número (`ultimaComunicacion`). Los números salteados se siguen buscando 30 días (`pendientes`).
 - Textos ordenados: por versión de la carátula.
 - Rentas Córdoba y prensa del BCRA: por lista de vistas. Si todo lo que se ve es nuevo, avisa que puede haber más.
-- Además, la página avisa si dejó de actualizarse (16 h entre semana, 50 h el fin de semana), por si GitHub no corre.
+- Además, la página avisa si pasaron más de 16 h sin actualizarse, por si GitHub no corre.
 
 **Todo lo que ve el cliente (página, guía, mails) tiene que ser claro y profesional**: tono formal, sin jerga técnica, sin detalles internos (repo, pruebas, métricas de validación) ni expresiones coloquiales.
 

@@ -223,7 +223,8 @@ function informe(r, sobreTitulo) {
   c.push(descartadas(desc));
   c.push(
     '<details class="caja revisado"><summary>Fuentes consultadas</summary>',
-    `<ul>${r.revisado.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`,
+    // La línea del resumen con IA es interna (y solo refleja la última corrida del día).
+    `<ul>${r.revisado.filter((x) => !x.startsWith('Resumen con IA')).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>`,
     `<p class="chico">Actualizado el ${esc(r.generado)} (hora de Argentina).</p></details>`,
   );
   return c.join('');
@@ -304,14 +305,11 @@ document.getElementById('actualizado').insertAdjacentText('beforeend', textoActu
 document.getElementById('actualizado-movil').textContent = `${textoActualizado} (hora de Argentina)`;
 
 // Si la página lleva más tiempo sin actualizarse que el que hay entre dos
-// corridas, se avisa: lo publicado después todavía no fue revisado. Entre el
-// sábado al mediodía y el lunes a la mañana no hay corridas.
+// corridas (12 h, todos los días), se avisa: lo publicado después todavía no
+// fue revisado.
 (function avisarSiVencio() {
-  const ahora = new Date(Date.now() - 3 * 3_600_000); // hora argentina
-  const dia = ahora.getUTCDay();
-  const finDeSemana = dia === 0 || (dia === 1 && ahora.getUTCHours() < 12);
   const horas = (Date.now() - Date.parse(DATOS.generadoIso)) / 3_600_000;
-  if (!(horas > (finDeSemana ? 50 : 16))) return;
+  if (!(horas > 16)) return;
   const el = document.getElementById('vencido');
   el.innerHTML = `<div class="aviso">${icono('alerta')}<div><b>El monitor no se actualiza desde el ${esc(DATOS.generado)}.</b> Las publicaciones posteriores todavía no fueron revisadas.</div></div>`;
   el.hidden = false;
