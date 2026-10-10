@@ -39,7 +39,6 @@ const errores: string[] = [];
 const bo = await recorrerBoletin('Boletín Oficial', estado, fecha, Boolean(manual), (dia) => avisosDelDia(dia.replaceAll('-', '')), (avisos, dia) => lote.avisosBO(avisos, dia));
 revisado.push(...bo.revisado);
 errores.push(...bo.errores);
-const huboEdicion = bo.edicionHoy;
 
 // 2. Comunicaciones del BCRA
 const forzado = argumento('bcra-desde');
@@ -181,7 +180,7 @@ const demoras = [...new Set(errores.map(claveFalla))]
 // Las que fallan hace menos de 24 h: el cliente las ve "en actualización",
 // nunca como revisadas.
 const enCurso = [...new Set(errores.map(claveFalla))].filter((k) => !demoras.some((d) => d.startsWith(`${k}:`)));
-const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { huboEdicion, demoras, enCurso });
+const { resumen, nuevos } = await guardarDia(fecha, lote, revisado, errores, { demoras, enCurso });
 if (!manual) await limpiarDiasAnteriores(fecha, new Set(Object.keys(fallasDesde)));
 await escribirSitio(resumen.generado);
 
