@@ -1,17 +1,62 @@
 {
   "fecha": "2026-11-02",
-  "generado": "2/11/2026 a las 09:49",
-  "hallazgos": [],
+  "generado": "2/11/2026 a las 21:49",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"A\" 8502",
+      "asunto": "Regímenes Informativos. Prórrogas.",
+      "fecha": "02/11/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8502.pdf",
+      "tipo": "Comunicación normativa",
+      "queCambia": "El BCRA se ha resuelto extender, de manera excepcional, el vencimiento para las presentaciones de los regímenes informativos mensuales enumerados a continuación, correspondiente al período octubre 2026, el cual operará el día 26.11.26: - Balance de Saldos (R.I.-B.S.) - Deudores del Sistema Financiero (R.I.-D.S.F.) - Exigencia e Integración de Capitales Mínimos (R.I.-E.I.C.M.) - Efectivo Mínimo y Aplicación de Recursos (R.I.-E.M. y A.R.) - Relación para los Activos Inmovilizados y Otros Conceptos (R.I. – A.I.) - Estado de Consolidación de Entidades Locales con Filiales y Subsidiarias Significativas en el País y en el Exterior (R.I.",
+      "paraQue": "",
+      "tema": "informativo",
+      "comoAfecta": [
+        "Dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, categoría que comprende a SYS.",
+        "Modifica la información a presentar al BCRA, su formato o su periodicidad."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 16,
+        "motivos": [
+          "dirigida a los proveedores de servicios de pago",
+          "proveedores de servicios de pago",
+          "cuentas de pago",
+          "transferencias inmediatas",
+          "agregadores / adquirentes",
+          "entidades financieras"
+        ],
+        "temas": [
+          "psp",
+          "pagos",
+          "general"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "El Banco Central prorroga excepcionalmente al 26 de noviembre de 2026 el vencimiento de los regímenes informativos mensuales de octubre de 2026 para los proveedores de servicios de pago.",
+        "comoAfecta": "A SYS le extiende el plazo para presentar los regímenes informativos mensuales ante el Banco Central.",
+        "queHacer": "Presentar los regímenes informativos mensuales correspondientes a octubre de 2026 hasta el 26/11/2026.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
   "revisado": [
-    "Boletín Oficial del 2026-11-01: no hubo edición.",
     "Boletín Oficial del 2026-11-02: 47 normas.",
-    "BCRA \"A\": 0 nuevas (última leída: A 8501).",
-    "BCRA \"B\": 0 nuevas (última leída: B 13252).",
-    "BCRA \"C\": 0 nuevas (última leída: C 102493).",
+    "BCRA \"A\": 3 nuevas (última leída: A 8504).",
+    "BCRA \"B\": 1 nuevas (última leída: B 13253).",
+    "BCRA \"C\": 7 nuevas (última leída: C 102500).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
     "Rentas Córdoba: 0 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": [],
   "demoras": [],
