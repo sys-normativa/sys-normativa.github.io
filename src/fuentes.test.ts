@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { fechaDeNoticia, parsearListado } from './fuentes/bcraPrensa.js';
 import { fechaArgentina, parsearFeed } from './fuentes/rentasCordoba.js';
-import { numeroDeAviso, parsearPdf, parsearRepositorio } from './fuentes/boletinOficial.js';
+import { linkDelPdf, numeroDeAviso, parsearPdf, parsearRepositorio } from './fuentes/boletinOficial.js';
 import { claveCordoba } from './procesar.js';
 import { evaluar } from './reglas.js';
 
@@ -147,4 +147,17 @@ test('Boletín Oficial por PDF: separa cada aviso con organismo, nombre, texto y
 test('Boletín Oficial por PDF: un PDF sin avisos reconocibles es un error, no un día vacío', () => {
   assert.throws(() => parsearPdf(['tapa', 'otra cosa']));
   assert.throws(() => parsearPdf([PAGINAS[0], PAGINAS[1], 'BOLETÍN OFICIAL Nº 36.019 - Primera Sección 3\nTexto sin pie']));
+});
+
+test('Boletín Oficial por PDF: el link abre la lista del día en la norma (caso real: UIF, Resolución 144/2026, 3/11/2026)', () => {
+  assert.equal(
+    linkDelPdf('20261103', 'Resolución 144/2026', 'UNIDAD DE INFORMACIÓN FINANCIERA'),
+    'https://www.boletinoficial.gob.ar/seccion/primera/20261103#:~:text=Resoluci%C3%B3n%20144%2F2026',
+  );
+  // Un aviso sin nombre de norma se busca por el organismo; el "-" va codificado.
+  assert.equal(
+    linkDelPdf('20261023', 'Aviso Oficial', 'BANCO CENTRAL DE LA REPÚBLICA ARGENTINA - GERENCIA'),
+    'https://www.boletinoficial.gob.ar/seccion/primera/20261023#:~:text=BANCO%20CENTRAL%20DE%20LA%20REP%C3%9ABLICA%20ARGENTINA',
+  );
+  assert.equal(linkDelPdf('20261023', 'Decreto 12-B/2026', ''), 'https://www.boletinoficial.gob.ar/seccion/primera/20261023#:~:text=Decreto%2012%2DB%2F2026');
 });

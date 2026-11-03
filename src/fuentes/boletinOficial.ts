@@ -161,7 +161,22 @@ export function parsearPdf(paginas: string[]): { organismo: string; titulo: stri
   return avisos;
 }
 
-/** El día leído del PDF. El link de cada aviso es la sección del día en la web. */
+/**
+ * Link a un aviso leído del PDF. El PDF no trae el número de la página propia
+ * del aviso en la web (/detalleAviso/primera/349974/...: ni el orden ni las
+ * marcas del PDF coinciden, probado el 3/11/2026), así que el link es la lista
+ * del día con un "fragmento de texto" (#:~:text=): el navegador baja hasta el
+ * nombre de la norma ("Resolución 144/2026") y lo resalta. Si no lo encuentra,
+ * abre la lista arriba de todo.
+ */
+export function linkDelPdf(fecha: string, titulo: string, organismo: string): string {
+  const buscar = titulo && titulo !== 'Aviso Oficial' ? titulo : organismo.split(' - ')[0];
+  // En el fragmento, "-", "," y "&" tienen significado propio: van codificados.
+  const texto = encodeURIComponent(buscar.trim()).replace(/-/g, '%2D');
+  return `${BASE}/seccion/primera/${fecha}${texto ? `#:~:text=${texto}` : ''}`;
+}
+
+/** El día leído del PDF. El link de cada aviso es la lista del día en la web, abierta en el aviso. */
 async function avisosDelPdf(fecha: string): Promise<AvisoBO[]> {
   const dia = `${fecha.slice(6, 8)}-${fecha.slice(4, 6)}-${fecha.slice(0, 4)}`;
   const pdfs = parsearRepositorio(await pedirTexto(`${REPOSITORIO}/ots/?date_filter=${dia}`), fecha);
@@ -171,7 +186,7 @@ async function avisosDelPdf(fecha: string): Promise<AvisoBO[]> {
     if (!res.ok) throw new Error(`HTTP ${res.status} al pedir el PDF del día`);
     const { text } = await extractText(await getDocumentProxy(new Uint8Array(await res.arrayBuffer())), { mergePages: false });
     for (const a of parsearPdf(text)) {
-      avisos.push({ ...a, id: `pdf-${a.numero}`, url: `${BASE}/seccion/primera/${fecha}#aviso-${a.numero.replace('/', '-')}` });
+      avisos.push({ ...a, id: `pdf-${a.numero}`, url: linkDelPdf(fecha, a.titulo, a.organismo) });
     }
   }
   return avisos;
