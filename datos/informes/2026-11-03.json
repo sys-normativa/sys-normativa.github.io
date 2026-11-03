@@ -1,0 +1,66 @@
+{
+  "fecha": "2026-11-03",
+  "generado": "3/11/2026 a las 09:49",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Unidad de Información Financiera",
+      "titulo": "Resolución 144/2026",
+      "asunto": "",
+      "fecha": "03/11/2026",
+      "url": "https://www.boletinoficial.gob.ar/seccion/primera/20261103#aviso-82017-26",
+      "avisoBO": "82017/26",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Objeto. La presente resolución tiene por objeto establecer el régimen específico de Antecedente Favorable y, como parte integrante de este, un Régimen de Debida Diligencia Simplificada Especial, en el marco de las medidas de debida diligencia que los Sujetos Obligados por la Ley N.º 25.246 y sus modificatorias deberán aplicar respecto de las personas humanas o sucesiones indivisas adheridas al Régimen de Declaración Jurada Simplificada para el Impuesto a las Ganancias previsto en el Capítulo III del Título II de la Ley N.º 27.799 y modificatorias, para determinadas operaciones de ingreso de fondos y/o activos al sistema financiero formal realizadas mediante los mecanismos autorizados por el…",
+      "paraQue": "Resulta necesario distinguir, a los fines del sistema de prevención de LA/FT/FP, entre aquellos bienes o",
+      "tema": "lavado",
+      "comoAfecta": [
+        "Trata materias vinculadas a SYS (Ley 25.246 (lavado de activos), sujetos obligados, activos virtuales (PSAV)), sin mencionar expresamente su actividad.",
+        "SYS es sujeto obligado ante la UIF desde la Ley 27.739 (identificación de clientes, monitoreo y reporte de operaciones sospechosas). Sus cambios pueden requerir ajustes en el alta de clientes o en el monitoreo."
+      ],
+      "queHacer": "Evaluar su aplicabilidad a SYS.",
+      "fechasClave": [
+        "La presente resolución entrará en vigencia a partir del día siguiente al de su publicación"
+      ],
+      "dondeNombraASys": "virtuales, cuentas comitentes y cuentas registradas en Proveedores de Servicios de Activos Virtuales inscriptos",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 7,
+        "motivos": [
+          "Ley 25.246 (lavado de activos)",
+          "sujetos obligados",
+          "activos virtuales (PSAV)",
+          "emitida por la UIF",
+          "la IA confirma que aplica"
+        ],
+        "temas": [
+          "lavado",
+          "cnv"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "La UIF establece un régimen de antecedente favorable y debida diligencia simplificada especial para los clientes de SYS adheridos al Régimen de Declaración Jurada Simplificada.",
+        "comoAfecta": "SYS debe aplicar medidas de debida diligencia simplificada y considerar como antecedente favorable dicha adhesión al monitorear las operaciones de esos clientes.",
+        "queHacer": "Actualizar la matriz de riesgo y los procedimientos de debida diligencia para incorporar la constancia de adhesión al régimen como antecedente favorable a partir de la entrada en vigencia de la norma.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-11-02: 47 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-11-03: 38 normas.",
+    "BCRA \"A\": 0 nuevas (última leída: A 8504).",
+    "BCRA \"B\": 0 nuevas (última leída: B 13253).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102500).",
+    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
+    "Rentas Córdoba: 0 normas nuevas.",
+    "Prensa del BCRA: 0 noticias nuevas.",
+    "Resumen con IA: 1 de 1 normas."
+  ],
+  "errores": [],
+  "demoras": [],
+  "enCurso": []
+}
