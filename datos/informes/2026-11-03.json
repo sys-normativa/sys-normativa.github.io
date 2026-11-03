@@ -1,7 +1,48 @@
 {
   "fecha": "2026-11-03",
-  "generado": "3/11/2026 a las 09:49",
+  "generado": "3/11/2026 a las 14:54",
   "hallazgos": [
+    {
+      "fuente": "Rentas Córdoba",
+      "emisor": "Rentas Córdoba (Ingresos Brutos de Córdoba)",
+      "titulo": "Resolución General N° 2232/2026 – Padrón de Noviembre de 2026 de contribuyentes para los regímenes SIRCREB, SIRPEI, SIRTAC y SIRCUPA",
+      "asunto": "",
+      "fecha": "03/11/2026",
+      "url": "https://www.rentascordoba.gob.ar/cms/resolucion-general-n-2232-2026-padron-de-noviembre-de-2026-de-contribuyentes-para-los-regimenes-sircreb-sirpei-sirtac-y-sircupa/",
+      "tipo": "Resolucion General de Córdoba",
+      "queCambia": "(Se relaciona con el Decreto N° 2445/2023 (B.O. 28-12-2023) y sus modificatorios, y la Resolución N° 454-D/2023 del Ministerio de Economía y Gestión Pública (B.O. 10-10-2023) y sus modificatorias)\nAprueba y envía a la Comisión Arbitral del Convenio Multilateral el listado de contribuyentes correspondiente a Noviembre de 2026 para los regímenes SIRCREB, SIRPEI, SIRTAC y SIRCUPA el que determina qué contribuyentes estarán alcanzados por estos sistemas y la alícuota que se les aplicará como pago a cuenta del Impuesto sobre los Ingresos Brutos. Los contribuyentes pueden consultar su situación a través de SIFERE Web con Clave Fiscal.",
+      "paraQue": "",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Norma tributaria de la Provincia de Córdoba que menciona materias propias de la actividad de SYS: SIRCUPA (IIBB sobre cuentas de pago), SIRTAC / regímenes de recaudación de IIBB, Convenio Multilateral / IIBB.",
+        "Retenciones de Ingresos Brutos sobre las acreditaciones en cuentas de pago. Puede modificar las alícuotas aplicables a los clientes de SYS o sus obligaciones como agente."
+      ],
+      "queHacer": "Evaluar el impacto en las obligaciones de Ingresos Brutos de SYS.",
+      "fechasClave": [],
+      "dondeNombraASys": "Resolución General N° 2232/2026 – Padrón de Noviembre de 2026 de contribuyentes para los regímenes SIRCREB, SIRPEI, SIRTAC y SIRCUPA",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 10,
+        "motivos": [
+          "SIRCUPA (IIBB sobre cuentas de pago)",
+          "SIRTAC / regímenes de recaudación de IIBB",
+          "Convenio Multilateral / IIBB",
+          "emitida por Rentas (Ingresos Brutos provincial)"
+        ],
+        "temas": [
+          "iibb"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "Rentas Córdoba aprueba y envía el padrón de contribuyentes de Noviembre de 2026 para el régimen SIRCUPA con las alícuotas aplicables.",
+        "comoAfecta": "SYS debe actualizar el padrón de alícuotas para calcular las retenciones de Ingresos Brutos a sus clientes corporativos en SIRCUPA.",
+        "queHacer": "Implementar el padrón de Noviembre de 2026 de SIRCUPA para las retenciones de Ingresos Brutos.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
     {
       "fuente": "Boletín Oficial",
       "emisor": "Unidad de Información Financiera",
@@ -50,13 +91,12 @@
     }
   ],
   "revisado": [
-    "Boletín Oficial del 2026-11-02: 47 normas (día anterior, vuelto a mirar por si quedó algo).",
     "Boletín Oficial del 2026-11-03: 38 normas.",
     "BCRA \"A\": 0 nuevas (última leída: A 8504).",
     "BCRA \"B\": 0 nuevas (última leída: B 13253).",
     "BCRA \"C\": 0 nuevas (última leída: C 102500).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
-    "Rentas Córdoba: 0 normas nuevas.",
+    "Rentas Córdoba: 2 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
     "Resumen con IA: 1 de 1 normas."
   ],
