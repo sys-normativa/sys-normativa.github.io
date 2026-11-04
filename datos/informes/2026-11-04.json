@@ -1,0 +1,63 @@
+{
+  "fecha": "2026-11-04",
+  "generado": "4/11/2026 a las 09:49",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Inspección General de Justicia",
+      "titulo": "Resolución General 12/2026",
+      "asunto": "",
+      "fecha": "04/11/2026",
+      "url": "https://www.boletinoficial.gob.ar/seccion/primera/20261104#:~:text=Resoluci%C3%B3n%20General%2012%2F2026",
+      "avisoBO": "82441/26",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Deróganse los Anexos XII y XIII del Anexo A de la Resolución General IGJ N.º 15/24, los artículos 34 y 50 del Anexo A de la Resolución General IGJ N.º 6/17 y la Resolución General IGJ N.º 10/15.",
+      "paraQue": "Corresponde a esta INSPECCIÓN GENERAL DE JUSTICIA dictar la presente resolución a fin de adecuar",
+      "tema": "cnv",
+      "comoAfecta": [
+        "Trata materias vinculadas a SYS (sujetos obligados, activos virtuales (PSAV), entidades financieras), sin mencionar expresamente su actividad.",
+        "Aplica si SYS remunera saldos mediante fondos comunes de inversión u opera con activos virtuales."
+      ],
+      "queHacer": "Evaluar su aplicabilidad a SYS.",
+      "fechasClave": [],
+      "dondeNombraASys": "Activos virtuales: la representación digital de valor que puede comercializarse o transferirse digitalmente y",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "descartada",
+        "puntaje": 4,
+        "motivos": [
+          "sujetos obligados",
+          "activos virtuales (PSAV)",
+          "entidades financieras",
+          "la IA no ve impacto para SYS"
+        ],
+        "temas": [
+          "cnv",
+          "lavado",
+          "general"
+        ],
+        "fuerte": false
+      },
+      "resumenIa": {
+        "veredicto": "no_aplica",
+        "queCambia": "La IGJ actualizó su normativa sobre prevención de lavado de activos para las sociedades y entidades bajo su jurisdicción.",
+        "comoAfecta": "La norma regula a las sociedades inscriptas en la IGJ, no a las obligaciones de SYS como PSP.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-11-03: 38 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-11-04: 71 normas.",
+    "BCRA \"A\": 0 nuevas (última leída: A 8504).",
+    "BCRA \"B\": 0 nuevas (última leída: B 13253).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102505).",
+    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
+    "Rentas Córdoba: 0 normas nuevas.",
+    "Prensa del BCRA: 0 noticias nuevas.",
+    "Resumen con IA: 1 de 1 normas."
+  ],
+  "errores": [],
+  "demoras": [],
+  "enCurso": []
+}
