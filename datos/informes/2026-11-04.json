@@ -1,6 +1,6 @@
 {
   "fecha": "2026-11-04",
-  "generado": "4/11/2026 a las 21:49",
+  "generado": "5/11/2026 a las 09:49",
   "hallazgos": [
     {
       "fuente": "BCRA",
@@ -157,13 +157,11 @@
     "BCRA \"C\": 5 nuevas (última leída: C 102510).",
     "Textos ordenados del BCRA: 9 temas, 1 cambiaron.",
     "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: 2 de 2 normas."
+    "Resumen con IA: no hubo normas para resumir."
   ],
   "errores": [
     "Rentas Córdoba: el sitio de Rentas está en mantenimiento; se vuelve a consultar en la próxima revisión, sin perder lo publicado mientras tanto"
   ],
   "demoras": [],
-  "enCurso": [
-    "Rentas Córdoba"
-  ]
+  "enCurso": []
 }
