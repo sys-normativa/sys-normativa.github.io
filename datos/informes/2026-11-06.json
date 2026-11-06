@@ -1,0 +1,74 @@
+{
+  "fecha": "2026-11-06",
+  "generado": "6/11/2026 a las 09:48",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Comisión Nacional de Valores",
+      "titulo": "Resolución General 1178/2026",
+      "asunto": "",
+      "fecha": "06/11/2026",
+      "url": "https://www.boletinoficial.gob.ar/seccion/primera/20261106#:~:text=Resoluci%C3%B3n%20General%201178%2F2026",
+      "avisoBO": "83339/26",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Sustituir el artículo 58 de la Sección VII Capítulo V del Título II de las NORMAS (N.T. 2013 y mod), por el siguiente texto: “TASAS Y ARANCELES. ARTÍCULO 58.- Conforme lo establecido en el artículo 12 del Capítulo I del Título XVII de estas Normas, quedan exceptuadas del pago de la tasa de fiscalización y control aquellas Emisoras que, además de cumplir los requisitos específicos de esta Sección, califiquen como PyME CNV, de acuerdo con lo establecido en el Capítulo VI del presente Título”.",
+      "paraQue": "",
+      "tema": "cnv",
+      "comoAfecta": [
+        "Trata materias vinculadas a SYS (sujetos obligados, retenciones/percepciones, activos virtuales (PSAV)), sin mencionar expresamente su actividad.",
+        "Aplica si SYS remunera saldos mediante fondos comunes de inversión u opera con activos virtuales."
+      ],
+      "queHacer": "Evaluar su aplicabilidad a SYS.",
+      "fechasClave": [
+        "La presente RG entrará en vigencia a partir del día siguiente al de su publicación en el B.O."
+      ],
+      "dondeNombraASys": "",
+      "relacionadas": [
+        {
+          "texto": "Comunicación \"A\" 3500 del BCRA",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A3500.pdf",
+          "detalle": "Circular CAMEX 1 – 333. Disposiciones para la determinación del tipo de cambio de referencia ()"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "descartada",
+        "puntaje": 7,
+        "motivos": [
+          "sujetos obligados",
+          "retenciones/percepciones",
+          "activos virtuales (PSAV)",
+          "entidades financieras",
+          "emitida por la CNV",
+          "la IA no ve impacto para SYS"
+        ],
+        "temas": [
+          "cnv",
+          "lavado",
+          "impuestos",
+          "general"
+        ],
+        "fuerte": false
+      },
+      "resumenIa": {
+        "veredicto": "no_aplica",
+        "queCambia": "La Comisión Nacional de Valores modificó el régimen de tasas y aranceles aplicables a los sujetos inscriptos en su órbita.",
+        "comoAfecta": "No regula la operatoria de billeteras virtuales ni sus obligaciones como PSPCP.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
+  "revisado": [
+    "Boletín Oficial del 2026-11-05: 34 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-11-06: 57 normas.",
+    "BCRA \"A\": 0 nuevas (última leída: A 8508).",
+    "BCRA \"B\": 0 nuevas (última leída: B 13253).",
+    "BCRA \"C\": 0 nuevas (última leída: C 102514).",
+    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
+    "Rentas Córdoba: 1 normas nuevas.",
+    "Prensa del BCRA: 0 noticias nuevas.",
+    "Resumen con IA: 1 de 1 normas."
+  ],
+  "errores": [],
+  "demoras": [],
+  "enCurso": []
+}
