@@ -1,17 +1,71 @@
 {
   "fecha": "2026-11-05",
-  "generado": "5/11/2026 a las 09:49",
-  "hallazgos": [],
+  "generado": "5/11/2026 a las 21:48",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"A\" 8508",
+      "asunto": "Sistema Nacional de Pagos - Transferencias - Normas Complementarias. Sistema Nacional de Pagos - Servicios de Pago. Adecuaciones.",
+      "fecha": "05/11/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8508.pdf",
+      "tipo": "Norma nueva",
+      "queCambia": "1 - Sustituir el punto 1.2.6. del texto ordenado sobre Sistema Nacional de Pagos – Transferencias – Normas Complementarias por lo siguiente: “1.2.6. Ecosistema interoperable: todo esquema de transferencias inmediatas deberá interoperar con el resto de los esquemas de transferencias inmediatas para que sus participantes puedan originar transferencias con destino a cualquier otro proveedor de cuenta –entidad financiera o PSPCP–que no sea participante, en las mismas condiciones en términos de nivel de servicio que una transferencia que se resuelva dentro del propio esquema.",
+      "paraQue": "",
+      "tema": "pagos",
+      "comoAfecta": [
+        "Dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, categoría que comprende a SYS.",
+        "Alcanza la operatoria de pagos de SYS: envío, acreditación y rechazo de pagos con QR y transferencias. Puede requerir cambios en el producto o en la integración con entidades y redes."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [
+        {
+          "texto": "Comunicación \"A\" 6423",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A6423.pdf",
+          "detalle": "Circular SINAP 1 - 68 Sistema Nacional de Pagos. Débito inmediato. (05/01/2018)"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 28,
+        "motivos": [
+          "dirigida a los proveedores de servicios de pago",
+          "proveedores de servicios de pago",
+          "cuentas de pago",
+          "PSP/PSPCP",
+          "CVU",
+          "transferencias inmediatas",
+          "sistema nacional de pagos",
+          "DEBIN / débito inmediato",
+          "entidades financieras"
+        ],
+        "temas": [
+          "psp",
+          "pagos",
+          "general"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "El BCRA establece los nuevos flujos operativos interoperables obligatorios entre esquemas de transferencias inmediatas desde el 06/04/2027 y prohíbe usar los términos DEBIN y CREDIN en las interfaces con clientes.",
+        "comoAfecta": "SYS debe adecuar sus flujos de transferencias inmediatas y actualizar la denominación comercial en sus pantallas a clientes.",
+        "queHacer": "Adecuar los flujos transaccionales y eliminar los términos DEBIN y CREDIN de las interfaces antes del 06/04/2027.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
   "revisado": [
-    "Boletín Oficial del 2026-11-04: 71 normas (día anterior, vuelto a mirar por si quedó algo).",
     "Boletín Oficial del 2026-11-05: 34 normas.",
-    "BCRA \"A\": 0 nuevas (última leída: A 8505).",
+    "BCRA \"A\": 3 nuevas (última leída: A 8508).",
     "BCRA \"B\": 0 nuevas (última leída: B 13253).",
-    "BCRA \"C\": 0 nuevas (última leída: C 102510).",
+    "BCRA \"C\": 4 nuevas (última leída: C 102514).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
     "Rentas Córdoba: 0 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": [],
   "demoras": [],
