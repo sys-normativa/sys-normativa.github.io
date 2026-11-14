@@ -15,7 +15,7 @@
     "t-rmgcti": "A 8401",
     "t-excbio": "A 8481"
   },
-  "boletinHasta": "2026-11-12",
+  "boletinHasta": "2026-11-13",
   "pendientes": {
     "A": [],
     "B": [],
@@ -40,7 +40,9 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [],
+  "fallasAvisadas": [
+    "Boletín Oficial"
+  ],
   "rentasVistas": [
     "p=102230",
     "p=102062",
@@ -61,10 +63,12 @@
     "p=100623",
     "p=100746"
   ],
-  "fallasDesde": {},
+  "fallasDesde": {
+    "Boletín Oficial del 2026-11-14": "2026-11-14T12:48:56.121Z"
+  },
   "boletinHoy": {
     "fecha": "2026-11-13",
     "normas": 58
   },
-  "ultimaCorrida": "2026-11-14T00:49:14.776Z"
+  "ultimaCorrida": "2026-11-14T12:48:56.121Z"
 }
