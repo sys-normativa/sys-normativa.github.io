@@ -1,22 +1,114 @@
 {
   "fecha": "2026-11-18",
-  "generado": "18/11/2026 a las 09:50",
-  "hallazgos": [],
+  "generado": "18/11/2026 a las 10:07",
+  "hallazgos": [
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Comisión Arbitral Convenio Multilateral del 18.8.77",
+      "titulo": "Resolución General 13/2026",
+      "asunto": "",
+      "fecha": "18/11/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/350504/20261118",
+      "avisoBO": "86018/26",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Sustituir el punto 6) del Anexo I “Procedimientos de los Agentes” de la Resolución General N° 9/2022 (y sus modificatorias), el cual quedará redactado de la siguiente manera: “6) El pago de los importes que corresponda ingresar según la información de las declaraciones juradas, se hará efectivo mediante la emisión de una “Boleta de Pago”, que se ha de confeccionar mediante el sistema SIRCUPA, y su posterior cancelación de fondos a través de los medios de pago habilitados específicamente en el Sistema de Transferencia Electrónica de Fondos (Pago Electrónico COMARB) para este sistema informático”.",
+      "paraQue": "En tal sentido, corresponde modificar el Anexo I de la citada Resolución General, disponiendo que el pago se efectuará mediante el “Sistema de Transferencia Electrónica de Fondos” (en adelante “Pago Electrónico COMARB”), conforme la Resolución General N° 12/2026.",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Menciona materias propias de la actividad de SYS: proveedores de servicios de pago, SIRCUPA (IIBB sobre cuentas de pago), transferencia electrónica de fondos.",
+        "Retenciones de Ingresos Brutos sobre las acreditaciones en cuentas de pago. Puede modificar las alícuotas aplicables a los clientes de SYS o sus obligaciones como agente."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [
+        "La presente resolución entrará en vigencia a partir del 1 de diciembre del 2026."
+      ],
+      "dondeNombraASys": "El sistema de Recaudación y Control de Acreditaciones Bancarias de Contribuyentes del Convenio Multilateral (SIRCUPA) aprobado por la Resolución General N° 9/2022 y modificado por la Resolución General N° 7/2023 y la Resolución General N° 12/2026 que establece el “Sistema de Transferencia Electrónica de Fondos”…",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 14,
+        "motivos": [
+          "proveedores de servicios de pago",
+          "SIRCUPA (IIBB sobre cuentas de pago)",
+          "transferencia electrónica de fondos",
+          "Convenio Multilateral / IIBB",
+          "emitida por la Comisión Arbitral"
+        ],
+        "temas": [
+          "iibb",
+          "psp",
+          "pagos"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "La Comisión Arbitral modificó el procedimiento para pagar los importes retenidos por SIRCUPA mediante el uso del Sistema de Transferencia Electrónica de Fondos (Pago Electrónico COMARB) desde el 1 de diciembre de 2026.",
+        "comoAfecta": "SYS debe cambiar el medio de pago para cancelar las declaraciones juradas de SIRCUPA.",
+        "queHacer": "Utilizar el Pago Electrónico COMARB para cancelar los importes de las declaraciones juradas de SIRCUPA a partir del 1 de diciembre de 2026.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "Boletín Oficial",
+      "emisor": "Comisión Arbitral Convenio Multilateral del 18.8.77",
+      "titulo": "Resolución General 12/2026",
+      "asunto": "",
+      "fecha": "18/11/2026",
+      "url": "https://www.boletinoficial.gob.ar/detalleAviso/primera/350503/20261118",
+      "avisoBO": "86020/26",
+      "tipo": "Publicada en el Boletín Oficial",
+      "queCambia": "Establecer el “Sistema de Transferencia Electrónica de Fondos”, que en adelante se denominará “Pago Electrónico COMARB”, como el marco general para la cancelación de las obligaciones de pago que surjan de los sistemas administrados por esta Comisión Arbitral.",
+      "paraQue": "",
+      "tema": "iibb",
+      "comoAfecta": [
+        "Menciona materias propias de la actividad de SYS: SIRCUPA (IIBB sobre cuentas de pago), SIRTAC / regímenes de recaudación de IIBB, transferencia electrónica de fondos.",
+        "Retenciones de Ingresos Brutos sobre las acreditaciones en cuentas de pago. Puede modificar las alícuotas aplicables a los clientes de SYS o sus obligaciones como agente."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [],
+      "dondeNombraASys": "Que la Comisión Arbitral administra distintos aplicativos y sistemas web (tales como SIFERE, SIRCREB, SIRTAC, SIRCUPA, SIRCAR Y SIRCIP, que requieren el ingreso de fondos por parte de los sujetos obligados a través de la generación de Boletas de Pago.",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 13,
+        "motivos": [
+          "SIRCUPA (IIBB sobre cuentas de pago)",
+          "SIRTAC / regímenes de recaudación de IIBB",
+          "transferencia electrónica de fondos",
+          "sujetos obligados",
+          "Convenio Multilateral / IIBB",
+          "retenciones/percepciones",
+          "emitida por la Comisión Arbitral"
+        ],
+        "temas": [
+          "iibb",
+          "pagos",
+          "lavado",
+          "impuestos"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "La Comisión Arbitral establece el Sistema de Transferencia Electrónica de Fondos (Pago Electrónico COMARB) para unificar los medios de pago y proveedores habilitados en la cancelación de obligaciones de los sistemas administrados.",
+        "comoAfecta": "Modifica los canales y proveedores habilitados para el pago de las obligaciones de SIRCUPA de SYS.",
+        "queHacer": "Consultar el Anexo de la resolución en la edición web del Boletín Oficial para verificar los proveedores de pago habilitados en SIRCUPA.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
   "revisado": [
-    "Boletín Oficial del 2026-11-17: 68 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-11-18: 65 normas.",
     "BCRA \"A\": 0 nuevas (última leída: A 8510).",
     "BCRA \"B\": 0 nuevas (última leída: B 13262).",
     "BCRA \"C\": 0 nuevas (última leída: C 102539).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
     "Rentas Córdoba: 0 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 2 de 2 normas."
   ],
-  "errores": [
-    "Boletín Oficial del 2026-11-18: HTTP 429 en https://www.boletinoficial.gob.ar/detalleAviso/primera/350525/20261118"
-  ],
+  "errores": [],
   "demoras": [],
-  "enCurso": [
-    "Boletín Oficial del 2026-11-18"
-  ]
+  "enCurso": []
 }
