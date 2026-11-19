@@ -2,7 +2,7 @@
   "ultimaComunicacion": {
     "A": 8510,
     "B": 13262,
-    "C": 102546
+    "C": 102547
   },
   "textosOrdenados": {
     "t-snp-psp": "A 8505",
@@ -40,9 +40,7 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [
-    "Boletín Oficial"
-  ],
+  "fallasAvisadas": [],
   "rentasVistas": [
     "p=102230",
     "p=102062",
@@ -63,12 +61,10 @@
     "p=100623",
     "p=100746"
   ],
-  "fallasDesde": {
-    "Boletín Oficial del 2026-11-19": "2026-11-19T12:49:30.057Z"
-  },
+  "fallasDesde": {},
   "boletinHoy": {
-    "fecha": "2026-11-18",
-    "normas": 65
+    "fecha": "2026-11-19",
+    "normas": 67
   },
-  "ultimaCorrida": "2026-11-19T12:49:30.057Z"
+  "ultimaCorrida": "2026-11-19T13:06:34.967Z"
 }
