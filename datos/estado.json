@@ -15,7 +15,7 @@
     "t-rmgcti": "A 8401",
     "t-excbio": "A 8481"
   },
-  "boletinHasta": "2026-11-18",
+  "boletinHasta": "2026-11-19",
   "pendientes": {
     "A": [],
     "B": [],
@@ -42,7 +42,7 @@
     "post-103632"
   ],
   "fallasAvisadas": [
-    "Rentas Córdoba"
+    "Boletín Oficial"
   ],
   "rentasVistas": [
     "p=102230",
@@ -65,11 +65,11 @@
     "p=100746"
   ],
   "fallasDesde": {
-    "Rentas Córdoba": "2026-11-20T00:48:55.536Z"
+    "Boletín Oficial del 2026-11-20": "2026-11-20T12:50:36.004Z"
   },
   "boletinHoy": {
     "fecha": "2026-11-19",
     "normas": 67
   },
-  "ultimaCorrida": "2026-11-20T00:48:55.536Z"
+  "ultimaCorrida": "2026-11-20T12:50:36.004Z"
 }
