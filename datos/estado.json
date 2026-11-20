@@ -2,7 +2,7 @@
   "ultimaComunicacion": {
     "A": 8511,
     "B": 13262,
-    "C": 102550
+    "C": 102551
   },
   "textosOrdenados": {
     "t-snp-psp": "A 8505",
@@ -22,6 +22,7 @@
     "C": []
   },
   "prensaVistas": [
+    "post-109596",
     "post-108334",
     "post-108168",
     "post-108269",
@@ -40,7 +41,9 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [],
+  "fallasAvisadas": [
+    "Rentas Córdoba"
+  ],
   "rentasVistas": [
     "p=102230",
     "p=102062",
@@ -61,10 +64,12 @@
     "p=100623",
     "p=100746"
   ],
-  "fallasDesde": {},
+  "fallasDesde": {
+    "Rentas Córdoba": "2026-11-20T00:48:55.536Z"
+  },
   "boletinHoy": {
     "fecha": "2026-11-19",
     "normas": 67
   },
-  "ultimaCorrida": "2026-11-19T19:20:33.649Z"
+  "ultimaCorrida": "2026-11-20T00:48:55.536Z"
 }
