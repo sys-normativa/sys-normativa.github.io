@@ -15,7 +15,7 @@
     "t-rmgcti": "A 8401",
     "t-excbio": "A 8481"
   },
-  "boletinHasta": "2026-11-20",
+  "boletinHasta": "2026-11-21",
   "pendientes": {
     "A": [],
     "B": [],
@@ -65,11 +65,11 @@
     "p=100746"
   ],
   "fallasDesde": {
-    "Boletín Oficial del 2026-11-21": "2026-11-21T12:49:14.736Z"
+    "Boletín Oficial del 2026-11-22": "2026-11-22T12:48:37.479Z"
   },
   "boletinHoy": {
     "fecha": "2026-11-20",
     "normas": 62
   },
-  "ultimaCorrida": "2026-11-22T01:05:03.711Z"
+  "ultimaCorrida": "2026-11-22T12:48:37.479Z"
 }
