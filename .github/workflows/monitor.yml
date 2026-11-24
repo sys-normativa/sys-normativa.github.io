@@ -78,7 +78,7 @@ jobs:
     timeout-minutes: 45
     environment:
       name: github-pages
-      url: ${{ steps.publicar.outputs.page_url }}
+      url: ${{ steps.publicar1.outputs.page_url || steps.publicar.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -176,15 +176,27 @@ jobs:
           url=$(gh issue create --title "Monitor: no salió el mail a los destinatarios" --body-file "$RUNNER_TEMP/mailfallo.md")
           gh issue close "$url"
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: salida
 
+      # deploy-pages a veces no encuentra el paquete recién subido ("No artifacts
+      # named github-pages", 23 y 24/11/2026): se espera un minuto y se reintenta.
       - name: Publicar la página
+        id: publicar1
+        continue-on-error: true
+        uses: actions/deploy-pages@v5
+
+      - name: Esperar antes de reintentar la publicación
+        if: steps.publicar1.outcome == 'failure'
+        run: sleep 60
+
+      - name: Publicar la página (segundo intento)
         id: publicar
-        uses: actions/deploy-pages@v4
+        if: steps.publicar1.outcome == 'failure'
+        uses: actions/deploy-pages@v5
 
       # Si no se pudo leer el Boletín o el BCRA, se vuelve a correr en 15 min, y
       # así hasta que ande. Cada tanda se corta a las 8 h (32 intentos): para
