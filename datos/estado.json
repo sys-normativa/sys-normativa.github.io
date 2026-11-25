@@ -41,9 +41,7 @@
     "post-103687",
     "post-103632"
   ],
-  "fallasAvisadas": [
-    "Boletín Oficial"
-  ],
+  "fallasAvisadas": [],
   "rentasVistas": [
     "p=102230",
     "p=102062",
@@ -64,12 +62,10 @@
     "p=100623",
     "p=100746"
   ],
-  "fallasDesde": {
-    "Boletín Oficial del 2026-11-25": "2026-11-25T12:50:34.071Z"
-  },
+  "fallasDesde": {},
   "boletinHoy": {
-    "fecha": "2026-11-24",
-    "normas": 62
+    "fecha": "2026-11-25",
+    "normas": 80
   },
-  "ultimaCorrida": "2026-11-25T12:50:34.071Z"
+  "ultimaCorrida": "2026-11-25T13:06:47.785Z"
 }
