@@ -1,9 +1,9 @@
 {
   "fecha": "2026-11-26",
-  "generado": "26/11/2026 a las 09:49",
+  "generado": "26/11/2026 a las 10:06",
   "hallazgos": [],
   "revisado": [
-    "Boletín Oficial del 2026-11-25: 80 normas (día anterior, vuelto a mirar por si quedó algo).",
+    "Boletín Oficial del 2026-11-26: 62 normas.",
     "BCRA \"A\": 0 nuevas (última leída: A 8511).",
     "BCRA \"B\": 0 nuevas (última leída: B 13265).",
     "BCRA \"C\": 0 nuevas (última leída: C 102565).",
@@ -12,11 +12,7 @@
     "Prensa del BCRA: 0 noticias nuevas.",
     "Resumen con IA: no hubo normas para resumir."
   ],
-  "errores": [
-    "Boletín Oficial del 2026-11-26: HTTP 429 en https://www.boletinoficial.gob.ar/detalleAviso/primera/350850/20261126"
-  ],
+  "errores": [],
   "demoras": [],
-  "enCurso": [
-    "Boletín Oficial del 2026-11-26"
-  ]
+  "enCurso": []
 }
