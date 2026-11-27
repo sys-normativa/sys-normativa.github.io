@@ -1,16 +1,98 @@
 {
   "fecha": "2026-11-26",
-  "generado": "26/11/2026 a las 10:06",
-  "hallazgos": [],
+  "generado": "26/11/2026 a las 21:52",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Comunicación \"C\" 102570",
+      "asunto": "Banco Cetelem Argentina SA - Modificación de su denominación social por Revolut Bank Argentina SAU",
+      "fecha": "26/11/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/C102570.pdf",
+      "tipo": "Corrección de una norma anterior",
+      "queCambia": "El BCRA escribe para llevar a su conocimiento que Banco Cetelem Argentina SA modificó su denominación social por Revolut Bank Argentina SAU.",
+      "paraQue": "",
+      "tema": "psp",
+      "comoAfecta": [
+        "Dirigida a los proveedores de servicios de pago que ofrecen cuentas de pago, categoría que comprende a SYS.",
+        "Régimen que habilita a SYS a operar como proveedor de servicios de pago. Sus cambios pueden alcanzar el registro, el resguardo de fondos de clientes, la información a clientes y los reportes al BCRA."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "alta",
+        "puntaje": 11,
+        "motivos": [
+          "dirigida a los proveedores de servicios de pago",
+          "proveedores de servicios de pago",
+          "cuentas de pago",
+          "entidades financieras"
+        ],
+        "temas": [
+          "psp",
+          "general"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "aplica",
+        "queCambia": "El Banco Central informa que Banco Cetelem Argentina SA cambió su denominación social a Revolut Bank Argentina SAU.",
+        "comoAfecta": "SYS debe actualizar los registros y validaciones de contrapartes bancarias con la nueva razón social de la entidad.",
+        "queHacer": "Actualizar el nombre de la entidad en los sistemas internos de SYS.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    },
+    {
+      "fuente": "BCRA — prensa",
+      "emisor": "Banco Central (BCRA) — comunicado de prensa",
+      "titulo": "El BCRA moderniza el registro de proveedores no financieros de crédito",
+      "asunto": "",
+      "fecha": "26/11/2026",
+      "url": "https://www.bcra.gob.ar/noticias/bcra-moderniza-registro-proveedores-no-financieros-credito/",
+      "tipo": "Anuncio de prensa (no es una norma)",
+      "queCambia": "La reforma fortalece los mecanismos de supervisión, promueve mayores estándares de transparencia y gobernanza y mejora la calidad de la información disponible para el seguimiento de la actividad y protección del usuario financiero.",
+      "paraQue": "",
+      "tema": "usuarios",
+      "comoAfecta": [
+        "Anuncio del BCRA, sin carácter normativo. Puede anticipar una comunicación futura, que se informará al publicarse.",
+        "Normas sobre comisiones, información al cliente y reclamos. Su aplicación a SYS es parcial, dado que sus clientes son empresas."
+      ],
+      "queHacer": "Seguimiento: evaluar si corresponde anticipar adecuaciones.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [],
+      "evaluacion": {
+        "nivel": "revisar",
+        "puntaje": 4,
+        "motivos": [
+          "protección de usuarios de servicios financieros",
+          "entidades financieras"
+        ],
+        "temas": [
+          "usuarios",
+          "general"
+        ],
+        "fuerte": true
+      },
+      "resumenIa": {
+        "veredicto": "no_aplica",
+        "queCambia": "El Banco Central anunció la modernización del registro de proveedores no financieros de crédito y su régimen de inscripción.",
+        "comoAfecta": "SYS es un proveedor de servicios de pago y no un proveedor no financiero de crédito.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
   "revisado": [
     "Boletín Oficial del 2026-11-26: 62 normas.",
-    "BCRA \"A\": 0 nuevas (última leída: A 8511).",
-    "BCRA \"B\": 0 nuevas (última leída: B 13265).",
-    "BCRA \"C\": 0 nuevas (última leída: C 102565).",
+    "BCRA \"A\": 2 nuevas (última leída: A 8513).",
+    "BCRA \"B\": 1 nuevas (última leída: B 13266).",
+    "BCRA \"C\": 7 nuevas (última leída: C 102572).",
     "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
     "Rentas Córdoba: 0 normas nuevas.",
-    "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: no hubo normas para resumir."
+    "Prensa del BCRA: 1 noticias nuevas.",
+    "Resumen con IA: 2 de 2 normas."
   ],
   "errores": [],
   "demoras": [],
