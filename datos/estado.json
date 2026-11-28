@@ -1,8 +1,8 @@
 {
   "ultimaComunicacion": {
-    "A": 8513,
+    "A": 8514,
     "B": 13266,
-    "C": 102572
+    "C": 102577
   },
   "textosOrdenados": {
     "t-snp-psp": "A 8505",
@@ -13,7 +13,7 @@
     "t-pusf": "A 8433",
     "t-rmrtsd": "A 7783",
     "t-rmgcti": "A 8401",
-    "t-excbio": "A 8481"
+    "t-excbio": "A 8512"
   },
   "boletinHasta": "2026-11-26",
   "pendientes": {
@@ -44,6 +44,7 @@
   ],
   "fallasAvisadas": [],
   "rentasVistas": [
+    "p=102371",
     "p=102230",
     "p=102062",
     "p=102075",
@@ -68,5 +69,5 @@
     "fecha": "2026-11-27",
     "normas": 75
   },
-  "ultimaCorrida": "2026-11-27T12:49:17.932Z"
+  "ultimaCorrida": "2026-11-28T00:48:39.449Z"
 }

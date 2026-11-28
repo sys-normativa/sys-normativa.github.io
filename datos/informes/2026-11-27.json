@@ -1,17 +1,61 @@
 {
   "fecha": "2026-11-27",
-  "generado": "27/11/2026 a las 09:49",
-  "hallazgos": [],
+  "generado": "27/11/2026 a las 21:48",
+  "hallazgos": [
+    {
+      "fuente": "BCRA",
+      "emisor": "Banco Central (BCRA)",
+      "titulo": "Se actualizó el texto ordenado \"Exterior y cambios\"",
+      "asunto": "Ahora incorpora la Comunicación \"A\" 8512",
+      "fecha": "26/11/2026",
+      "url": "https://www.bcra.gob.ar/archivos/Pdfs/Texord/t-excbio.pdf#A8512",
+      "tipo": "Cambio en un texto ordenado",
+      "queCambia": "El BCRA actualizó la versión consolidada de \"Exterior y cambios\". Antes llegaba hasta la Comunicación A 8481; ahora incorpora la A 8512. Las modificaciones se destacan en el texto ordenado.",
+      "paraQue": "",
+      "tema": "cambios",
+      "comoAfecta": [
+        "Texto ordenado que regula la actividad de SYS.",
+        "Aplica si SYS opera pagos en el exterior o en moneda extranjera.",
+        "Corresponde revisar la comunicación incorporada si no fue informada previamente."
+      ],
+      "queHacer": "Evaluar las adecuaciones requeridas y sus plazos.",
+      "fechasClave": [],
+      "dondeNombraASys": "",
+      "relacionadas": [
+        {
+          "texto": "Comunicación A 8512",
+          "url": "https://www.bcra.gob.ar/archivos/Pdfs/comytexord/A8512.pdf",
+          "detalle": "Exterior y Cambios. Adecuaciones. Actualización del texto ordenado. (26/11/2026)"
+        }
+      ],
+      "evaluacion": {
+        "nivel": "descartada",
+        "puntaje": 0,
+        "motivos": [
+          "tema normativo que regula a SYS",
+          "la IA no ve impacto para SYS"
+        ],
+        "temas": [
+          "cambios"
+        ]
+      },
+      "resumenIa": {
+        "veredicto": "no_aplica",
+        "queCambia": "El Banco Central actualizó el texto ordenado Exterior y cambios incorporando la Comunicación A 8512.",
+        "comoAfecta": "No afecta la operatoria de SYS como billetera virtual.",
+        "modelo": "gemini-3.5-flash-lite"
+      }
+    }
+  ],
   "revisado": [
-    "Boletín Oficial del 2026-11-26: 62 normas (día anterior, vuelto a mirar por si quedó algo).",
     "Boletín Oficial del 2026-11-27: 75 normas.",
-    "BCRA \"A\": 0 nuevas (última leída: A 8513).",
+    "BCRA \"A\": 1 nuevas (última leída: A 8514).",
     "BCRA \"B\": 0 nuevas (última leída: B 13266).",
-    "BCRA \"C\": 0 nuevas (última leída: C 102572).",
-    "Textos ordenados del BCRA: 9 temas, 0 cambiaron.",
-    "Rentas Córdoba: 0 normas nuevas.",
+    "BCRA \"C\": 5 nuevas (última leída: C 102577).",
+    "Textos ordenados del BCRA: 9 temas, 1 cambiaron.",
+    "Rentas Córdoba: 1 normas nuevas.",
     "Prensa del BCRA: 0 noticias nuevas.",
-    "Resumen con IA: no hubo normas para resumir."
+    "Resumen con IA: 1 de 1 normas."
   ],
   "errores": [],
   "demoras": [],
